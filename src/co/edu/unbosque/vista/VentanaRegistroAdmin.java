@@ -6,16 +6,17 @@ import javax.swing.JFrame;
 
 public class VentanaRegistroAdmin extends JFrame{
 	
-	
+	PanelRegistro panelRegistroAdmin;
 	public VentanaRegistroAdmin() {
 		setTitle("Registro Administrador");
-		setSize(1600, 800);
+		setSize(600, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));
 
-		
-		setVisible(false);
+		panelRegistroAdmin=new PanelRegistro();
+		add(panelRegistroAdmin);
+		setVisible(true);
 	}
 
 }

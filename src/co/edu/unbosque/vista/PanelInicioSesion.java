@@ -1,6 +1,7 @@
 package co.edu.unbosque.vista;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -29,6 +30,7 @@ public class PanelInicioSesion extends JPanel {
     public PanelInicioSesion() {
         setLayout(new BorderLayout(10, 20));
         inicializarComponentes();
+        setPreferredSize(new Dimension(1000, 800));
         
     }
     
@@ -43,7 +45,7 @@ public class PanelInicioSesion extends JPanel {
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         
         // Espacio para imagen (puedes reemplazar con una imagen real)
-        lblImagen = new JLabel(new ImageIcon("ruta/a/tu/imagen.png")); // Cambia por tu imagen
+        lblImagen = new JLabel(); // Cambia por tu imagen
         lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
         
         panelSuperior.add(lblTitulo);

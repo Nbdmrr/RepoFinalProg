@@ -9,7 +9,7 @@ public class VentanaRegistroEntrenador extends JFrame{
 	
 	public VentanaRegistroEntrenador() {
 		setTitle("Registro entrenador");
-		setSize(1600, 800);
+		setSize(1000, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));

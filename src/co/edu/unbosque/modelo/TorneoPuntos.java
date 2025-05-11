@@ -58,6 +58,7 @@ public class TorneoPuntos extends Torneo{
 	    for (int i = 0; i < jugadoresDespuesDeRonda.size(); i++) {
 	        System.out.println("Jugador en posicion " + (i + 1) + ": " + jugadoresDespuesDeRonda.get(i).getUsuario()
 	                           + " - Puntos: " + jugadoresDespuesDeRonda.get(i).getPuntos());
+	        "hola"
 	    }
 	}
 	

@@ -1,11 +1,16 @@
 package co.edu.unbosque.modelo;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class TorneoPuntos extends Torneo{
 	 private int indiceActual = 0;
+	 private String[][] cronograma;
+	    private LocalDate[] fechas;
+	
+	 
 	 
 	public TorneoPuntos(String nombre, int limiteParticipantes, String tipo, String juego) {
 		super(nombre,limiteParticipantes,tipo,juego);
@@ -13,7 +18,14 @@ public class TorneoPuntos extends Torneo{
 	
 	public void añadirJugador(Jugador j1) {
 		if(participantes.size()<limiteParticipantes) {
+			if (j1.getPuntos()==0) {
 		participantes.add(j1);}
+			
+		else if (j1.getPuntos()!=0) {
+			j1.setPuntos(0);
+			participantes.add(j1);
+		}
+			}
 		else{System.out.println("Torneo Lleno");
 		}
 	}
@@ -24,9 +36,34 @@ public class TorneoPuntos extends Torneo{
 	        System.out.println("Todos los jugadores ya tuvieron su ronda.");
 	        return;
 	    }
+	    
+	    if (indiceActual == 0) {
+	        fechas = new LocalDate[participantes.size()];
+	        fechas[0] = LocalDate.now().plusDays(1);
+	        cronograma = new String[participantes.size()][];
+	    }
+	    
+	    int partidosEnRonda = participantes.size() - indiceActual - 1;
+	    cronograma[indiceActual] = new String[partidosEnRonda];
+	    
 	    Jugador actual = participantes.get(indiceActual);
+	    int contarPartido = 0;
+	    
 	    for (int j = indiceActual + 1; j < participantes.size(); j++) {
-	        iniciarDuelo(actual, participantes.get(j)); 
+	        iniciarDuelo(actual, participantes.get(j));
+	        
+	      
+	        if (indiceActual == 0) {
+	      
+	            cronograma[indiceActual][contarPartido] = "Fase 1 (" + fechas[0] + "): " + actual.getUsuario() + " vs " + participantes.get(j).getUsuario();
+	        } else {
+	   
+	            cronograma[indiceActual][contarPartido] = "Fase " + (indiceActual + 1) + " (" +  fechas[indiceActual] + "): " +  actual.getUsuario() + " vs " + participantes.get(j).getUsuario();
+	        }
+	        contarPartido++;
+	    }
+	    if (indiceActual + 1 < participantes.size()) {
+	        fechas[indiceActual + 1] = fechas[indiceActual].plusDays(1);
 	    }
 	    listaPorPuntos(participantes);
 	    indiceActual++;

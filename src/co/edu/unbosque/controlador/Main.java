@@ -59,10 +59,7 @@ public class Main {
 		
 		
         
-        
-        
-        System.out.println(pepitos.get(0));
-		
+        "mucho me cuesta"		
 
 	}
 

@@ -11,6 +11,17 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		
+		
+
+		
+				
+				Controlador controlador = new Controlador();
+				
+				
+
+		
+		
 		Jugador jugador1= new Jugador("pepito1", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","sapo");
 		Jugador jugador2= new Jugador("pepito2", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","buho");
 		Jugador jugador3= new Jugador("pepito356", "dsdsd", "dasndjs", "shabdjas ", "dasdsa", "goku");

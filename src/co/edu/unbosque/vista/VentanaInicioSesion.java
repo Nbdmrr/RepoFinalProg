@@ -1,28 +1,37 @@
 package co.edu.unbosque.vista;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
 public class VentanaInicioSesion extends JFrame{
 
-	PanelInicioSesion panelInicioSesion;
+	private PanelInicioSesion panelInicioSesion;
 
 	public VentanaInicioSesion() {
 		setTitle("Inicio sesion");
-		setSize(1600, 800);
+		setSize(1000,400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));
 
 		
 		
+		setPanelInicioSesion(new PanelInicioSesion());
+		add(getPanelInicioSesion());
 		
-		panelInicioSesion = new PanelInicioSesion();
-		add(panelInicioSesion);
 		
-		setVisible(true);
+		setVisible(false);
 
+	}
+
+	public PanelInicioSesion getPanelInicioSesion() {
+		return panelInicioSesion;
+	}
+
+	public void setPanelInicioSesion(PanelInicioSesion panelInicioSesion) {
+		this.panelInicioSesion = panelInicioSesion;
 	}	
 	
 	

@@ -8,15 +8,19 @@ public class PanelRegistroAdmin extends PanelRegistro {
     private JTextField txtCargo;
 
     public PanelRegistroAdmin() {
-        // Crear y configurar el campo "Cargo"
+        super();
+
+        // Crear el campo "Cargo"
         JPanel panelCargo = new JPanel(new BorderLayout());
         JLabel lblCargo = new JLabel("Cargo:");
         txtCargo = new JTextField();
         panelCargo.add(lblCargo, BorderLayout.NORTH);
         panelCargo.add(txtCargo, BorderLayout.CENTER);
 
-        // Insertar en el espacio reservado del panel padre
+        // Agregar al campo extra y actualizar visualmente
         campoExtra1.add(panelCargo, BorderLayout.CENTER);
+        campoExtra1.revalidate();
+        campoExtra1.repaint();
     }
 
     public JTextField getTxtCargo() {

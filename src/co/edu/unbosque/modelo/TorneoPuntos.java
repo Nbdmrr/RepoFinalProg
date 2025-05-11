@@ -4,6 +4,8 @@ package co.edu.unbosque.modelo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 
 public class TorneoPuntos extends Torneo{
 	 private int indiceActual = 0;
@@ -22,11 +24,21 @@ public class TorneoPuntos extends Torneo{
 		participantes.add(j1);}
 			
 		else if (j1.getPuntos()!=0) {
-			j1.setPuntos(0);
-			participantes.add(j1);
+			
+			JOptionPane.showMessageDialog(
+				    null, 
+				    "El usuario ya está registrado en un torneo por puntos", 
+				    "Advertencia", 
+				    JOptionPane.WARNING_MESSAGE
+				);
 		}
 			}
-		else{System.out.println("Torneo Lleno");
+		else{JOptionPane.showMessageDialog(
+			    null, 
+			    "Torneo lleno", 
+			    "Advertencia", 
+			    JOptionPane.WARNING_MESSAGE
+			);
 		}
 	}
 	

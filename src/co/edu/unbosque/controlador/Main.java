@@ -9,7 +9,7 @@ import co.edu.unbosque.modelo.TorneoGrupos;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
 		
 		
 		

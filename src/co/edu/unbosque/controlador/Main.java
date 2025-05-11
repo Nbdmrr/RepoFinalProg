@@ -57,12 +57,6 @@ public class Main {
 		
 		torneo.mostrarCronograma();
 		
-		
-        
-        
-        
-        System.out.println(pepitos.get(0));
-		
 
 	}
 

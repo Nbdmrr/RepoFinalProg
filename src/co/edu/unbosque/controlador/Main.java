@@ -13,8 +13,8 @@ public class Main {
 		
 		Jugador jugador1= new Jugador("pepito1", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","sapo");
 		Jugador jugador2= new Jugador("pepito2", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","buho");
-		Jugador jugador3= new Jugador("pepito3", "dsdsd", "dasndjs", "shabdjas ", "dasdsa", "goku");
-		Jugador jugador4= new Jugador("pepito4", "dsdsd", "dasndjs", "shabdjas ", "dasdsa", "goku");
+		Jugador jugador3= new Jugador("pepito356", "dsdsd", "dasndjs", "shabdjas ", "dasdsa", "goku");
+		Jugador jugador4= new Jugador("pepito456", "dsdsd", "dasndjs", "shabdjas ", "dasdsa", "goku");
 		Jugador jugador5= new Jugador("pepito5", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","buho");
 		Jugador jugador6= new Jugador("pepito6", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","sapo");
 		Jugador jugador7= new Jugador("pepito7", "dsdsd", "dasndjs", "shabdjas ", "dasdsa","perro");

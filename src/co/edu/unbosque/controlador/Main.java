@@ -59,7 +59,7 @@ public class Main {
 		
 		
         
-        "mucho me cuesta normal si te sientes solita y me extrañas"		
+        	
 
 	}
 

@@ -10,8 +10,12 @@ public class PanelRegistroJugador extends PanelRegistro {
 
     public PanelRegistroJugador() {
         super();
-
-        // Campo especialidad
+        agregarCampos();
+        
+    }
+    
+    public void agregarCampos() {
+    	// Campo especialidad
         JPanel panelEspecialidad = new JPanel(new BorderLayout());
         JLabel lblEspecialidad = new JLabel("Especialidad:");
         txtEspecialidad = new JTextField();

@@ -78,6 +78,13 @@ public class TorneoEliminacion extends Torneo{
 
         fase++;
     }
+    
+    
+    
+    
+    
+    
+    
 
     public void mostrarCronograma() {
         for (int i = 0; i < getCronograma().length; i++) {

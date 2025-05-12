@@ -2,7 +2,7 @@ package co.edu.unbosque.vista;
 
 public class Vista {
 	
-	private VentanaAvanzeTorneo ventanaAvanzeTorneo;
+	private VentanaAvanzeYInicioTorneo ventanaAvanzeTorneo;
 	private VentanaCrearEquipo ventanaCrearEquipo;
 	private VentanaCrearTorneo ventanaCrearTorneo;
 	private VentanaCronograma ventanaCronograma;
@@ -16,7 +16,7 @@ public class Vista {
 	private VentanaRegistroJugador ventanaRegistroJugador;
 	
 	public Vista() {
-		this.ventanaAvanzeTorneo = new VentanaAvanzeTorneo();
+		this.ventanaAvanzeTorneo = new VentanaAvanzeYInicioTorneo();
         this.ventanaCrearEquipo = new VentanaCrearEquipo();
         this.ventanaCrearTorneo = new VentanaCrearTorneo();
         this.ventanaCronograma = new VentanaCronograma();
@@ -118,11 +118,11 @@ public class Vista {
 		this.ventanaCrearEquipo = ventanaCrearEquipo;
 	}
 
-	public VentanaAvanzeTorneo getVentanAvanzeTorneo() {
+	public VentanaAvanzeYInicioTorneo getVentanAvanzeTorneo() {
 		return ventanaAvanzeTorneo;
 	}
 
-	public void setVentanAvanzeTorneo(VentanaAvanzeTorneo ventanAvanzeTorneo) {
+	public void setVentanAvanzeTorneo(VentanaAvanzeYInicioTorneo ventanAvanzeTorneo) {
 		this.ventanaAvanzeTorneo = ventanAvanzeTorneo;
 	}
 	

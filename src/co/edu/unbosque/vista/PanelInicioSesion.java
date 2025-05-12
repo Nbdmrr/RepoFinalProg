@@ -29,9 +29,9 @@ public class PanelInicioSesion extends JPanel {
     
     public PanelInicioSesion() {
         setLayout(new BorderLayout(10, 20));
-        inicializarComponentes();
-        setPreferredSize(new Dimension(1000, 800));
         
+        
+        inicializarComponentes();
     }
     
     public void inicializarComponentes() {

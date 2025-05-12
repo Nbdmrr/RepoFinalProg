@@ -18,7 +18,7 @@ public class VentanaRegistroJugador extends JFrame{
 
 		setPanelRegistroJugador(new PanelRegistroJugador());
 		add(getPanelRegistroJugador());
-		setVisible(true);
+		setVisible(false);
 	}
 
 

@@ -17,6 +17,7 @@ public class Equipo {
 		this.setEntrenador1(entrenador1);
 		entrenador2 = null;
 		entrenador3 = null;
+		equipo = new ArrayList<Jugador>();
 			
 	}
 

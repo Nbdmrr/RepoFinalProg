@@ -109,8 +109,25 @@ public class TorneoPuntos extends Torneo{
 	                           + " - Puntos: " + jugadoresDespuesDeRonda.get(i).getPuntos());
 	        
 	    }
+	    
+	   
 	}
-
+ public void finalizarTorneo() {
+	 if (indiceActual ==participantes.size()) {
+	 for (int i =0; i< participantes.size(); i++) {
+		 participantes.get(i).setPuntos(0);}
+		 
+	 }
+	 else {
+		 JOptionPane.showMessageDialog(
+				    null, 
+				    "NO SE PUEDE FINALIZAR, EL TORNEO SIGUE EN CURSO", 
+				    "Advertencia", 
+				    JOptionPane.WARNING_MESSAGE);
+	 }
+	 
+	    	
+	    }
     public void setFechas(LocalDate[] fechas2) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setFechas'");

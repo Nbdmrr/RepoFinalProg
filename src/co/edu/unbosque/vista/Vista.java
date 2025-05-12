@@ -125,6 +125,11 @@ public class Vista {
 	public void setVentanAvanzeTorneo(VentanaAvanzeTorneo ventanAvanzeTorneo) {
 		this.ventanaAvanzeTorneo = ventanAvanzeTorneo;
 	}
+
+    public void mostrarMensaje(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mostrarMensaje'");
+    }
 	
 
 }

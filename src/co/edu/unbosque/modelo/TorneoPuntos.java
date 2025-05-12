@@ -110,6 +110,26 @@ public class TorneoPuntos extends Torneo{
 	        
 	    }
 	}
+
+    public void setFechas(LocalDate[] fechas2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setFechas'");
+    }
+
+    public void setCronograma(String[][] cronograma2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setCronograma'");
+    }
+
+    public String[][] getCronograma() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCronograma'");
+    }
+
+    public LocalDate[] getFechas() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFechas'");
+    }
 	
 
 	

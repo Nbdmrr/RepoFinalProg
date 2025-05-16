@@ -6,6 +6,12 @@ import java.time.LocalDate;
 public class TorneoPuntosDTO extends TorneoDTO {
     private String[][] cronograma;
     private LocalDate[] fechas;
+    private JugadorDTO ganadorTorneo;
+    
+    
+    
+    
+    
 
     public String[][] getCronograma() {
         return cronograma;
@@ -23,25 +29,13 @@ public class TorneoPuntosDTO extends TorneoDTO {
         this.fechas = fechas;
     }
 
-    public TorneoPuntos toEntity() {
-        TorneoPuntos torneoPuntos = new TorneoPuntos(nombre, limiteParticipantes, tipo, juego);
-        torneoPuntos.setEstado(estado);
-        torneoPuntos.setFase(fase);
-        torneoPuntos.setCronograma(cronograma);
-        torneoPuntos.setFechas(fechas);
-        return torneoPuntos;
-    }
+	public JugadorDTO getGanadorTorneo() {
+		return ganadorTorneo;
+	}
 
-    public static TorneoPuntosDTO fromEntity(TorneoPuntos torneoPuntos) {
-        TorneoPuntosDTO dto = new TorneoPuntosDTO();
-        dto.setNombre(torneoPuntos.getNombre());
-        dto.setLimiteParticipantes(torneoPuntos.getLimiteParticipantes());
-        dto.setTipo(torneoPuntos.getTipo());
-        dto.setJuego(torneoPuntos.getJuego());
-        dto.setEstado(torneoPuntos.getEstado());
-        dto.setFase(torneoPuntos.getFase());
-        dto.setCronograma(torneoPuntos.getCronograma());
-        dto.setFechas(torneoPuntos.getFechas());
-        return dto;
-    }
+	public void setGanadorTorneo(JugadorDTO ganadorTorneo) {
+		this.ganadorTorneo = ganadorTorneo;
+	}
+
+    	
 }

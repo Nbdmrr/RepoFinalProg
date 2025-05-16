@@ -14,6 +14,7 @@ public class PanelRegistro extends JPanel {
 
     protected JPanel campoExtra1;
     protected JPanel campoExtra2;
+    private JLabel lblTitulo;
 
     public PanelRegistro() {
         setLayout(new BorderLayout(10, 10));
@@ -24,10 +25,10 @@ public class PanelRegistro extends JPanel {
     }
     public void inicializarComponentes() {
     	
-    	// Título
-        JLabel lblTitulo = new JLabel("Registro de Persona", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 22));
-        add(lblTitulo, BorderLayout.NORTH);
+    	
+        setLblTitulo(new JLabel("", SwingConstants.CENTER));
+        getLblTitulo().setFont(new Font("Arial", Font.BOLD, 22));
+        add(getLblTitulo(), BorderLayout.NORTH);
 
         // Panel central con 8 filas
         JPanel panelCampos = new JPanel(new GridLayout(8, 1, 10, 10));
@@ -142,4 +143,10 @@ public class PanelRegistro extends JPanel {
     public JPanel getCampoExtra2() {
         return campoExtra2;
     }
+	public JLabel getLblTitulo() {
+		return lblTitulo;
+	}
+	public void setLblTitulo(JLabel lblTitulo) {
+		this.lblTitulo = lblTitulo;
+	}
 }

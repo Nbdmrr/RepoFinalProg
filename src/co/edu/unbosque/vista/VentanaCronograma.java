@@ -8,7 +8,7 @@ public class VentanaCronograma extends JFrame{
 	
 	
 	
-	PanelCronograma panelCronograma;
+	private PanelCronograma panelCronograma;
 	
 	public VentanaCronograma() {
 		setTitle("Cronograma");
@@ -17,9 +17,17 @@ public class VentanaCronograma extends JFrame{
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));
 
-		panelCronograma = new PanelCronograma();
-		add(panelCronograma);
-		setVisible(false);
+		setPanelCronograma(new PanelCronograma());
+		add(getPanelCronograma());
+		setVisible(true);
+	}
+
+	public PanelCronograma getPanelCronograma() {
+		return panelCronograma;
+	}
+
+	public void setPanelCronograma(PanelCronograma panelCronograma) {
+		this.panelCronograma = panelCronograma;
 	}
 
 }

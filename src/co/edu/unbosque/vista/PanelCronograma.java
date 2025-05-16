@@ -8,49 +8,56 @@ public class PanelCronograma extends JPanel {
 
     private JTable tablaCronograma;
     private DefaultTableModel modeloTabla;
+    private JButton botonVolver;
 
     public PanelCronograma() {
-        setLayout(new BorderLayout()); // Usamos BorderLayout para acomodar bien la tabla.
-        setPreferredSize(new Dimension(800, 600)); // Panel de tamaño aumentado
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(1000, 700)); // Tamaño base más amplio
 
-        // Inicializamos la tabla con un modelo vacío.
         modeloTabla = new DefaultTableModel();
         tablaCronograma = new JTable(modeloTabla);
-        
-        // Agregamos la tabla dentro de un JScrollPane para que se pueda desplazar en ambas direcciones (horizontal y vertical).
+
+        // Evitar que la tabla ajuste automáticamente el tamaño de las columnas
+        tablaCronograma.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // Panel con scroll que envuelve la tabla
         JScrollPane scrollPane = new JScrollPane(tablaCronograma);
-        
-        // Habilitamos el desplazamiento en ambas direcciones (horizontal y vertical).
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        add(scrollPane, BorderLayout.CENTER); // Añadimos el JScrollPane con la tabla al panel
+        // Agregar scrollPane al centro del panel
+        add(scrollPane, BorderLayout.CENTER);
+
+        // Panel inferior con botón "Volver"
+        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        botonVolver = new JButton("Volver");
+        panelInferior.add(botonVolver);
+
+        add(panelInferior, BorderLayout.SOUTH);
     }
 
-   
-    public void actualizarCronogramaGeneral(Object[][] datos, Object[] encabezados) {
-        // Limpiamos el modelo de la tabla antes de agregar nuevos datos.
+    public void actualizarCronogramaGeneral(Object[][] datos) {
         modeloTabla.setRowCount(0);
         modeloTabla.setColumnCount(0);
-        
-        // Establecemos los encabezados de las columnas.
-        modeloTabla.setColumnIdentifiers(encabezados);
-        
-        // Agregamos las filas (los datos).
+
+        if (datos.length > 0) {
+            int columnas = datos[0].length;
+            modeloTabla.setColumnCount(columnas);
+
+            // Ajustar ancho de columnas para mostrar mejor el texto largo
+            for (int i = 0; i < columnas; i++) {
+                tablaCronograma.getColumnModel().getColumn(i).setPreferredWidth(300);
+            }
+        }
+
         for (Object[] fila : datos) {
             modeloTabla.addRow(fila);
         }
-        
-        // Refrescamos la vista de la tabla.
+
         modeloTabla.fireTableDataChanged();
     }
 
-    // Métodos para obtener el modelo de la tabla y manipularla si es necesario.
     public DefaultTableModel getModeloTabla() {
         return modeloTabla;
-    }
-    
-    public JTable getTablaCronograma() {
-        return tablaCronograma;
     }
 }

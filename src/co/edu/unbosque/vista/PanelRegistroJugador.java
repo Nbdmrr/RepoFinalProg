@@ -15,6 +15,8 @@ public class PanelRegistroJugador extends PanelRegistro {
     }
     
     public void agregarCampos() {
+    	
+    	getLblTitulo().setText("Registro jugador:"); 
     	// Campo especialidad
         JPanel panelEspecialidad = new JPanel(new BorderLayout());
         JLabel lblEspecialidad = new JLabel("Especialidad:");

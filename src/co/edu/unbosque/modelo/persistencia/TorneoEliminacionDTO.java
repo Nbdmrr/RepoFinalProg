@@ -1,9 +1,17 @@
 package co.edu.unbosque.modelo.persistencia;
 
+import co.edu.unbosque.modelo.Jugador;
 import co.edu.unbosque.modelo.TorneoEliminacion;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TorneoEliminacionDTO extends TorneoDTO {
+	
+    private ArrayList<JugadorDTO> ganadores;
+    private HashMap<JugadorDTO,Boolean> eliminados;
+    
+    private JugadorDTO ganadorTorneo;
     private String[][] cronograma;
     private LocalDate[] fechas;
 
@@ -23,25 +31,29 @@ public class TorneoEliminacionDTO extends TorneoDTO {
         this.fechas = fechas;
     }
 
-    public TorneoEliminacion toEntity() {
-        TorneoEliminacion torneoEliminacion = new TorneoEliminacion(nombre, limiteParticipantes, tipo, juego);
-        torneoEliminacion.setEstado(estado);
-        torneoEliminacion.setFase(fase);
-        torneoEliminacion.setCronograma(cronograma);
-        torneoEliminacion.setFechas(fechas);
-        return torneoEliminacion;
-    }
+	public JugadorDTO getGanadorTorneo() {
+		return ganadorTorneo;
+	}
 
-    public static TorneoEliminacionDTO fromEntity(TorneoEliminacion torneoEliminacion) {
-        TorneoEliminacionDTO dto = new TorneoEliminacionDTO();
-        dto.setNombre(torneoEliminacion.getNombre());
-        dto.setLimiteParticipantes(torneoEliminacion.getLimiteParticipantes());
-        dto.setTipo(torneoEliminacion.getTipo());
-        dto.setJuego(torneoEliminacion.getJuego());
-        dto.setEstado(torneoEliminacion.getEstado());
-        dto.setFase(torneoEliminacion.getFase());
-        dto.setCronograma(torneoEliminacion.getCronograma());
-        dto.setFechas(torneoEliminacion.getFechas());
-        return dto;
-    }
+	public void setGanadorTorneo(JugadorDTO ganadorTorneo) {
+		this.ganadorTorneo = ganadorTorneo;
+	}
+
+	public HashMap<JugadorDTO,Boolean> getEliminados() {
+		return eliminados;
+	}
+
+	public void setEliminados(HashMap<JugadorDTO,Boolean> eliminados) {
+		this.eliminados = eliminados;
+	}
+
+	public ArrayList<JugadorDTO> getGanadores() {
+		return ganadores;
+	}
+
+	public void setGanadores(ArrayList<JugadorDTO> ganadores) {
+		this.ganadores = ganadores;
+	}
+
+   
 }

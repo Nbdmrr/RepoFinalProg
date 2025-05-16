@@ -16,7 +16,7 @@ public class VentanaPrincipalAdmin extends JFrame{
 
 		panelPrincipalAdmin= new PanelPrincipalAdmin();
 		add(panelPrincipalAdmin);
-		setVisible(true);
+		setVisible(false);
 		
 		
 	}

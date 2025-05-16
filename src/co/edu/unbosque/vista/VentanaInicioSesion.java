@@ -11,7 +11,7 @@ public class VentanaInicioSesion extends JFrame{
 
 	public VentanaInicioSesion() {
 		setTitle("Inicio sesion");
-		setSize(1000,400);
+		setSize(700,400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));

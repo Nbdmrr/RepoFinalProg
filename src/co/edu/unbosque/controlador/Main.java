@@ -1,60 +1,74 @@
 package co.edu.unbosque.controlador;
 
+import java.util.ArrayList;
+
 import co.edu.unbosque.modelo.Jugador;
+import co.edu.unbosque.modelo.TorneoEliminacion;
 import co.edu.unbosque.modelo.TorneoGrupos;
 import co.edu.unbosque.modelo.persistencia.DirectorioJugadoresDAO;
 import co.edu.unbosque.modelo.persistencia.DirectorioTorneosDAO;
+import co.edu.unbosque.vista.Vista;
 
 public class Main {
+	
 
     public static void main(String[] args) {
+    	
+    	Controlador controlador = new Controlador();
         DirectorioJugadoresDAO jugadoresDAO = new DirectorioJugadoresDAO("jugadores.bin");
         DirectorioTorneosDAO torneosDAO = new DirectorioTorneosDAO("torneos.bin");
+        TorneoGrupos torneo = new TorneoGrupos("Torneo Grupal", 12, "Por Grupos", "Valorant");
 
-        Jugador jugador1 = new Jugador("pepito1", "dsdsd", "Colombia", "pepito1@mail.com", "Ajedrez", "sapo");
-        Jugador jugador2 = new Jugador("pepito2", "dsdsd", "Argentina", "pepito2@mail.com", "Fútbol", "buho");
-        Jugador jugador3 = new Jugador("pepito356", "dsdsd", "Chile", "pepito3@mail.com", "Tenis", "goku");
-        Jugador jugador4 = new Jugador("pepito456", "dsdsd", "Perú", "pepito4@mail.com", "Natación", "goku");
-        Jugador jugador5 = new Jugador("pepito5", "dsdsd", "Brasil", "pepito5@mail.com", "Ajedrez", "buho");
-        Jugador jugador6 = new Jugador("pepito6", "dsdsd", "México", "pepito6@mail.com", "Fútbol", "sapo");
-        Jugador jugador7 = new Jugador("pepito7", "dsdsd", "Ecuador", "pepito7@mail.com", "Tenis", "perro");
-        Jugador jugador8 = new Jugador("pepito8", "dsdsd", "Uruguay", "pepito8@mail.com", "Natación", "perro");
+     // Crear los 12 jugadores
+     Jugador[] equipo1 = {
+         new Jugador("Leo", "123", "Colombia", "leo@example.com", "Sniper", "Team A"),
+         new Jugador("Ana", "123", "Chile", "ana@example.com", "Mid", "Team A"),
+         new Jugador("Carlos", "123", "Perú", "carlos@example.com", "Jungla", "Team A")
+     };
 
-        jugadoresDAO.add(jugador1);
-        jugadoresDAO.add(jugador2);
-        jugadoresDAO.add(jugador3);
-        jugadoresDAO.add(jugador4);
-        jugadoresDAO.add(jugador5);
-        jugadoresDAO.add(jugador6);
-        jugadoresDAO.add(jugador7);
-        jugadoresDAO.add(jugador8);
+     Jugador[] equipo2 = {
+         new Jugador("Lucía", "123", "Argentina", "lucia@example.com", "Top", "Team B"),
+         new Jugador("Pedro", "123", "México", "pedro@example.com", "Support", "Team B"),
+         new Jugador("Sofía", "123", "Uruguay", "sofia@example.com", "ADC", "Team B")
+     };
 
-        System.out.println("Jugadores registrados:");
-        System.out.println(jugadoresDAO.getAll());
+     Jugador[] equipo3 = {
+         new Jugador("Juan", "123", "Bolivia", "juan@example.com", "Mid", "Team C"),
+         new Jugador("Marta", "123", "Ecuador", "marta@example.com", "Top", "Team C"),
+         new Jugador("Nico", "123", "Chile", "nico@example.com", "Jungla", "Team C")
+     };
 
-        TorneoGrupos torneo = new TorneoGrupos("Torneo Sapo", 16, "Grupos", "Ajedrez");
+     Jugador[] equipo4 = {
+         new Jugador("Laura", "123", "Paraguay", "laura@example.com", "Support", "Team D"),
+         new Jugador("Andrés", "123", "Colombia", "andres@example.com", "ADC", "Team D"),
+         new Jugador("Valentina", "123", "Perú", "valentina@example.com", "Sniper", "Team D")
+     };
 
-        torneo.getParticipantes().add(jugador1);
-        torneo.getParticipantes().add(jugador2);
-        torneo.getParticipantes().add(jugador3);
-        torneo.getParticipantes().add(jugador4);
-        torneo.getParticipantes().add(jugador5);
-        torneo.getParticipantes().add(jugador6);
-        torneo.getParticipantes().add(jugador7);
-        torneo.getParticipantes().add(jugador8);
+     // Agregar jugadores al torneo
+     for (Jugador j : equipo1) torneo.getParticipantes().add(j);
+     for (Jugador j : equipo2) torneo.getParticipantes().add(j);
+     for (Jugador j : equipo3) torneo.getParticipantes().add(j);
+     for (Jugador j : equipo4) torneo.getParticipantes().add(j);
 
-        try {
-            if (torneo.getParticipantes().size() < 8) {
-                throw new IllegalStateException("No hay suficientes jugadores para organizar el torneo.");
-            }
-            torneo.organizarEquipos();
-            torneo.generarCronograma();
-            torneo.mostrarCronograma();
-            torneosDAO.add(torneo);
-            System.out.println("Torneos registrados:");
-            System.out.println(torneosDAO.getAll());
-        } catch (IllegalStateException e) {
-            System.err.println("Error al organizar el torneo: " + e.getMessage());
-        }
-    }
-}
+     // Asignar equipos al torneo
+     torneo.organizarEquipos();
+
+     // Generar cronograma
+     torneo.generarCronograma();
+
+     // Mostrar en interfaz
+     String[][] cronograma = torneo.getCronograma();
+     controlador.getVista().getVentanaCronograma().getPanelCronograma().actualizarCronogramaGeneral(cronograma);
+
+     // Simular semifinales
+     torneo.avanzarAFase2();
+     torneo.actualizarCronogramaPorGrupos();
+     cronograma = torneo.getCronograma();
+     controlador.getVista().getVentanaCronograma().getPanelCronograma().actualizarCronogramaGeneral(cronograma);
+
+     // Simular final
+     torneo.elegirGanadorFinal();
+     cronograma = torneo.getCronograma();
+     controlador.getVista().getVentanaCronograma().getPanelCronograma().actualizarCronogramaGeneral(cronograma);
+
+}}

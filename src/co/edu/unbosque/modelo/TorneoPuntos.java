@@ -3,14 +3,17 @@ package co.edu.unbosque.modelo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
 
 public class TorneoPuntos extends Torneo{
-	 private int indiceActual = 0;
+	 
 	 private String[][] cronograma;
 	    private LocalDate[] fechas;
+	    private Jugador ganadorTorneo;
 	
 	 
 	 
@@ -42,111 +45,167 @@ public class TorneoPuntos extends Torneo{
 		}
 	}
 	
+
 	
-	public void iniciarRonda() {
-	    if (indiceActual >= participantes.size()) {
-	        System.out.println("Todos los jugadores ya tuvieron su ronda.");
+	
+	public void generarCronogramaPorPuntos() {
+	    actualizarEstadisticaTorneosJugados();
+
+	    int n = participantes.size();
+	    int totalFases = n - 1; // Porque el último ya peleó con todos antes
+
+	    setCronograma(new String[totalFases][]);
+	    setFechas(new LocalDate[totalFases]);
+	    fase = 0;
+
+	    LocalDate fechaInicial = LocalDate.now().plusDays(1);
+
+	    for (int i = 0; i < totalFases; i++) {
+	        int cantidadDuelo = n - i - 1; // jugador i vs (i+1) hasta n-1
+	        getCronograma()[i] = new String[cantidadDuelo];
+	        getFechas()[i] = fechaInicial.plusDays(i);
+
+	        String jugadorA = participantes.get(i).getUsuario();
+
+	        for (int j = i + 1, k = 0; j < n; j++, k++) {
+	            String jugadorB = participantes.get(j).getUsuario();
+	            getCronograma()[i][k] = "Fase " + (i + 1) + " (" + getFechas()[i] + "): " + jugadorA + " vs " + jugadorB;
+	        }
+	    }
+	}
+	public void avanzarFasePorPuntos() {
+	    if (fase >= participantes.size()) {
+	        System.out.println("El torneo ya ha finalizado.");
 	        return;
 	    }
-	    
-	    if (indiceActual == 0) {
-	        fechas = new LocalDate[participantes.size()];
-	        fechas[0] = LocalDate.now().plusDays(1);
-	        cronograma = new String[participantes.size()][];
+
+	    Jugador jugadorActual = participantes.get(fase);
+
+	    System.out.println("Fase " + (fase + 1) + ": " + jugadorActual.getUsuario() + " vs todos los demás");
+
+	    for (int i = 0; i < participantes.size(); i++) {
+	        if (i == fase) continue;
+
+	        Jugador oponente = participantes.get(i);
+	        Jugador ganador = Math.random() < 0.5 ? jugadorActual : oponente;
+
+	        // Estadísticas
+	        ganador.sumarPartidaGanada();
+	        jugadorActual.sumarPartidaJugada();
+	        oponente.sumarPartidaJugada();
+
+	        ganador.setPuntos(ganador.getPuntos() + 1);
+
+	        System.out.println(jugadorActual.getUsuario() + " vs " + oponente.getUsuario() + " -> Ganador: " + ganador.getUsuario());
 	    }
-	    
-	    int partidosEnRonda = participantes.size() - indiceActual - 1;
-	    cronograma[indiceActual] = new String[partidosEnRonda];
-	    
-	    Jugador actual = participantes.get(indiceActual);
-	    int contarPartido = 0;
-	    
-	    for (int j = indiceActual + 1; j < participantes.size(); j++) {
-	        iniciarDuelo(actual, participantes.get(j));
-	        
-	      
-	        if (indiceActual == 0) {
-	      
-	            cronograma[indiceActual][contarPartido] = "Fase 1 (" + fechas[0] + "): " + actual.getUsuario() + " vs " + participantes.get(j).getUsuario();
-	        } else {
-	   
-	            cronograma[indiceActual][contarPartido] = "Fase " + (indiceActual + 1) + " (" +  fechas[indiceActual] + "): " +  actual.getUsuario() + " vs " + participantes.get(j).getUsuario();
-	        }
-	        contarPartido++;
-	    }
-	    if (indiceActual + 1 < participantes.size()) {
-	        fechas[indiceActual + 1] = fechas[indiceActual].plusDays(1);
-	    }
-	    listaPorPuntos(participantes);
-	    indiceActual++;
-	}
-	
-		
-		
-	public void iniciarDuelo(Jugador peleador1, Jugador peleador2){
-		if (Math.random() < 0.5) {
-		  peleador1.setPuntos(peleador1.getPuntos()+1);;
-		} else {
-			peleador2.setPuntos(peleador2.getPuntos()+1);
-		}
-		
-	}
-	
-	public void listaPorPuntos(ArrayList<Jugador> jugadoresDespuesDeRonda) {
-	    for (int i = 0; i < jugadoresDespuesDeRonda.size() - 1; i++) {
-	        for (int j = i + 1; j < jugadoresDespuesDeRonda.size(); j++) {
-	            Jugador jugador1 = jugadoresDespuesDeRonda.get(i);
-	            Jugador jugador2 = jugadoresDespuesDeRonda.get(j);
-	            
-	            if (jugador1.getPuntos() < jugador2.getPuntos()) {
-	                jugadoresDespuesDeRonda.set(i, jugador2);
-	                jugadoresDespuesDeRonda.set(j, jugador1);
+
+	    fase++;
+
+	    // Si ya todos han jugado (última fase completada)
+	    if (fase >= participantes.size()) {
+	        // Buscar el mayor puntaje
+	        int maxPuntos = participantes.stream().mapToInt(Jugador::getPuntos).max().orElse(0);
+
+	        // Buscar todos los jugadores con ese puntaje
+	        List<Jugador> empatados = new ArrayList<>();
+	        for (Jugador j : participantes) {
+	            if (j.getPuntos() == maxPuntos) {
+	                empatados.add(j);
 	            }
 	        }
+
+	        if (empatados.size() == 1) {
+	            setGanadorTorneo(empatados.get(0));
+	            getGanadorTorneo().sumarTorneoGanado();
+	            System.out.println("¡El torneo ha finalizado! Ganador: " + getGanadorTorneo().getUsuario());
+	            estado = "Terminado";
+
+	            // Reiniciar puntos de todos los jugadores
+	            for (Jugador j : participantes) {
+	                j.setPuntos(0);
+	            }
+	        } else {
+	            // Desempate
+	            System.out.println("Hay un empate. Iniciando ronda de desempate entre:");
+	            for (Jugador j : empatados) {
+	                System.out.println("- " + j.getUsuario());
+	            }
+	            desempatar(empatados);
+	        }
 	    }
-	    for (int i = 0; i < jugadoresDespuesDeRonda.size(); i++) {
-	        System.out.println("Jugador en posicion " + (i + 1) + ": " + jugadoresDespuesDeRonda.get(i).getUsuario()
-	                           + " - Puntos: " + jugadoresDespuesDeRonda.get(i).getPuntos());
-	        
-	    }
-	    
-	   
 	}
- public void finalizarTorneo() {
-	 if (indiceActual ==participantes.size()) {
-	 for (int i =0; i< participantes.size(); i++) {
-		 participantes.get(i).setPuntos(0);}
-		 
-	 }
-	 else {
-		 JOptionPane.showMessageDialog(
-				    null, 
-				    "NO SE PUEDE FINALIZAR, EL TORNEO SIGUE EN CURSO", 
-				    "Advertencia", 
-				    JOptionPane.WARNING_MESSAGE);
-	 }
+
+	private void desempatar(List<Jugador> empatados) {
+	    List<Jugador> nuevosEmpatados = new ArrayList<>(empatados);
+
+	    while (nuevosEmpatados.size() > 1) {
+	        System.out.println("Ronda de desempate...");
+
+	        // Reiniciar puntos antes de desempate
+	        for (Jugador j : nuevosEmpatados) {
+	            j.setPuntos(0);
+	        }
+
+	        for (int i = 0; i < nuevosEmpatados.size(); i++) {
+	            Jugador jugadorActual = nuevosEmpatados.get(i);
+	            for (int j = 0; j < nuevosEmpatados.size(); j++) {
+	                if (i == j) continue;
+	                Jugador oponente = nuevosEmpatados.get(j);
+	                Jugador ganador = Math.random() < 0.5 ? jugadorActual : oponente;
+
+	                ganador.setPuntos(ganador.getPuntos() + 1);
+	            }
+	        }
+
+	        int maxPuntos = nuevosEmpatados.stream().mapToInt(Jugador::getPuntos).max().orElse(0);
+	        nuevosEmpatados = nuevosEmpatados.stream().filter(j -> j.getPuntos() == maxPuntos).toList();
+	    }
+
+	    setGanadorTorneo(nuevosEmpatados.get(0));
+	    getGanadorTorneo().sumarTorneoGanado();
+	    System.out.println("¡El torneo ha finalizado! Ganador tras desempate: " + getGanadorTorneo().getUsuario());
+	    estado = "Terminado";
+
+	    // Reiniciar puntos
+	    for (Jugador j : participantes) {
+	        j.setPuntos(0);
+	    }
+	}
+
+	public Jugador getGanadorTorneo() {
+		return ganadorTorneo;
+	}
+
+	public void setGanadorTorneo(Jugador ganadorTorneo) {
+		this.ganadorTorneo = ganadorTorneo;
+	}
+
+	public LocalDate[] getFechas() {
+		return fechas;
+	}
+
+	public void setFechas(LocalDate[] fechas) {
+		this.fechas = fechas;
+	}
+
+	public String[][] getCronograma() {
+		return cronograma;
+	}
+
+	public void setCronograma(String[][] cronograma) {
+		this.cronograma = cronograma;
+	}
+
+
+
+	
+		
+		
+	
 	 
 	    	
-	    }
-    public void setFechas(LocalDate[] fechas2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFechas'");
-    }
-
-    public void setCronograma(String[][] cronograma2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCronograma'");
-    }
-
-    public String[][] getCronograma() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCronograma'");
-    }
-
-    public LocalDate[] getFechas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFechas'");
-    }
+	    
+    
 	
 
 	

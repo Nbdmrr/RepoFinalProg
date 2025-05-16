@@ -13,6 +13,8 @@ public class PanelRegistroEntrenador extends PanelRegistro {
        agregarCampo();
     }
     public void agregarCampo() {
+    	
+    	getLblTitulo().setText("Registro Entrenador"); 
     JPanel panelEquipo = new JPanel(new BorderLayout());
     JLabel lblEquipo = new JLabel("Equipo:");
     txtEquipo = new JTextField();

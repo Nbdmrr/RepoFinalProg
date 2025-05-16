@@ -52,16 +52,5 @@ public class UsuarioDTO {
         this.usuario = usuario;
     }
 
-    public Usuario toEntity() {
-        return new Usuario(usuario, contraseña, nacionalidad, correo);
-    }
-
-    public static UsuarioDTO fromEntity(Usuario usuario) {
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setUsuario(usuario.getUsuario());
-        dto.setContraseña(usuario.getContraseña());
-        dto.setNacionalidad(usuario.getNacionalidad());
-        dto.setCorreo(usuario.getCorreo());
-        return dto;
-    }
+   
 }

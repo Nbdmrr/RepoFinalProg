@@ -9,7 +9,7 @@ public class VentanaCrearTorneo extends JFrame{
 	PanelCrearTorneo panelCrearTorneo;
 	public VentanaCrearTorneo() {
 		setTitle("Crear Torneo");
-		setSize(600, 600);
+		setSize(600, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));

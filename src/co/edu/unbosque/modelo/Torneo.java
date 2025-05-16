@@ -9,7 +9,6 @@ public class Torneo {
 	protected String tipo;
 	protected String nombre;
 	protected int limiteParticipantes;
-	private int cantidadEliminados;
 	protected String juego;
 	protected int fase;
 	protected String estado;
@@ -25,16 +24,16 @@ public class Torneo {
 		 this.tipo=tipo;
 		 this.setJuego(juego);
 		 this.setEstado("preparando");
-		 setCantidadEliminados(0);
 		 
-		 
-		
+		 	
 	}
-
-
-	
-
-
+	 public void actualizarEstadisticaTorneosJugados() {
+		 for (Jugador jugador : participantes) {
+			 
+			 jugador.sumarTorneoJugado();
+		}
+		 
+	 }
 	public int getLimiteParticipantes() {
 		return limiteParticipantes;
 	}
@@ -110,24 +109,6 @@ public class Torneo {
 	public void setJuego(String juego) {
 		this.juego = juego;
 	}
-
-
 	
-
-
-
-
-
-	public int getCantidadEliminados() {
-		return cantidadEliminados;
-	}
-
-
-
-
-
-	public void setCantidadEliminados(int cantidadEliminados) {
-		this.cantidadEliminados = cantidadEliminados;
-	}
 
 }

@@ -16,6 +16,7 @@ public class PanelPrincipalEntrenador extends JPanel {
     private JLabel valorUsuario;
     private JLabel etiquetaNacionalidad;
     private JLabel valorCargo;
+    private JButton botonCrear;
 
 
     public PanelPrincipalEntrenador() {
@@ -24,9 +25,7 @@ public class PanelPrincipalEntrenador extends JPanel {
         inicializarComponentes();
     }
     
-    public void inicializarComponentes(){
-    	
-    	
+    public void inicializarComponentes() {
 
         // Panel Centro con dos listas
         JPanel panelListas = new JPanel(new GridLayout(1, 2, 10, 0));
@@ -41,7 +40,7 @@ public class PanelPrincipalEntrenador extends JPanel {
 
         add(panelListas, BorderLayout.CENTER);
 
-     // Panel derecha con imagen y datos
+        // Panel derecha con imagen y datos
         JPanel panelDerecha = new JPanel();
         panelDerecha.setLayout(new BoxLayout(panelDerecha, BoxLayout.Y_AXIS));
         panelDerecha.setPreferredSize(new Dimension(250, 0));
@@ -73,7 +72,6 @@ public class PanelPrincipalEntrenador extends JPanel {
 
         add(panelDerecha, BorderLayout.EAST);
 
-
         // Panel inferior con botones y mensaje
         JPanel panelInferior = new JPanel();
         panelInferior.setLayout(new BoxLayout(panelInferior, BoxLayout.X_AXIS));
@@ -90,17 +88,19 @@ public class PanelPrincipalEntrenador extends JPanel {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         setBotonVolver(new JButton("Volver"));
         setBotonUnirse(new JButton("Unirse a un equipo"));
+        setBotonCrear(new JButton("Crear Equipo"));
+
         panelBotones.add(getBotonVolver());
         panelBotones.add(getBotonUnirse());
+        panelBotones.add(getBotonCrear());
 
         panelInferior.add(panelMensaje);
         panelInferior.add(Box.createHorizontalStrut(20)); // espacio entre mensaje y botones
         panelInferior.add(panelBotones);
 
-       
-
         add(panelInferior, BorderLayout.SOUTH);
     }
+
 
 	public JLabel getValorCargo() {
 		return valorCargo;
@@ -188,6 +188,14 @@ public class PanelPrincipalEntrenador extends JPanel {
 
 	public void setListaEquiposDisponibles(JList<String> listaEquiposDisponibles) {
 		this.listaEquiposDisponibles = listaEquiposDisponibles;
+	}
+	
+	public JButton getBotonCrear() {
+	    return botonCrear;
+	}
+
+	public void setBotonCrear(JButton botonCrear) {
+	    this.botonCrear = botonCrear;
 	}
 
 	

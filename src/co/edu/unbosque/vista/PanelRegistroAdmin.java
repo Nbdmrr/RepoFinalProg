@@ -8,11 +8,16 @@ public class PanelRegistroAdmin extends PanelRegistro {
     private JTextField txtCargo;
 
     public PanelRegistroAdmin() {
+    	
         super(); 
+        
         agregarCampoCargo(); 
+        
     }
 
     private void agregarCampoCargo() {
+    	getLblTitulo().setText("Registro Administrador"); 
+    	
         JPanel panelCargo = new JPanel(new BorderLayout());
         JLabel lblCargo = new JLabel("Cargo:");
         txtCargo = new JTextField();

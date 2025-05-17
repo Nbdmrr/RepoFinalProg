@@ -11,6 +11,7 @@ import co.edu.unbosque.modelo.DirectorioPrincipal;
 import co.edu.unbosque.modelo.Entrenador;
 import co.edu.unbosque.modelo.Equipo;
 import co.edu.unbosque.modelo.Jugador;
+import co.edu.unbosque.modelo.TorneoEliminacion;
 import co.edu.unbosque.modelo.TorneoGrupos;
 import co.edu.unbosque.modelo.persistencia.Archivo;
 import co.edu.unbosque.modelo.persistencia.DirectorioJugadoresDAO;
@@ -298,7 +299,25 @@ public class Controlador implements ActionListener{
 			String tipoTorneo =vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboTipo().getSelectedItem().toString();
 			String juego = vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboJuego().getSelectedItem().toString();
 			
-			if(tipoTorneo.equals("Eliminacion Directa")) {
+			if(tipoTorneo.equals("Eliminación Directa")) {
+				
+				TorneoEliminacion nuevoTorneoEliminacion = new TorneoEliminacion(nombreTorneo, limiteParticipantes, tipoTorneo, juego);
+				
+				directorioPrincipal.getDirectorioTorneosEliminacion().adicionarTorneoEliminacion(MapHandler.convertirTorneoEliminacionATorneoEliminacionDTO(nuevoTorneoEliminacion));
+				
+				vista.mostrarMensaje("Torneo Agregador Correctamente");
+				vista.getVentanaCrearTorneo().setVisible(false);
+				vista.getVentanaPrincipalAdmin().setVisible(true);
+				
+				
+
+			}else if (tipoTorneo.equals("Grupos")) {
+				
+				
+				
+			}else if(tipoTorneo.equals("Puntos")) {
+				
+				
 				
 				
 				

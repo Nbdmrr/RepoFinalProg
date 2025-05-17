@@ -1,9 +1,11 @@
 package co.edu.unbosque.modelo.persistencia;
 
 import co.edu.unbosque.modelo.Torneo;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TorneoDTO {
+public class TorneoDTO implements Serializable{
 
     protected static final long serialVersionUID = 1L;
     protected ArrayList<JugadorDTO> participantes;

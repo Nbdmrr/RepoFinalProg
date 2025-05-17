@@ -2,11 +2,14 @@ package co.edu.unbosque.modelo.persistencia;
 
 import co.edu.unbosque.modelo.Jugador;
 import co.edu.unbosque.modelo.TorneoEliminacion;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TorneoEliminacionDTO extends TorneoDTO {
+	
 	
     private ArrayList<JugadorDTO> ganadores;
     private HashMap<JugadorDTO,Boolean> eliminados;

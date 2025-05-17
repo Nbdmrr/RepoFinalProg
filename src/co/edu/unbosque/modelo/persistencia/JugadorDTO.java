@@ -6,7 +6,7 @@ public class JugadorDTO extends UsuarioDTO {
 	
 	
 	
-
+	
     private int partidasJugadas;
     private int torneosJugados;
     private int partidasGanadas;

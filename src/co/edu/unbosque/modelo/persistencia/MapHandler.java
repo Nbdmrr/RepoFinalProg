@@ -161,8 +161,11 @@ public class MapHandler {
 	    torneo.setFase(dto.getFase());
 	    torneo.setFechas(dto.getFechas());
 	    torneo.setCronograma(dto.getCronograma());
-	    torneo.setGanadorTorneo(convertirJugadorDTOAJugador(dto.getGanadorTorneo()));
-	    
+	    if(dto.getGanadorTorneo()==null) {
+	    torneo.setGanadorTorneo(null);
+	    }else {
+	    	torneo.setGanadorTorneo(convertirJugadorDTOAJugador(dto.getGanadorTorneo()));
+	    }
 	    return torneo;
 	    
 	}
@@ -190,8 +193,13 @@ public class MapHandler {
 	        eliminados.put(jugadorDTO, torneo.getEliminados().get(jugador));
 	    }
 	    dto.setEliminados(eliminados);
+	    if(torneo.getGanadorTorneo() ==null) {
+	    	dto.setGanadorTorneo(null);
+	    }else {
+	    	dto.setGanadorTorneo(convertirJugadorAJugadorDTO(torneo.getGanadorTorneo()));
+		    
+	    }
 
-	    dto.setGanadorTorneo(convertirJugadorAJugadorDTO(torneo.getGanadorTorneo()));
 	    for (Jugador jugador : torneo.getGanadores()) {
 	    	
 	    	ganadores.add(convertirJugadorAJugadorDTO(jugador));
@@ -200,7 +208,6 @@ public class MapHandler {
 		}
 	    
 	    dto.setGanadores(ganadores);
-	    dto.setGanadorTorneo(convertirJugadorAJugadorDTO(torneo.getGanadorTorneo()));
 	    dto.setFechas(torneo.getFechas());
 	    dto.setCronograma(torneo.getCronograma());
 

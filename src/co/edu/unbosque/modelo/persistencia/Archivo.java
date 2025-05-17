@@ -85,7 +85,7 @@ public class Archivo {
     }
 
     public ArrayList<TorneoEliminacion> leerArchivoTorneosEliminacion() {
-        ArrayList<TorneoEliminacion> torneos = null;
+        ArrayList<TorneoEliminacion> torneos = new ArrayList<TorneoEliminacion>();
         if (getUbicacionArchivoTorneosEliminacion().length() != 0) {
             try {
                 setEntrada(new ObjectInputStream(new FileInputStream(getUbicacionArchivoTorneosEliminacion())));
@@ -184,7 +184,7 @@ public class Archivo {
     }
 
     public ArrayList<TorneoGrupos> leerArchivoTorneosGrupos() {
-        ArrayList<TorneoGrupos> torneosGrupos = null;
+        ArrayList<TorneoGrupos> torneosGrupos = new ArrayList<TorneoGrupos>();
         if (getUbicacionArchivoTorneosGrupos().length() != 0) {
             try {
                 setEntrada(new ObjectInputStream(new FileInputStream(getUbicacionArchivoTorneosGrupos())));
@@ -209,7 +209,7 @@ public class Archivo {
     }
 
     public ArrayList<TorneoPuntos> leerArchivoTorneosPuntos() {
-        ArrayList<TorneoPuntos> torneosPuntos = null;
+        ArrayList<TorneoPuntos> torneosPuntos = new ArrayList<TorneoPuntos>();
         if (getUbicacionArchivoTorneosPuntos().length() != 0) {
             try {
                 setEntrada(new ObjectInputStream(new FileInputStream(getUbicacionArchivoTorneosPuntos())));

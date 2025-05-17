@@ -6,42 +6,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Clase que representa un torneo por eliminación directa. 
+ * Los jugadores se enfrentan entre sí y el perdedor queda eliminado hasta que queda un solo ganador.
+ */
 public class TorneoEliminacion extends Torneo {
-   
+
     private String[][] cronograma;
     private LocalDate[] fechas;
     private ArrayList<Jugador> ganadores;
-    
-    // HashMap para los jugadores eliminados con un valor de tipo Boolean
     private HashMap<Jugador, Boolean> eliminados;
-    
     private Jugador ganadorTorneo;
-    
-    // Constructor
+
+    /**
+     * Constructor para inicializar un torneo por eliminación.
+     * 
+     * @param nombre Nombre del torneo.
+     * @param limiteparticipantes Número máximo de participantes.
+     * @param tipo Tipo de torneo.
+     * @param juego Juego del torneo.
+     */
     public TorneoEliminacion(String nombre, int limiteparticipantes, String tipo, String juego) {
         super(nombre, limiteparticipantes, tipo, juego);
-        
         ganadores = new ArrayList<>();
-        
-        // Inicializar el HashMap eliminados
         eliminados = new HashMap<>();
-        
-        
-        
     }
-    
+
+    /**
+     * Genera el cronograma del torneo en fases eliminatorias.
+     */
     public void generarCronograma() {
         actualizarEstadisticaTorneosJugados();
         int fases = 0;
         int participantesRestantes = limiteParticipantes;
-        
+
         while (participantesRestantes > 1) {
             if (participantesRestantes % 2 == 0) {
                 participantesRestantes = participantesRestantes / 2;
                 fases++;
             }
         }
-        
+
         cronograma = new String[fases][];
         fechas = new LocalDate[fases];
         fase = 0;
@@ -69,6 +74,11 @@ public class TorneoEliminacion extends Torneo {
         }
     }
 
+    /**
+     * Actualiza el cronograma para la siguiente fase usando los ganadores actuales.
+     * 
+     * @param ganadores Lista de jugadores que ganaron la fase actual.
+     */
     public void actualizarCronograma(List<Jugador> ganadores) {
         if (fase >= getCronograma().length - 1) {
             System.out.println("El torneo ha finalizado.");
@@ -89,58 +99,53 @@ public class TorneoEliminacion extends Torneo {
         fase++;
     }
 
+    /**
+     * Simula los partidos de la fase actual y avanza a la siguiente fase.
+     * Elige un ganador al azar por cada enfrentamiento.
+     */
     public void avanzarFase() {
         if (fase >= cronograma.length) {
-           estado = "terminado";
+            estado = "terminado";
             return;
         }
 
         Random random = new Random();
         ArrayList<Jugador> ganadoresFaseActual = new ArrayList<>();
 
-        // Emparejar jugadores de dos en dos
         for (int i = 0; i < participantes.size() - 1; i += 2) {
             Jugador jugador1 = participantes.get(i);
             Jugador jugador2 = participantes.get(i + 1);
 
-            // Ambos suman una partida jugada
             jugador1.sumarPartidaJugada();
             jugador2.sumarPartidaJugada();
 
-            // Elegir ganador al azar
             Jugador ganador = random.nextBoolean() ? jugador1 : jugador2;
             Jugador perdedor = (ganador == jugador1) ? jugador2 : jugador1;
 
-            // Ganador suma partida ganada
             ganador.sumarPartidaGanada();
+            eliminados.put(perdedor, false);
 
-            // El jugador perdedor es eliminado y se marca en el HashMap
-            eliminados.put(perdedor, false); // El jugador se ha eliminado, el valor sigue siendo false
-
-            // Agregar a la lista de ganadores de la fase
             ganadoresFaseActual.add(ganador);
 
             System.out.println("Duelo: " + jugador1.getUsuario() + " vs " + jugador2.getUsuario() +
                                " -> Ganador: " + ganador.getUsuario());
         }
 
-        // Guardar ganadores
         this.ganadores = ganadoresFaseActual;
-
-        // Actualizar el cronograma
         actualizarCronograma(ganadoresFaseActual);
 
-        // Si ya solo queda un ganador, se finaliza el torneo
         if (ganadoresFaseActual.size() == 1) {
             this.ganadorTorneo = ganadoresFaseActual.get(0);
             ganadorTorneo.sumarTorneoGanado();
             System.out.println("¡El torneo ha finalizado! Ganador: " + ganadorTorneo.getUsuario());
         } else {
-            // Preparar la siguiente ronda con los ganadores
             this.participantes = ganadoresFaseActual;
         }
     }
 
+    /**
+     * Muestra el cronograma del torneo en consola.
+     */
     public void mostrarCronograma() {
         for (int i = 0; i < getCronograma().length; i++) {
             for (String partido : getCronograma()[i]) {
@@ -149,39 +154,85 @@ public class TorneoEliminacion extends Torneo {
         }
     }
 
+    /**
+     * Obtiene el mapa de jugadores eliminados.
+     * 
+     * @return Mapa con jugadores y su estado de eliminación.
+     */
     public HashMap<Jugador, Boolean> getEliminados() {
         return eliminados;
     }
 
+    /**
+     * Obtiene el jugador ganador del torneo.
+     * 
+     * @return Ganador del torneo.
+     */
     public Jugador getGanadorTorneo() {
         return ganadorTorneo;
     }
 
+    /**
+     * Establece el jugador ganador del torneo.
+     * 
+     * @param ganadorTorneo Jugador ganador.
+     */
     public void setGanadorTorneo(Jugador ganadorTorneo) {
         this.ganadorTorneo = ganadorTorneo;
     }
 
+    /**
+     * Obtiene la lista de ganadores de la fase actual.
+     * 
+     * @return Lista de ganadores.
+     */
     public ArrayList<Jugador> getGanadores() {
         return ganadores;
     }
 
+    /**
+     * Establece la lista de ganadores de la fase actual.
+     * 
+     * @param ganadores Lista de ganadores.
+     */
     public void setGanadores(ArrayList<Jugador> ganadores) {
         this.ganadores = ganadores;
     }
 
+    /**
+     * Obtiene el arreglo de fechas del cronograma.
+     * 
+     * @return Arreglo de fechas.
+     */
     public LocalDate[] getFechas() {
         return fechas;
     }
 
+    /**
+     * Establece el arreglo de fechas del cronograma.
+     * 
+     * @param fechas Arreglo de fechas.
+     */
     public void setFechas(LocalDate[] fechas) {
         this.fechas = fechas;
     }
 
+    /**
+     * Obtiene el cronograma del torneo.
+     * 
+     * @return Matriz con los partidos programados.
+     */
     public String[][] getCronograma() {
         return cronograma;
     }
 
+    /**
+     * Establece el cronograma del torneo.
+     * 
+     * @param cronograma Matriz con partidos programados.
+     */
     public void setCronograma(String[][] cronograma) {
         this.cronograma = cronograma;
     }
-}
+} 
+

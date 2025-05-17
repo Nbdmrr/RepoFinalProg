@@ -1,53 +1,100 @@
 package co.edu.unbosque.modelo;
 
+/**
+ * Clase que representa a un usuario del sistema.
+ */
 public class Usuario {
-	
-	protected String usuario;
-	protected String contraseña;
-	protected String nacionalidad;
-	protected String tipo;
-	protected String correo;
-	
-	public Usuario(String usuario,String contraseña, String nacionalidad, String correo) {
-		
-		this.setContraseña(contraseña);
-		this.setUsuario(usuario);
-		this.setNacionalidad(nacionalidad);
-		this.setCorreo(correo);
-	}
+    
+    /** Nombre de usuario. */
+    protected String usuario;
+    
+    /** Contraseña del usuario. */
+    protected String contraseña;
+    
+    /** Nacionalidad del usuario. */
+    protected String nacionalidad;
+    
+    /** Tipo de usuario. */
+    protected String tipo;
+    
+    /** Correo electrónico del usuario. */
+    protected String correo;
 
-	public String getContraseña() {
-		return contraseña;
-	}
+    /**
+     * Constructor de la clase Usuario.
+     * @param usuario Nombre de usuario.
+     * @param contraseña Contraseña del usuario.
+     * @param nacionalidad Nacionalidad del usuario.
+     * @param correo Correo electrónico del usuario.
+     */
+    public Usuario(String usuario, String contraseña, String nacionalidad, String correo) {
+        this.contraseña = contraseña;
+        this.usuario = usuario;
+        this.nacionalidad = nacionalidad;
+        this.correo = correo;
+    }
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
-	}
+    /**
+     * Obtiene la contraseña del usuario.
+     * @return Contraseña del usuario.
+     */
+    public String getContraseña() {
+        return contraseña;
+    }
 
-	public String getUsuario() {
-		return usuario;
-	}
+    /**
+     * Establece la contraseña del usuario.
+     * @param contraseña Contraseña del usuario.
+     */
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+    /**
+     * Obtiene el nombre de usuario.
+     * @return Nombre de usuario.
+     */
+    public String getUsuario() {
+        return usuario;
+    }
 
-	public String getNacionalidad() {
-		return nacionalidad;
-	}
+    /**
+     * Establece el nombre de usuario.
+     * @param usuario Nombre de usuario.
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
-	public void setNacionalidad(String nacionalidad) {
-		this.nacionalidad = nacionalidad;
-	}
+    /**
+     * Obtiene la nacionalidad del usuario.
+     * @return Nacionalidad del usuario.
+     */
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
 
-	public String getCorreo() {
-		return correo;
-	}
+    /**
+     * Establece la nacionalidad del usuario.
+     * @param nacionalidad Nacionalidad del usuario.
+     */
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-	
-	
+    /**
+     * Obtiene el correo electrónico del usuario.
+     * @return Correo electrónico del usuario.
+     */
+    public String getCorreo() {
+        return correo;
+    }
 
+    /**
+     * Establece el correo electrónico del usuario.
+     * @param correo Correo electrónico del usuario.
+     */
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 }

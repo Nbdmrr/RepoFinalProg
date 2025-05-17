@@ -27,6 +27,8 @@ public class PanelRegistroAdmin extends PanelRegistro {
         campoExtra1.add(panelCargo, BorderLayout.CENTER);
         campoExtra1.revalidate();
         campoExtra1.repaint();
+        btnVolver.setActionCommand("VOLVERDEREGISTROADMINAPRINCIPALADMIN");
+        btnRegistrarse.setActionCommand("REGISTRARADMIN");
     }
 
     public JTextField getTxtCargo() {

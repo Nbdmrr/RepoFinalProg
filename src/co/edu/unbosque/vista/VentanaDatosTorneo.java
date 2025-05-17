@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class VentanaDatosTorneo extends JFrame{
 	
 	
-	PanelDatosTorneo panelDatosTorneo;
+	private PanelDatosTorneo panelDatosTorneo;
 	
 	public VentanaDatosTorneo() {
 		setTitle("Datos del torneo");
@@ -16,9 +16,17 @@ public class VentanaDatosTorneo extends JFrame{
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));
 
-		panelDatosTorneo = new PanelDatosTorneo();
-		add(panelDatosTorneo);
+		setPanelDatosTorneo(new PanelDatosTorneo());
+		add(getPanelDatosTorneo());
 		setVisible(false);
+	}
+
+	public PanelDatosTorneo getPanelDatosTorneo() {
+		return panelDatosTorneo;
+	}
+
+	public void setPanelDatosTorneo(PanelDatosTorneo panelDatosTorneo) {
+		this.panelDatosTorneo = panelDatosTorneo;
 	}
 
 }

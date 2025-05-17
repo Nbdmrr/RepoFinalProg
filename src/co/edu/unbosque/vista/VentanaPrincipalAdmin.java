@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 public class VentanaPrincipalAdmin extends JFrame{
 	
-	PanelPrincipalAdmin panelPrincipalAdmin;
+	private PanelPrincipalAdmin panelPrincipalAdmin;
 	public VentanaPrincipalAdmin() {
 		setTitle("Administrador");
 		setSize(1100, 500);
@@ -14,11 +14,17 @@ public class VentanaPrincipalAdmin extends JFrame{
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));
 
-		panelPrincipalAdmin= new PanelPrincipalAdmin();
-		add(panelPrincipalAdmin);
+		setPanelPrincipalAdmin(new PanelPrincipalAdmin());
+		add(getPanelPrincipalAdmin());
 		setVisible(false);
 		
 		
+	}
+	public PanelPrincipalAdmin getPanelPrincipalAdmin() {
+		return panelPrincipalAdmin;
+	}
+	public void setPanelPrincipalAdmin(PanelPrincipalAdmin panelPrincipalAdmin) {
+		this.panelPrincipalAdmin = panelPrincipalAdmin;
 	}
 
 }

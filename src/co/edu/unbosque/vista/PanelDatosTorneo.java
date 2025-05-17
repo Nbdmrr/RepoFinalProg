@@ -5,100 +5,88 @@ import java.awt.*;
 
 public class PanelDatosTorneo extends JPanel {
 
-    // Paneles internos
     private JPanel panelIzquierda;
     private JPanel panelDerecha;
     private JButton botonVolver;
+    private JButton botonCronograma;
 
-    // Etiquetas para los datos del torneo
     private JLabel lblNombre;
     private JLabel lblParticipantesRestantes;
     private JLabel lblEliminados;
     private JLabel lblTipo;
 
-    // JList para los participantes restantes
     private JList<String> listParticipantesRestantes;
     private DefaultListModel<String> listModel;
 
     public PanelDatosTorneo() {
-        // Configuración básica del layout
         setLayout(new BorderLayout());
 
-        // Inicializar los paneles
         panelIzquierda = new JPanel();
         panelDerecha = new JPanel();
 
-        // Configurar el layout de los paneles
-        panelIzquierda.setLayout(new GridLayout(4, 1, 10, 10)); // 4 filas para las etiquetas
-        panelDerecha.setLayout(new BorderLayout()); // JList con encabezado
+        panelIzquierda.setLayout(new GridLayout(4, 1, 10, 10));
+        panelDerecha.setLayout(new BorderLayout());
 
-        // Inicializar las etiquetas con texto por defecto
         lblNombre = new JLabel("Nombre: No disponible");
         lblParticipantesRestantes = new JLabel("Participantes Restantes: 0");
         lblEliminados = new JLabel("Eliminados: 0");
         lblTipo = new JLabel("Tipo: No especificado");
 
-        // Cambiar el tamaño de la fuente de las etiquetas en la parte izquierda
         Font fuente = new Font("Arial", Font.BOLD, 16);
         lblNombre.setFont(fuente);
         lblParticipantesRestantes.setFont(fuente);
         lblEliminados.setFont(fuente);
         lblTipo.setFont(fuente);
 
-        // Agregar las etiquetas al panel izquierdo
         panelIzquierda.add(lblNombre);
         panelIzquierda.add(lblParticipantesRestantes);
         panelIzquierda.add(lblEliminados);
         panelIzquierda.add(lblTipo);
 
-        // Agregar el panel izquierdo al panel principal (izquierda)
         add(panelIzquierda, BorderLayout.WEST);
 
-        // Inicializar el modelo de la lista y la JList
         listModel = new DefaultListModel<>();
         listParticipantesRestantes = new JList<>(listModel);
 
-        // Configurar la JList para que sea scrollable
         JScrollPane scrollPane = new JScrollPane(listParticipantesRestantes);
         panelDerecha.add(new JLabel("Participantes Restantes"), BorderLayout.NORTH);
         panelDerecha.add(scrollPane, BorderLayout.CENTER);
 
-        // Agregar el panel derecho al panel principal (centro)
         add(panelDerecha, BorderLayout.CENTER);
 
-        // Panel inferior con el botón "Volver"
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botonVolver = new JButton("Volver");
+        botonCronograma = new JButton("Cronograma");
+
+        panelInferior.add(botonCronograma);
         panelInferior.add(botonVolver);
 
-        // Agregar el panel inferior al panel principal (sur)
         add(panelInferior, BorderLayout.SOUTH);
     }
 
-
-    // Métodos para actualizar los datos
     public void actualizarNombre(String nombre) {
-        getLblNombre().setText("Nombre: " + nombre);
+        lblNombre.setText("Nombre: " + nombre);
     }
 
     public void actualizarParticipantesRestantes(int restantes) {
-        getLblParticipantesRestantes().setText("Participantes Restantes: " + restantes);
+        lblParticipantesRestantes.setText("Participantes Restantes: " + restantes);
     }
 
     public void actualizarEliminados(int eliminados) {
-        getLblEliminados().setText("Eliminados: " + eliminados);
+        lblEliminados.setText("Eliminados: " + eliminados);
     }
 
     public void actualizarTipo(String tipo) {
-        getLblTipo().setText("Tipo: " + tipo);
+        lblTipo.setText("Tipo: " + tipo);
     }
 
     public void actualizarParticipantesRestantesList(String[] participantes) {
-        getListModel().clear(); // Limpiar la lista antes de agregar los nuevos participantes
+        listModel.clear();
         for (String participante : participantes) {
-            getListModel().addElement(participante);
+            listModel.addElement(participante);
         }
     }
+
     public JButton getBotonVolver() {
         return botonVolver;
     }
@@ -107,67 +95,75 @@ public class PanelDatosTorneo extends JPanel {
         this.botonVolver = botonVolver;
     }
 
-	public DefaultListModel<String> getListModel() {
-		return listModel;
-	}
+    public JButton getBotonCronograma() {
+        return botonCronograma;
+    }
 
-	public void setListModel(DefaultListModel<String> listModel) {
-		this.listModel = listModel;
-	}
+    public void setBotonCronograma(JButton botonCronograma) {
+        this.botonCronograma = botonCronograma;
+    }
 
-	public JList<String> getListParticipantesRestantes() {
-		return listParticipantesRestantes;
-	}
+    public DefaultListModel<String> getListModel() {
+        return listModel;
+    }
 
-	public void setListParticipantesRestantes(JList<String> listParticipantesRestantes) {
-		this.listParticipantesRestantes = listParticipantesRestantes;
-	}
+    public void setListModel(DefaultListModel<String> listModel) {
+        this.listModel = listModel;
+    }
 
-	public JLabel getLblTipo() {
-		return lblTipo;
-	}
+    public JList<String> getListParticipantesRestantes() {
+        return listParticipantesRestantes;
+    }
 
-	public void setLblTipo(JLabel lblTipo) {
-		this.lblTipo = lblTipo;
-	}
+    public void setListParticipantesRestantes(JList<String> listParticipantesRestantes) {
+        this.listParticipantesRestantes = listParticipantesRestantes;
+    }
 
-	public JLabel getLblEliminados() {
-		return lblEliminados;
-	}
+    public JLabel getLblTipo() {
+        return lblTipo;
+    }
 
-	public void setLblEliminados(JLabel lblEliminados) {
-		this.lblEliminados = lblEliminados;
-	}
+    public void setLblTipo(JLabel lblTipo) {
+        this.lblTipo = lblTipo;
+    }
 
-	public JLabel getLblParticipantesRestantes() {
-		return lblParticipantesRestantes;
-	}
+    public JLabel getLblEliminados() {
+        return lblEliminados;
+    }
 
-	public void setLblParticipantesRestantes(JLabel lblParticipantesRestantes) {
-		this.lblParticipantesRestantes = lblParticipantesRestantes;
-	}
+    public void setLblEliminados(JLabel lblEliminados) {
+        this.lblEliminados = lblEliminados;
+    }
 
-	public JLabel getLblNombre() {
-		return lblNombre;
-	}
+    public JLabel getLblParticipantesRestantes() {
+        return lblParticipantesRestantes;
+    }
 
-	public void setLblNombre(JLabel lblNombre) {
-		this.lblNombre = lblNombre;
-	}
+    public void setLblParticipantesRestantes(JLabel lblParticipantesRestantes) {
+        this.lblParticipantesRestantes = lblParticipantesRestantes;
+    }
 
-	public JPanel getPanelDerecha() {
-		return panelDerecha;
-	}
+    public JLabel getLblNombre() {
+        return lblNombre;
+    }
 
-	public void setPanelDerecha(JPanel panelDerecha) {
-		this.panelDerecha = panelDerecha;
-	}
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
 
-	public JPanel getPanelIzquierda() {
-		return panelIzquierda;
-	}
+    public JPanel getPanelDerecha() {
+        return panelDerecha;
+    }
 
-	public void setPanelIzquierda(JPanel panelIzquierda) {
-		this.panelIzquierda = panelIzquierda;
-	}
+    public void setPanelDerecha(JPanel panelDerecha) {
+        this.panelDerecha = panelDerecha;
+    }
+
+    public JPanel getPanelIzquierda() {
+        return panelIzquierda;
+    }
+
+    public void setPanelIzquierda(JPanel panelIzquierda) {
+        this.panelIzquierda = panelIzquierda;
+    }
 }

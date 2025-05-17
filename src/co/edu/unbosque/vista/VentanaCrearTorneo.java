@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 public class VentanaCrearTorneo extends JFrame{
 	
-	PanelCrearTorneo panelCrearTorneo;
+	private PanelCrearTorneo panelCrearTorneo;
 	public VentanaCrearTorneo() {
 		setTitle("Crear Torneo");
 		setSize(600, 400);
@@ -14,9 +14,15 @@ public class VentanaCrearTorneo extends JFrame{
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(10, 10));
 
-		panelCrearTorneo = new PanelCrearTorneo();
-		add(panelCrearTorneo);
+		setPanelCrearTorneo(new PanelCrearTorneo());
+		add(getPanelCrearTorneo());
 		setVisible(false);
+	}
+	public PanelCrearTorneo getPanelCrearTorneo() {
+		return panelCrearTorneo;
+	}
+	public void setPanelCrearTorneo(PanelCrearTorneo panelCrearTorneo) {
+		this.panelCrearTorneo = panelCrearTorneo;
 	}
 
 }

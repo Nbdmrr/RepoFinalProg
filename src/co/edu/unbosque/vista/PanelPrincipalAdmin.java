@@ -77,6 +77,9 @@ public class PanelPrincipalAdmin extends JPanel {
         valorCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
         etiquetaNacionalidad.setAlignmentX(Component.CENTER_ALIGNMENT);
         valorNacionalidad.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiquetaImagen.setIcon(new ImageIcon(new ImageIcon("src/imagenes/usuario.png")
+        .getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+
 
         panelDerecha.add(Box.createRigidArea(new Dimension(0, 15)));
         panelDerecha.add(etiquetaImagen);
@@ -101,8 +104,10 @@ public class PanelPrincipalAdmin extends JPanel {
 
         botonVolver = new JButton("Volver");
         botonRegistrarAdmin = new JButton("Registrar Administrador");
+        botonRegistrarAdmin.setActionCommand("REGISTRARADMINISTRADOR");
         botonPDF = new JButton("PDF");
         botonCrearTorneo = new JButton("Crear Torneo");
+        botonCrearTorneo.setActionCommand("CREACIONTORNEO");
 
         panelInferior.add(botonVolver);
         panelInferior.add(botonRegistrarAdmin);
@@ -111,6 +116,13 @@ public class PanelPrincipalAdmin extends JPanel {
 
         add(panelInferior, BorderLayout.SOUTH);
     }
+    public void actualizarDatosAdmin(String usuario, String cargo, String correo, String nacionalidad) {
+        valorUsuario.setText(usuario);
+        valorCargo.setText(cargo);
+        valorCorreo.setText(correo);
+        valorNacionalidad.setText(nacionalidad);
+    }
+
 
     // === Getters y Setters ===
 

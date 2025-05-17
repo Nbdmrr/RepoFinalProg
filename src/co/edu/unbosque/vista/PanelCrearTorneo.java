@@ -68,6 +68,8 @@ public class PanelCrearTorneo extends JPanel {
         btnCrear = new JButton("Crear");
         panelBotones.add(btnVolver);
         panelBotones.add(btnCrear);
+        btnVolver.setActionCommand("VOLVERDEVENTANACREARTORNEOAPRINCIPALADMIN");
+        btnCrear.setActionCommand("CREARTORNEO");
         panelCampos.add(panelBotones);
 
         add(panelCampos, BorderLayout.CENTER);

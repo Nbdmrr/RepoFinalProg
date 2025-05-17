@@ -11,32 +11,34 @@ public class PanelPrincipalEntrenador extends JPanel {
     private JButton botonEnviar;
     private JButton botonVolver;
     private JButton botonUnirse;
+    private JButton botonCrear;
+
     private JLabel etiquetaImagen;
     private JLabel etiquetaUsuario;
     private JLabel valorUsuario;
     private JLabel etiquetaNacionalidad;
-    private JLabel valorCargo;
-    private JButton botonCrear;
-
+    private JLabel valorNacionalidad;
+    private JLabel etiquetaCorreo;
+    private JLabel valorCorreo;
 
     public PanelPrincipalEntrenador() {
-    	setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1100, 500));
         inicializarComponentes();
     }
-    
+
     public void inicializarComponentes() {
 
         // Panel Centro con dos listas
         JPanel panelListas = new JPanel(new GridLayout(1, 2, 10, 0));
 
-        setListaEquiposDisponibles(new JList<>());
-        getListaEquiposDisponibles().setBorder(BorderFactory.createTitledBorder("Equipos Disponibles"));
-        panelListas.add(new JScrollPane(getListaEquiposDisponibles()));
+        listaEquiposDisponibles = new JList<>();
+        listaEquiposDisponibles.setBorder(BorderFactory.createTitledBorder("Equipos Disponibles"));
+        panelListas.add(new JScrollPane(listaEquiposDisponibles));
 
-        setListaEquiposEntrenados(new JList<>());
-        getListaEquiposEntrenados().setBorder(BorderFactory.createTitledBorder("Equipos que Entrena"));
-        panelListas.add(new JScrollPane(getListaEquiposEntrenados()));
+        listaEquiposEntrenados = new JList<>();
+        listaEquiposEntrenados.setBorder(BorderFactory.createTitledBorder("Equipos que Entrena"));
+        panelListas.add(new JScrollPane(listaEquiposEntrenados));
 
         add(panelListas, BorderLayout.CENTER);
 
@@ -45,30 +47,39 @@ public class PanelPrincipalEntrenador extends JPanel {
         panelDerecha.setLayout(new BoxLayout(panelDerecha, BoxLayout.Y_AXIS));
         panelDerecha.setPreferredSize(new Dimension(250, 0));
 
-        setEtiquetaImagen(new JLabel());
-        getEtiquetaImagen().setPreferredSize(new Dimension(200, 200));
-        getEtiquetaImagen().setMaximumSize(new Dimension(200, 200));
-        getEtiquetaImagen().setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        getEtiquetaImagen().setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiquetaImagen = new JLabel();
+        etiquetaImagen.setPreferredSize(new Dimension(200, 200));
+        etiquetaImagen.setMaximumSize(new Dimension(200, 200));
+        etiquetaImagen.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        etiquetaImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiquetaImagen.setIcon(new ImageIcon(new ImageIcon("src/imagenes/usuario.png")
+                .getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 
-        setEtiquetaUsuario(new JLabel("Usuario:"));
-        setValorUsuario(new JLabel(" - "));
-        setEtiquetaNacionalidad(new JLabel("Nacionalidad:"));
-        setValorCargo(new JLabel(" - "));
+        etiquetaUsuario = new JLabel("Usuario:");
+        valorUsuario = new JLabel(" - ");
+        etiquetaNacionalidad = new JLabel("Nacionalidad:");
+        valorNacionalidad = new JLabel(" - ");
+        etiquetaCorreo = new JLabel("Correo:");
+        valorCorreo = new JLabel(" - ");
 
-        getEtiquetaUsuario().setAlignmentX(Component.CENTER_ALIGNMENT);
-        getValorUsuario().setAlignmentX(Component.CENTER_ALIGNMENT);
-        getEtiquetaNacionalidad().setAlignmentX(Component.CENTER_ALIGNMENT);
-        getValorCargo().setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiquetaUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
+        valorUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiquetaNacionalidad.setAlignmentX(Component.CENTER_ALIGNMENT);
+        valorNacionalidad.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiquetaCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        valorCorreo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panelDerecha.add(Box.createRigidArea(new Dimension(0, 15)));
-        panelDerecha.add(getEtiquetaImagen());
+        panelDerecha.add(etiquetaImagen);
         panelDerecha.add(Box.createRigidArea(new Dimension(0, 20)));
-        panelDerecha.add(getEtiquetaUsuario());
-        panelDerecha.add(getValorUsuario());
+        panelDerecha.add(etiquetaUsuario);
+        panelDerecha.add(valorUsuario);
         panelDerecha.add(Box.createRigidArea(new Dimension(0, 10)));
-        panelDerecha.add(getEtiquetaNacionalidad());
-        panelDerecha.add(getValorCargo());
+        panelDerecha.add(etiquetaNacionalidad);
+        panelDerecha.add(valorNacionalidad);
+        panelDerecha.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelDerecha.add(etiquetaCorreo);
+        panelDerecha.add(valorCorreo);
 
         add(panelDerecha, BorderLayout.EAST);
 
@@ -78,125 +89,149 @@ public class PanelPrincipalEntrenador extends JPanel {
         panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JPanel panelMensaje = new JPanel(new BorderLayout());
-        setCampoMensaje(new JTextField());
-        getCampoMensaje().setPreferredSize(new Dimension(600, 30));
-        setBotonEnviar(new JButton("➤"));
-        getBotonEnviar().setPreferredSize(new Dimension(60, 30));
-        panelMensaje.add(getCampoMensaje(), BorderLayout.CENTER);
-        panelMensaje.add(getBotonEnviar(), BorderLayout.EAST);
+        campoMensaje = new JTextField();
+        campoMensaje.setPreferredSize(new Dimension(600, 30));
+        botonEnviar = new JButton("➤");
+        botonEnviar.setPreferredSize(new Dimension(60, 30));
+        panelMensaje.add(campoMensaje, BorderLayout.CENTER);
+        panelMensaje.add(botonEnviar, BorderLayout.EAST);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        setBotonVolver(new JButton("Volver"));
-        setBotonUnirse(new JButton("Unirse a un equipo"));
-        setBotonCrear(new JButton("Crear Equipo"));
+        botonVolver = new JButton("Volver");
+        botonUnirse = new JButton("Unirse a un equipo");
+        botonCrear = new JButton("Crear Equipo");
+        
+        botonVolver.setActionCommand("VOLVERDEENTRENADORAINICIO");
 
-        panelBotones.add(getBotonVolver());
-        panelBotones.add(getBotonUnirse());
-        panelBotones.add(getBotonCrear());
+        panelBotones.add(botonVolver);
+        panelBotones.add(botonUnirse);
+        panelBotones.add(botonCrear);
 
         panelInferior.add(panelMensaje);
-        panelInferior.add(Box.createHorizontalStrut(20)); // espacio entre mensaje y botones
+        panelInferior.add(Box.createHorizontalStrut(20));
         panelInferior.add(panelBotones);
 
         add(panelInferior, BorderLayout.SOUTH);
     }
 
+    // Método para actualizar los datos del entrenador
+    public void actualizarDatosEntrenador(String usuario, String nacionalidad, String correo) {
+        valorUsuario.setText(usuario);
+        valorNacionalidad.setText(nacionalidad);
+        valorCorreo.setText(correo);
+    }
 
-	public JLabel getValorCargo() {
-		return valorCargo;
-	}
+    // === Getters y Setters ===
 
-	public void setValorCargo(JLabel valorCargo) {
-		this.valorCargo = valorCargo;
-	}
+    public JList<String> getListaEquiposDisponibles() {
+        return listaEquiposDisponibles;
+    }
 
-	public JLabel getEtiquetaNacionalidad() {
-		return etiquetaNacionalidad;
-	}
+    public void setListaEquiposDisponibles(JList<String> listaEquiposDisponibles) {
+        this.listaEquiposDisponibles = listaEquiposDisponibles;
+    }
 
-	public void setEtiquetaNacionalidad(JLabel etiquetaNacionalidad) {
-		this.etiquetaNacionalidad = etiquetaNacionalidad;
-	}
+    public JList<String> getListaEquiposEntrenados() {
+        return listaEquiposEntrenados;
+    }
 
-	public JLabel getValorUsuario() {
-		return valorUsuario;
-	}
+    public void setListaEquiposEntrenados(JList<String> listaEquiposEntrenados) {
+        this.listaEquiposEntrenados = listaEquiposEntrenados;
+    }
 
-	public void setValorUsuario(JLabel valorUsuario) {
-		this.valorUsuario = valorUsuario;
-	}
+    public JTextField getCampoMensaje() {
+        return campoMensaje;
+    }
 
-	public JLabel getEtiquetaUsuario() {
-		return etiquetaUsuario;
-	}
+    public void setCampoMensaje(JTextField campoMensaje) {
+        this.campoMensaje = campoMensaje;
+    }
 
-	public void setEtiquetaUsuario(JLabel etiquetaUsuario) {
-		this.etiquetaUsuario = etiquetaUsuario;
-	}
+    public JButton getBotonEnviar() {
+        return botonEnviar;
+    }
 
-	public JLabel getEtiquetaImagen() {
-		return etiquetaImagen;
-	}
+    public void setBotonEnviar(JButton botonEnviar) {
+        this.botonEnviar = botonEnviar;
+    }
 
-	public void setEtiquetaImagen(JLabel etiquetaImagen) {
-		this.etiquetaImagen = etiquetaImagen;
-	}
+    public JButton getBotonVolver() {
+        return botonVolver;
+    }
 
-	public JButton getBotonUnirse() {
-		return botonUnirse;
-	}
+    public void setBotonVolver(JButton botonVolver) {
+        this.botonVolver = botonVolver;
+    }
 
-	public void setBotonUnirse(JButton botonUnirse) {
-		this.botonUnirse = botonUnirse;
-	}
+    public JButton getBotonUnirse() {
+        return botonUnirse;
+    }
 
-	public JButton getBotonVolver() {
-		return botonVolver;
-	}
+    public void setBotonUnirse(JButton botonUnirse) {
+        this.botonUnirse = botonUnirse;
+    }
 
-	public void setBotonVolver(JButton botonVolver) {
-		this.botonVolver = botonVolver;
-	}
+    public JButton getBotonCrear() {
+        return botonCrear;
+    }
 
-	public JButton getBotonEnviar() {
-		return botonEnviar;
-	}
+    public void setBotonCrear(JButton botonCrear) {
+        this.botonCrear = botonCrear;
+    }
 
-	public void setBotonEnviar(JButton botonEnviar) {
-		this.botonEnviar = botonEnviar;
-	}
+    public JLabel getEtiquetaImagen() {
+        return etiquetaImagen;
+    }
 
-	public JTextField getCampoMensaje() {
-		return campoMensaje;
-	}
+    public void setEtiquetaImagen(JLabel etiquetaImagen) {
+        this.etiquetaImagen = etiquetaImagen;
+    }
 
-	public void setCampoMensaje(JTextField campoMensaje) {
-		this.campoMensaje = campoMensaje;
-	}
+    public JLabel getEtiquetaUsuario() {
+        return etiquetaUsuario;
+    }
 
-	public JList<String> getListaEquiposEntrenados() {
-		return listaEquiposEntrenados;
-	}
+    public void setEtiquetaUsuario(JLabel etiquetaUsuario) {
+        this.etiquetaUsuario = etiquetaUsuario;
+    }
 
-	public void setListaEquiposEntrenados(JList<String> listaEquiposEntrenados) {
-		this.listaEquiposEntrenados = listaEquiposEntrenados;
-	}
+    public JLabel getValorUsuario() {
+        return valorUsuario;
+    }
 
-	public JList<String> getListaEquiposDisponibles() {
-		return listaEquiposDisponibles;
-	}
+    public void setValorUsuario(JLabel valorUsuario) {
+        this.valorUsuario = valorUsuario;
+    }
 
-	public void setListaEquiposDisponibles(JList<String> listaEquiposDisponibles) {
-		this.listaEquiposDisponibles = listaEquiposDisponibles;
-	}
-	
-	public JButton getBotonCrear() {
-	    return botonCrear;
-	}
+    public JLabel getEtiquetaNacionalidad() {
+        return etiquetaNacionalidad;
+    }
 
-	public void setBotonCrear(JButton botonCrear) {
-	    this.botonCrear = botonCrear;
-	}
+    public void setEtiquetaNacionalidad(JLabel etiquetaNacionalidad) {
+        this.etiquetaNacionalidad = etiquetaNacionalidad;
+    }
 
-	
+    public JLabel getValorNacionalidad() {
+        return valorNacionalidad;
+    }
+
+    public void setValorNacionalidad(JLabel valorNacionalidad) {
+        this.valorNacionalidad = valorNacionalidad;
+    }
+
+    public JLabel getEtiquetaCorreo() {
+        return etiquetaCorreo;
+    }
+
+    public void setEtiquetaCorreo(JLabel etiquetaCorreo) {
+        this.etiquetaCorreo = etiquetaCorreo;
+    }
+
+    public JLabel getValorCorreo() {
+        return valorCorreo;
+    }
+
+    public void setValorCorreo(JLabel valorCorreo) {
+        this.valorCorreo = valorCorreo;
+    }
 }

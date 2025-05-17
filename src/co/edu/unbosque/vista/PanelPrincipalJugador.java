@@ -20,6 +20,16 @@ public class PanelPrincipalJugador extends JPanel {
     private JLabel etiquetaEquipo;
     private JLabel valorEquipo;
 
+    // Nuevos atributos (estadísticas)
+    private JLabel etiquetaPartidasJugadas;
+    private JLabel valorPartidasJugadas;
+    private JLabel etiquetaPartidasGanadas;
+    private JLabel valorPartidasGanadas;
+    private JLabel etiquetaTorneosJugados;
+    private JLabel valorTorneosJugados;
+    private JLabel etiquetaTorneosGanados;
+    private JLabel valorTorneosGanados;
+
     public PanelPrincipalJugador() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1100, 500));
@@ -46,7 +56,7 @@ public class PanelPrincipalJugador extends JPanel {
 
         add(panelCentro, BorderLayout.CENTER);
 
-        // Panel derecha con imagen y datos
+        // Panel derecha con imagen y datos personales
         JPanel panelDerecha = new JPanel();
         panelDerecha.setLayout(new BoxLayout(panelDerecha, BoxLayout.Y_AXIS));
         panelDerecha.setPreferredSize(new Dimension(250, 0));
@@ -55,8 +65,17 @@ public class PanelPrincipalJugador extends JPanel {
         etiquetaImagen = new JLabel();
         etiquetaImagen.setPreferredSize(new Dimension(150, 150));
         etiquetaImagen.setMaximumSize(new Dimension(150, 150));
+        etiquetaImagen.setMinimumSize(new Dimension(150, 150));
+        etiquetaImagen.setSize(150, 150);
         etiquetaImagen.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         etiquetaImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Cargar la imagen cuadrada
+        ImageIcon originalIcon = new ImageIcon("src/imagenes/usuario.png");
+        Image imagenOriginal = originalIcon.getImage();
+        Image imagenEscalada = imagenOriginal.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        etiquetaImagen.setIcon(new ImageIcon(imagenEscalada));
+
 
         etiquetaUsuario = new JLabel("Usuario:");
         valorUsuario = new JLabel(" - ");
@@ -89,10 +108,41 @@ public class PanelPrincipalJugador extends JPanel {
 
         add(panelDerecha, BorderLayout.EAST);
 
-        // Panel inferior con botón Volver
-        JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+        // Panel inferior que contiene estadísticas y botón Volver
+        JPanel panelInferior = new JPanel();
+        panelInferior.setLayout(new BorderLayout());
+
+        // Panel de estadísticas
+        JPanel panelEstadisticas = new JPanel(new GridLayout(4, 2, 10, 5));
+        panelEstadisticas.setBorder(BorderFactory.createTitledBorder("Estadísticas"));
+
+        etiquetaPartidasJugadas = new JLabel("Partidas Jugadas:");
+        valorPartidasJugadas = new JLabel(" - ");
+        etiquetaPartidasGanadas = new JLabel("Partidas Ganadas:");
+        valorPartidasGanadas = new JLabel(" - ");
+        etiquetaTorneosJugados = new JLabel("Torneos Jugados:");
+        valorTorneosJugados = new JLabel(" - ");
+        etiquetaTorneosGanados = new JLabel("Torneos Ganados:");
+        valorTorneosGanados = new JLabel(" - ");
+
+        panelEstadisticas.add(etiquetaPartidasJugadas);
+        panelEstadisticas.add(valorPartidasJugadas);
+        panelEstadisticas.add(etiquetaPartidasGanadas);
+        panelEstadisticas.add(valorPartidasGanadas);
+        panelEstadisticas.add(etiquetaTorneosJugados);
+        panelEstadisticas.add(valorTorneosJugados);
+        panelEstadisticas.add(etiquetaTorneosGanados);
+        panelEstadisticas.add(valorTorneosGanados);
+
+        panelInferior.add(panelEstadisticas, BorderLayout.CENTER);
+
+        // Botón "Volver" alineado a la derecha
         botonVolver = new JButton("Volver");
-        panelInferior.add(botonVolver);
+        botonVolver.setActionCommand("VOLVERDEJUGADORAINICIOSESION");
+        JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 5));
+        panelBotonDerecha.add(botonVolver);
+        panelInferior.add(panelBotonDerecha, BorderLayout.SOUTH);
+
         add(panelInferior, BorderLayout.SOUTH);
     }
 
@@ -104,6 +154,23 @@ public class PanelPrincipalJugador extends JPanel {
         panel.add(Box.createHorizontalGlue());
         return panel;
     }
+    public void actualizarDatosJugador(
+            String usuario, String nacionalidad, String especialidad, String correo, String equipo,
+            int partidasJugadas, int partidasGanadas,
+            int torneosJugados, int torneosGanados
+    ) {
+        valorUsuario.setText(usuario);
+        valorNacionalidad.setText(nacionalidad);
+        valorEspecialidad.setText(especialidad);
+        valorCorreo.setText(correo);
+        valorEquipo.setText(equipo);
+        valorPartidasJugadas.setText(String.valueOf(partidasJugadas));
+        valorPartidasGanadas.setText(String.valueOf(partidasGanadas));
+        valorTorneosJugados.setText(String.valueOf(torneosJugados));
+        valorTorneosGanados.setText(String.valueOf(torneosGanados));
+    }
+
+
 
     public JList<String> getListaTorneosParticipa() { return listaTorneosParticipa; }
     public JList<String> getListaTorneosActivos() { return listaTorneosActivos; }
@@ -114,4 +181,9 @@ public class PanelPrincipalJugador extends JPanel {
     public JLabel getValorEspecialidad() { return valorEspecialidad; }
     public JLabel getValorCorreo() { return valorCorreo; }
     public JLabel getValorEquipo() { return valorEquipo; }
+
+    public JLabel getValorPartidasJugadas() { return valorPartidasJugadas; }
+    public JLabel getValorPartidasGanadas() { return valorPartidasGanadas; }
+    public JLabel getValorTorneosJugados() { return valorTorneosJugados; }
+    public JLabel getValorTorneosGanados() { return valorTorneosGanados; }
 }

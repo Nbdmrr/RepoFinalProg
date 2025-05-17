@@ -48,6 +48,14 @@ public class Controlador implements ActionListener{
 		vista.getVentanaRegistroJugador().getPanelRegistroJugador().getBtnVolver().addActionListener(this);
 		vista.getVentanaRegistroJugador().getPanelRegistroJugador().getBtnRegistrarse().addActionListener(this);
 		vista.getVentanaInicioSesion().getPanelInicioSesion().getBtnIniciarSesion().addActionListener(this);
+		vista.getVentanaPrincipalJugador().getPanelPrincipalJugador().getBotonVolver().addActionListener(this);
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getBotonVolver().addActionListener(this);
+		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getBotonRegistrarAdmin().addActionListener(this);
+		vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getBtnRegistrarse().addActionListener(this);
+		vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getBtnVolver().addActionListener(this);
+		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getBotonCrearTorneo().addActionListener(this);
+		vista.getVentanaCrearTorneo().getPanelCrearTorneo().getBtnCrear().addActionListener(this);
+		vista.getVentanaCrearTorneo().getPanelCrearTorneo().getBtnVolver().addActionListener(this);
 
 	}
 
@@ -55,6 +63,9 @@ public class Controlador implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		String comando = e.getActionCommand();
+		Administrador administradorPrincipal = null;
+		Entrenador entrenadorPrincipal = null;
+		Jugador jugadorPrincipal = null;
 
 
 
@@ -62,13 +73,33 @@ public class Controlador implements ActionListener{
 
 			vista.getVentanaInicioSesion().setVisible(false);
 			vista.getVentanaRegistroJugador().setVisible(true);
+			vista.getVentanaRegistroJugador().getPanelRegistroJugador().getTxtContrasena().setText("");
+			vista.getVentanaRegistroJugador().getPanelRegistroJugador().getTxtCorreo().setText("");
+			vista.getVentanaRegistroJugador().getPanelRegistroJugador().getTxtEspecialidad().setText("");
+			vista.getVentanaRegistroJugador().getPanelRegistroJugador().getTxtUsuario().setText("");
+			
 
 		}else if(comando.equals("ABRIRREGISTROENTRENADOR") ) {
 
 			vista.getVentanaInicioSesion().setVisible(false);
 			vista.getVentanaRegistroEntrenador().setVisible(true);
+			vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().getTxtContrasena().setText("");
+			vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().getTxtCorreo().setText("");
+			vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().getTxtUsuario().setText("");
+			vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().getTxtEquipo().setText("");
 
-		}else if(comando.equals("VOLVERAINICIOSESIONDEREGISTROENTRENADOR")) {
+		}else if (comando.equals("REGISTRARADMINISTRADOR")) {
+			
+			vista.getVentanaPrincipalAdmin().setVisible(false);
+			vista.getVentanaRegistroAdmin().setVisible(true);
+			vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtContrasena().setText("");
+			vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtCorreo().setText("");
+			vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtUsuario().setText("");
+			
+			
+			
+			
+		}else  if(comando.equals("VOLVERAINICIOSESIONDEREGISTROENTRENADOR")) {
 
 			vista.getVentanaRegistroEntrenador().setVisible(false);
 			vista.getVentanaInicioSesion().setVisible(true);
@@ -80,6 +111,39 @@ public class Controlador implements ActionListener{
 
 
 
+		}else if(comando.equals("VOLVERDEREGISTROADMINAPRINCIPALADMIN")){
+		
+			
+			vista.getVentanaRegistroAdmin().setVisible(false);
+			vista.getVentanaPrincipalAdmin().setVisible(true);
+			
+		
+		}else if(comando.equals("REGISTRARADMIN")){
+		
+			
+			String usuario=vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtUsuario().getText();
+			String contraseña=vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtContrasena().getText();
+			String correo=vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtCorreo().getText();
+			String cargo=vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getTxtCargo().getText();
+			String nacionalidad=vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().getComboNacionalidad().getSelectedItem().toString();
+		
+			if(!vista.getVentanaRegistroAdmin().getPanelRegistroAdmin().validarCorreo(correo)) {
+				
+				
+				return;
+			}
+			if(!ValidarUsuario(usuario)) {
+				return;
+			} 
+			
+			Administrador adminNuevo = new Administrador(usuario, contraseña, nacionalidad, correo, cargo);
+			directorioPrincipal.getDirectorioAdministradores().adicionarAdministrador(MapHandler.convertirAdministradorAAdministradorDTO(adminNuevo));
+			
+			vista.getVentanaRegistroAdmin().setVisible(false);
+			vista.getVentanaPrincipalAdmin().setVisible(true);
+			
+			directorioPrincipal.getDirectorioAdministradores().cargarAdministradores();
+			
 		}else if(comando.equals("REGISTRARJUGADOR")) {
 
 			String contraseña = vista.getVentanaRegistroJugador().getPanelRegistroJugador().getTxtContrasena().getText();
@@ -116,7 +180,7 @@ public class Controlador implements ActionListener{
 			String equipo = vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().getTxtEquipo().getText();
 			String nacionalidad = vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().getComboNacionalidad().getSelectedItem().toString();
 
-			if (!vista.getVentanaRegistroJugador().getPanelRegistroJugador().validarCorreo(correo)) {
+			if (!vista.getVentanaRegistroEntrenador().getPanelRegistroEntrenador().validarCorreo(correo)) {
 				return;
 			} 
 			if(!ValidarUsuario(usuario)) {
@@ -151,10 +215,18 @@ public class Controlador implements ActionListener{
 			for (Entrenador entrenador : entrenadorAux) {
 
 				if(entrenador.getUsuario().equals(usuario)&& entrenador.getContraseña().equals(contraseña)) {
+					
+					entrenadorPrincipal = directorioPrincipal.getDirectorioEntrenadores().encontrarEntrenadores(MapHandler.convertirEntrenadorAEntrenadorDTO(entrenador));
+					vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().actualizarDatosEntrenador(entrenadorPrincipal.getUsuario(), entrenadorPrincipal.getNacionalidad(), entrenadorPrincipal.getCorreo());
+				
 
 
 					vista.getVentanaInicioSesion().setVisible(false);
 					vista.getVentanaPrincipalEntrenador().setVisible(true);
+					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtContrasena().setText("");
+					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtUsuario().setText("");
+					
+					
 					return;
 				}
 
@@ -163,27 +235,78 @@ public class Controlador implements ActionListener{
 
 				if(jugador.getUsuario().equals(usuario)&& jugador.getContraseña().equals(contraseña)) {
 
-
+					jugadorPrincipal = directorioPrincipal.getDirectorioJugadores().encontrarJugador(MapHandler.convertirJugadorAJugadorDTO(jugador));
+					vista.getVentanaPrincipalJugador().getPanelPrincipalJugador().actualizarDatosJugador(jugadorPrincipal.getUsuario(), jugadorPrincipal.getNacionalidad(), jugadorPrincipal.getEspecialidad(), jugadorPrincipal.getCorreo(), jugadorPrincipal.getEquipo(), jugadorPrincipal.getPartidasJugadas(), jugadorPrincipal.getPartidasGanadas(), jugadorPrincipal.getTorneosJugados(), jugadorPrincipal.getTorneosGanados());
 					vista.getVentanaInicioSesion().setVisible(false);
 					vista.getVentanaPrincipalJugador().setVisible(true);
+					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtContrasena().setText("");
+					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtUsuario().setText("");
 					return;
 				}
 			}
 			for (Administrador administrador : administradoresAux) {
 
 				if(administrador.getUsuario().equals(usuario)&& administrador.getContraseña().equals(contraseña)) {
+					
+					administradorPrincipal = directorioPrincipal.getDirectorioAdministradores().encontrarAdministrador(MapHandler.convertirAdministradorAAdministradorDTO(administrador));
+					vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().actualizarDatosAdmin(administradorPrincipal.getUsuario(), administradorPrincipal.getCargo(), administradorPrincipal.getCorreo(), administradorPrincipal.getNacionalidad());
 
 					vista.getVentanaInicioSesion().setVisible(false);
 					vista.getVentanaPrincipalAdmin().setVisible(true);
+					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtContrasena().setText("");
+					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtUsuario().setText("");
+					
+					
 					return;
 
 				}
+				
 
 			}
 
 			vista.mostrarMensaje("Usuario no encontrado o contraseña mal ingresada");   
 
+		}else if(comando.equals("VOLVERDEJUGADORAINICIOSESION")) {
+			
+			
+			vista.getVentanaPrincipalJugador().setVisible(false);
+			vista.getVentanaInicioSesion().setVisible(true);
+			
+		}else if(comando.equals("VOLVERDEENTRENADORAINICIO")) {
+			
+			vista.getVentanaPrincipalEntrenador().setVisible(false);
+			vista.getVentanaInicioSesion().setVisible(true);
+			
+			
+		}else if(comando.equals("CREACIONTORNEO")) {
+			
+			vista.getVentanaPrincipalAdmin().setVisible(false);
+			vista.getVentanaCrearTorneo().setVisible(true);
+			vista.getVentanaCrearTorneo().getPanelCrearTorneo().getTxtNombre().setText("");
+			
+			
+		}else if(comando.equals("VOLVERDEVENTANACREARTORNEOAPRINCIPALADMIN")) {
+			
+			vista.getVentanaCrearTorneo().setVisible(false);
+			vista.getVentanaPrincipalAdmin().setVisible(true);
+			
+			
+		}else if(comando.equals("CREARTORNEO")) {
+			
+			String nombreTorneo =vista.getVentanaCrearTorneo().getPanelCrearTorneo().getTxtNombre().getText();
+			int limiteParticipantes = Integer.parseInt(vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboLimiteParticipantes().getSelectedItem().toString());
+			String tipoTorneo =vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboTipo().getSelectedItem().toString();
+			String juego = vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboJuego().getSelectedItem().toString();
+			
+			if(tipoTorneo.equals("Eliminacion Directa")) {
+				
+				
+				
+			}
+			
 		}
+		
+		
 
 	}
 

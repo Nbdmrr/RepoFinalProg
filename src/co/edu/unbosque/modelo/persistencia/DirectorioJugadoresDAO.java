@@ -1,74 +1,95 @@
 package co.edu.unbosque.modelo.persistencia;
 
 import co.edu.unbosque.modelo.Jugador;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectorioJugadoresDAO implements InterfaceDAO<Jugador> {
 
-    private Archivo<Jugador> archivo;
-    private List<Jugador> jugadores;
+    private ArrayList<Jugador> jugadores;
+    private Archivo archivo;
 
-    public DirectorioJugadoresDAO(String rutaArchivo) {
-        this.archivo = new Archivo<>(rutaArchivo);
-        this.jugadores = archivo.cargar();
+    public DirectorioJugadoresDAO() {
+        this.jugadores = new ArrayList<>();
+        archivo = new Archivo();
+    }
+
+    public void actualizarJugadores() {
+        jugadores = archivo.leerArchivoJugadores();
     }
 
     @Override
-    public boolean add(Jugador jugador) {
-        if (jugador == null || jugador.getUsuario() == null || jugador.getUsuario().isEmpty()) {
-            return false;
-        }
-        for (Jugador j : jugadores) {
-            if (j.getUsuario().equalsIgnoreCase(jugador.getUsuario())) {
-                return false;
-            }
-        }
-        boolean added = jugadores.add(jugador);
-        if (added) {
-            archivo.guardar(jugadores);
-        }
-        return added;
-    }
-
-    @Override
-    public boolean delete(Jugador jugador) {
-        boolean removed = jugadores.remove(jugador);
-        if (removed) {
-            archivo.guardar(jugadores);
-        }
-        return removed;
-    }
-
-    @Override
-    public Jugador find(Jugador jugador) {
-        for (Jugador j : jugadores) {
-            if (j.getUsuario().equalsIgnoreCase(jugador.getUsuario())) {
-                return j;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean update(Jugador jugadorActual, Jugador jugadorNuevo) {
-        int index = jugadores.indexOf(jugadorActual);
-        if (index != -1) {
-            jugadores.set(index, jugadorNuevo);
-            archivo.guardar(jugadores);
+    public boolean add(Jugador x) {
+        if (find(x) == null) {
+            jugadores.add(x);
+            archivo.escribirArchivoJugadores(jugadores);
             return true;
         }
         return false;
     }
 
     @Override
-    public String getAll() {
-        if (jugadores.isEmpty()) {
-            return "No hay jugadores registrados.";
+    public boolean delete(Jugador x) {
+        Jugador y = find(x);
+        if (y != null) {
+            try {
+                jugadores.remove(y);
+                archivo.getUbicacionArchivoJugadores().delete();
+                archivo.getUbicacionArchivoJugadores().createNewFile();
+                archivo.escribirArchivoJugadores(jugadores);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
-        StringBuilder sb = new StringBuilder();
-        for (Jugador jugador : jugadores) {
-            sb.append("Jugador: ").append(jugador.getUsuario()).append("\n");
+        return false;
+    }
+
+    @Override
+    public Jugador find(Jugador x) {
+        for (Jugador j : jugadores) {
+            if (j.getUsuario().equals(x.getUsuario())) {
+                return j;
+            }
         }
-        return sb.toString();
+        return null;
+    }
+
+   @Override
+public ArrayList<Jugador> getAll() {
+	// TODO Auto-generated method stub
+	return jugadores;
+}
+
+    @Override
+    public boolean update(Jugador x, Jugador y) {
+        Jugador j = find(x);
+        if (j != null) {
+            try {
+                jugadores.remove(j);
+                j.setUsuario(y.getUsuario());
+                j.setContraseña(y.getContraseña());
+                j.setCorreo(y.getCorreo());
+                j.setEquipo(y.getEquipo());
+                j.setEspecialidad(y.getEspecialidad());
+                j.setNacionalidad(y.getNacionalidad());
+                j.setPartidasGanadas(y.getPartidasGanadas());
+                j.setPartidasJugadas(y.getPartidasJugadas());
+                j.setPuntos(y.getPuntos());
+                j.setTorneosGanados(y.getTorneosGanados());
+                j.setTorneosJugados(y.getTorneosJugados());
+         
+                archivo.getUbicacionArchivoJugadores().delete();
+                archivo.getUbicacionArchivoJugadores().createNewFile();
+                archivo.escribirArchivoJugadores(jugadores);
+                return true;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return false;
+            }
+        }
+        return false;
     }
 }

@@ -33,6 +33,10 @@ public class MapHandler {
 	}
 
 	public static EntrenadorDTO convertirEntrenadorAEntrenadorDTO(Entrenador entrenador) {
+		 if (entrenador == null) {
+		        System.err.println("ERROR: El objeto 'entrenador' es null en MapHandler.");
+		        return null;
+		    }
 	    EntrenadorDTO entrenadorDTO = new EntrenadorDTO();
 	    entrenadorDTO.setUsuario(entrenador.getUsuario());
 	    entrenadorDTO.setContraseña(entrenador.getContraseña());
@@ -66,35 +70,60 @@ public class MapHandler {
 
 	public static EquipoDTO convertirEquipoAEquipoDTO(Equipo equipo) {
 	    EquipoDTO equipoDTO = new EquipoDTO();
-	    ArrayList<JugadorDTO> equipoConvertido= new ArrayList<JugadorDTO>();
-	    
+	    ArrayList<JugadorDTO> equipoConvertido = new ArrayList<JugadorDTO>();
+
+	    // Asignar nombre del equipo
 	    equipoDTO.setNombre(equipo.getNombre());
-	    equipoDTO.setEntrenador1(convertirEntrenadorAEntrenadorDTO(equipo.getEntrenador1()));
-	    equipoDTO.setEntrenador2(convertirEntrenadorAEntrenadorDTO(equipo.getEntrenador2()));
-	    equipoDTO.setEntrenador3(convertirEntrenadorAEntrenadorDTO(equipo.getEntrenador3()));
-	 
-	   for (Jugador jugador : equipo.getEquipo()) {
-		   
-		   JugadorDTO jugadorDTO=convertirJugadorAJugadorDTO(jugador);
-		   equipoConvertido.add(jugadorDTO);
-		
-	}
-	    
+
+	    // Verificar si el entrenador 1 es null y convertirlo si no lo es
+	    if (equipo.getEntrenador1() != null) {
+	        equipoDTO.setEntrenador1(convertirEntrenadorAEntrenadorDTO(equipo.getEntrenador1()));
+	    } else {
+	        equipoDTO.setEntrenador1(null);  // De todos modos, lo puedes establecer explícitamente como null si lo deseas
+	    }
+
+	    // Hacer lo mismo para los entrenadores 2 y 3
+	    if (equipo.getEntrenador2() != null) {
+	        equipoDTO.setEntrenador2(convertirEntrenadorAEntrenadorDTO(equipo.getEntrenador2()));
+	    } else {
+	        equipoDTO.setEntrenador2(null);  // Si es null, simplemente lo asignas como null
+	    }
+
+	    if (equipo.getEntrenador3() != null) {
+	        equipoDTO.setEntrenador3(convertirEntrenadorAEntrenadorDTO(equipo.getEntrenador3()));
+	    } else {
+	        equipoDTO.setEntrenador3(null);  // De igual manera, si es null, lo puedes dejar como null
+	    }
+
+	    // Convertir los jugadores del equipo
+	    for (Jugador jugador : equipo.getEquipo()) {
+	        JugadorDTO jugadorDTO = convertirJugadorAJugadorDTO(jugador);
+	        equipoConvertido.add(jugadorDTO);
+	    }
+
+	    // Asignar la lista de jugadores al DTO del equipo
 	    equipoDTO.setEquipo(equipoConvertido);
-	    
+
 	    return equipoDTO;
 	}
 
-	public Equipo convertirEquipoDTOAEquipo(EquipoDTO equipoDTO) {
+
+
+	public static Equipo convertirEquipoDTOAEquipo(EquipoDTO equipoDTO) {
 	    Equipo equipo = new Equipo(equipoDTO.getNombre(), convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador1()));
 
-	    
+	    if(equipoDTO.getEntrenador2()!=null) {
 	        equipo.setEntrenador2(convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador2()));
 	    
-
-	    
+	    }else {
+	    	equipo.setEntrenador2(null);
+	    }
+	    if(equipoDTO.getEntrenador3()!=null) {
 	        equipo.setEntrenador3(convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador3()));
-	    
+	    }else {
+	    	equipo.setEntrenador3(null);
+	    	
+	    }
 
 	    ArrayList<Jugador> jugadores = new ArrayList<>();
 	    for (JugadorDTO jugadorDTO : equipoDTO.getEquipo()) {
@@ -314,7 +343,7 @@ public class MapHandler {
 	    
 	    return torneoDTO;
 	}
-	public ArrayList<AdministradorDTO> convertirAdministradoresAAdministradoresDTO(ArrayList<Administrador> administradores) {
+	public static ArrayList<AdministradorDTO> convertirAdministradoresAAdministradoresDTO(ArrayList<Administrador> administradores) {
 	    ArrayList<AdministradorDTO> administradoresDTO = new ArrayList<>();
 	    for (Administrador administrador : administradores) {
 	        administradoresDTO.add(convertirAdministradorAAdministradorDTO(administrador));
@@ -322,7 +351,7 @@ public class MapHandler {
 	    return administradoresDTO;
 	}
 
-	public ArrayList<Administrador> convertirAdministradoresDTOAAdministradores(ArrayList<AdministradorDTO> administradoresDTO) {
+	public static ArrayList<Administrador> convertirAdministradoresDTOAAdministradores(ArrayList<AdministradorDTO> administradoresDTO) {
 	    ArrayList<Administrador> administradores = new ArrayList<>();
 	    for (AdministradorDTO administradorDTO : administradoresDTO) {
 	        administradores.add(convertirAdministradorDTOAAdministrador(administradorDTO));
@@ -330,7 +359,7 @@ public class MapHandler {
 	    return administradores;
 	}
 
-	public ArrayList<JugadorDTO> convertirJugadoresAJugadoresDTO(ArrayList<Jugador> jugadores) {
+	public static ArrayList<JugadorDTO> convertirJugadoresAJugadoresDTO(ArrayList<Jugador> jugadores) {
 	    ArrayList<JugadorDTO> jugadoresDTO = new ArrayList<>();
 	    for (Jugador jugador : jugadores) {
 	        jugadoresDTO.add(convertirJugadorAJugadorDTO(jugador));
@@ -338,7 +367,7 @@ public class MapHandler {
 	    return jugadoresDTO;
 	}
 
-	public ArrayList<Jugador> convertirJugadoresDTOAJugadores(ArrayList<JugadorDTO> jugadoresDTO) {
+	public static ArrayList<Jugador> convertirJugadoresDTOAJugadores(ArrayList<JugadorDTO> jugadoresDTO) {
 	    ArrayList<Jugador> jugadores = new ArrayList<>();
 	    for (JugadorDTO jugadorDTO : jugadoresDTO) {
 	        jugadores.add(convertirJugadorDTOAJugador(jugadorDTO));
@@ -346,7 +375,7 @@ public class MapHandler {
 	    return jugadores;
 	}
 
-	public ArrayList<EntrenadorDTO> convertirEntrenadoresAEntrenadoresDTO(ArrayList<Entrenador> entrenadores) {
+	public static ArrayList<EntrenadorDTO> convertirEntrenadoresAEntrenadoresDTO(ArrayList<Entrenador> entrenadores) {
 	    ArrayList<EntrenadorDTO> entrenadoresDTO = new ArrayList<>();
 	    for (Entrenador entrenador : entrenadores) {
 	        entrenadoresDTO.add(convertirEntrenadorAEntrenadorDTO(entrenador));
@@ -354,7 +383,7 @@ public class MapHandler {
 	    return entrenadoresDTO;
 	}
 
-	public ArrayList<Entrenador> convertirEntrenadoresDTOAEntrenadores(ArrayList<EntrenadorDTO> entrenadoresDTO) {
+	public static ArrayList<Entrenador> convertirEntrenadoresDTOAEntrenadores(ArrayList<EntrenadorDTO> entrenadoresDTO) {
 	    ArrayList<Entrenador> entrenadores = new ArrayList<>();
 	    for (EntrenadorDTO entrenadorDTO : entrenadoresDTO) {
 	        entrenadores.add(convertirEntrenadorDTOAEntrenador(entrenadorDTO));
@@ -362,7 +391,7 @@ public class MapHandler {
 	    return entrenadores;
 	}
 
-	public ArrayList<EquipoDTO> convertirEquiposAEquiposDTO(ArrayList<Equipo> equipos) {
+	public static ArrayList<EquipoDTO> convertirEquiposAEquiposDTO(ArrayList<Equipo> equipos) {
 	    ArrayList<EquipoDTO> equiposDTO = new ArrayList<>();
 	    for (Equipo equipo : equipos) {
 	        equiposDTO.add(convertirEquipoAEquipoDTO(equipo));
@@ -370,14 +399,14 @@ public class MapHandler {
 	    return equiposDTO;
 	}
 
-	public ArrayList<Equipo> convertirEquiposDTOAEquipos(ArrayList<EquipoDTO> equiposDTO) {
+	public static ArrayList<Equipo> convertirEquiposDTOAEquipos(ArrayList<EquipoDTO> equiposDTO) {
 	    ArrayList<Equipo> equipos = new ArrayList<>();
 	    for (EquipoDTO equipoDTO : equiposDTO) {
 	        equipos.add(convertirEquipoDTOAEquipo(equipoDTO));
 	    }
 	    return equipos;
 	}
-	public ArrayList<TorneoEliminacionDTO> convertirTorneosEliminacionATorneosEliminacionDTO(ArrayList<TorneoEliminacion> torneos) {
+	public static ArrayList<TorneoEliminacionDTO> convertirTorneosEliminacionATorneosEliminacionDTO(ArrayList<TorneoEliminacion> torneos) {
 	    ArrayList<TorneoEliminacionDTO> torneosDTO = new ArrayList<>();
 	    for (TorneoEliminacion torneo : torneos) {
 	        torneosDTO.add(convertirTorneoEliminacionATorneoEliminacionDTO(torneo));
@@ -385,7 +414,7 @@ public class MapHandler {
 	    return torneosDTO;
 	}
 
-	public ArrayList<TorneoEliminacion> convertirTorneosEliminacionDTOATorneosEliminacion(ArrayList<TorneoEliminacionDTO> torneosDTO) {
+	public static ArrayList<TorneoEliminacion> convertirTorneosEliminacionDTOATorneosEliminacion(ArrayList<TorneoEliminacionDTO> torneosDTO) {
 	    ArrayList<TorneoEliminacion> torneos = new ArrayList<>();
 	    for (TorneoEliminacionDTO torneoDTO : torneosDTO) {
 	        torneos.add(convertirTorneoEliminacionDTOATorneoEliminacion(torneoDTO));
@@ -393,7 +422,7 @@ public class MapHandler {
 	    return torneos;
 	}
 
-	public ArrayList<TorneoPuntosDTO> convertirTorneosPuntosATorneosPuntosDTO(ArrayList<TorneoPuntos> torneos) {
+	public static ArrayList<TorneoPuntosDTO> convertirTorneosPuntosATorneosPuntosDTO(ArrayList<TorneoPuntos> torneos) {
 	    ArrayList<TorneoPuntosDTO> torneosDTO = new ArrayList<>();
 	    for (TorneoPuntos torneo : torneos) {
 	        torneosDTO.add(convertirTorneoPuntosATorneoPuntosDTO(torneo));
@@ -401,7 +430,7 @@ public class MapHandler {
 	    return torneosDTO;
 	}
 
-	public ArrayList<TorneoPuntos> convertirTorneosPuntosDTOATorneosPuntos(ArrayList<TorneoPuntosDTO> torneosDTO) {
+	public static ArrayList<TorneoPuntos> convertirTorneosPuntosDTOATorneosPuntos(ArrayList<TorneoPuntosDTO> torneosDTO) {
 	    ArrayList<TorneoPuntos> torneos = new ArrayList<>();
 	    for (TorneoPuntosDTO torneoDTO : torneosDTO) {
 	        torneos.add(convertirTorneoPuntosDTOATorneoPuntos(torneoDTO));
@@ -409,7 +438,7 @@ public class MapHandler {
 	    return torneos;
 	}
 
-	public ArrayList<TorneoGruposDTO> convertirTorneosGruposATorneosGruposDTO(ArrayList<TorneoGrupos> torneos) {
+	public static ArrayList<TorneoGruposDTO> convertirTorneosGruposATorneosGruposDTO(ArrayList<TorneoGrupos> torneos) {
 	    ArrayList<TorneoGruposDTO> torneosDTO = new ArrayList<>();
 	    for (TorneoGrupos torneo : torneos) {
 	        torneosDTO.add(convertirTorneoGruposATorneoGruposDTO(torneo));
@@ -417,7 +446,7 @@ public class MapHandler {
 	    return torneosDTO;
 	}
 
-	public ArrayList<TorneoGrupos> convertirTorneosGruposDTOATorneosGrupos(ArrayList<TorneoGruposDTO> torneosDTO) {
+	public static ArrayList<TorneoGrupos> convertirTorneosGruposDTOATorneosGrupos(ArrayList<TorneoGruposDTO> torneosDTO) {
 	    ArrayList<TorneoGrupos> torneos = new ArrayList<>();
 	    for (TorneoGruposDTO torneoDTO : torneosDTO) {
 	        torneos.add(convertirTorneoGruposDTOATorneoGrupos(torneoDTO));

@@ -22,7 +22,7 @@ public class VentanaInicioSesion extends JFrame{
 		add(getPanelInicioSesion());
 		
 		
-		setVisible(false);
+		setVisible(true);
 
 	}
 

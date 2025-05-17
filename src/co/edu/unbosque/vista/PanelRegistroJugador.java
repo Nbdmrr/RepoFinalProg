@@ -2,6 +2,7 @@ package co.edu.unbosque.vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PanelRegistroJugador extends PanelRegistro {
 
@@ -40,10 +41,13 @@ public class PanelRegistroJugador extends PanelRegistro {
         campoExtra2.revalidate();
         campoExtra1.repaint();
         campoExtra2.repaint();
+        btnVolver.setActionCommand("VOLVERAINICIOSESIONDEREGISTROJUGADOR");
+        btnRegistrarse.setActionCommand("REGISTRARJUGADOR");
     }
+    
 
     // Método para cargar los equipos desde un arreglo de strings
-    public void setEquipos(String[] equipos) {
+    public void setEquipos(ArrayList<String> equipos) {
         comboEquipo.removeAllItems();
         if (equipos != null) {
             for (String equipo : equipos) {

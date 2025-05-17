@@ -1,48 +1,56 @@
 package co.edu.unbosque.modelo.persistencia;
 
 import co.edu.unbosque.modelo.Equipo;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectorioEquiposDAO implements InterfaceDAO<Equipo> {
 
-    private Archivo<Equipo> archivo;
-    private List<Equipo> equipos;
+    private ArrayList<Equipo> equipos;
+    private Archivo archivo;
 
-    public DirectorioEquiposDAO(String rutaArchivo) {
-        this.archivo = new Archivo<>(rutaArchivo);
-        this.equipos = archivo.cargar();
+    public DirectorioEquiposDAO() {
+        equipos = new ArrayList<Equipo>();
+        archivo = new Archivo();
+    }
+
+    public void actualizarEquipos() {
+        equipos = archivo.leerArchivoEquipos();
     }
 
     @Override
-    public boolean add(Equipo equipo) {
-        if (equipo == null || equipo.getNombre() == null || equipo.getNombre().isEmpty()) {
-            return false;
+    public boolean add(Equipo x) {
+        if (find(x) == null) {
+            equipos.add(x);
+            archivo.escribirArchivoEquipos(equipos);
+            return true;
         }
-        for (Equipo e : equipos) {
-            if (e.getNombre().equalsIgnoreCase(equipo.getNombre())) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Equipo x) {
+        Equipo y = find(x);
+        if (y != null) {
+            try {
+                equipos.remove(y);
+                archivo.getUbicacionArchivoEquipos().delete();
+                archivo.getUbicacionArchivoEquipos().createNewFile();
+                archivo.escribirArchivoEquipos(equipos);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
                 return false;
             }
         }
-        boolean added = equipos.add(equipo);
-        if (added) {
-            archivo.guardar(equipos);
-        }
-        return added;
+        return false;
     }
 
     @Override
-    public boolean delete(Equipo equipo) {
-        boolean removed = equipos.remove(equipo);
-        if (removed) {
-            archivo.guardar(equipos);
-        }
-        return removed;
-    }
-
-    @Override
-    public Equipo find(Equipo equipo) {
+    public Equipo find(Equipo x) {
         for (Equipo e : equipos) {
-            if (e.getNombre().equalsIgnoreCase(equipo.getNombre())) {
+            if (e.getNombre().equals(x.getNombre())) {
                 return e;
             }
         }
@@ -50,25 +58,31 @@ public class DirectorioEquiposDAO implements InterfaceDAO<Equipo> {
     }
 
     @Override
-    public boolean update(Equipo equipoActual, Equipo equipoNuevo) {
-        int index = equipos.indexOf(equipoActual);
-        if (index != -1) {
-            equipos.set(index, equipoNuevo);
-            archivo.guardar(equipos);
-            return true;
-        }
-        return false;
+    public ArrayList<Equipo> getAll() {
+    	// TODO Auto-generated method stub
+    	return equipos;
     }
 
     @Override
-    public String getAll() {
-        if (equipos.isEmpty()) {
-            return "No hay equipos registrados.";
+    public boolean update(Equipo x, Equipo y) {
+        Equipo e = find(x);
+        if (e != null) {
+            try {
+                equipos.remove(e);
+                e.setNombre(y.getNombre());
+                e.setEntrenador1(y.getEntrenador1());
+                e.setEntrenador2(y.getEntrenador2());
+                e.setEntrenador3(y.getEntrenador3());
+                e.setEquipo(y.getEquipo());
+                archivo.getUbicacionArchivoEquipos().delete();
+                archivo.getUbicacionArchivoEquipos().createNewFile();
+                archivo.escribirArchivoEquipos(equipos);
+                return true;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return false;
+            }
         }
-        StringBuilder sb = new StringBuilder();
-        for (Equipo equipo : equipos) {
-            sb.append("Equipo: ").append(equipo.getNombre()).append("\n");
-        }
-        return sb.toString();
+        return false;
     }
 }

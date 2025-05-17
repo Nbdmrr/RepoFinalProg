@@ -1,38 +1,56 @@
 package co.edu.unbosque.modelo.persistencia;
 
 import co.edu.unbosque.modelo.TorneoGrupos;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DirectorioTorneosGruposDAO implements InterfaceDAO<TorneoGrupos> {
-    private List<TorneoGrupos> torneosGrupos;
+
+    private ArrayList<TorneoGrupos> torneosGrupos;
+    private Archivo archivo;
 
     public DirectorioTorneosGruposDAO() {
         this.torneosGrupos = new ArrayList<>();
+        archivo = new Archivo();
+    }
+
+    public void actualizarTorneosGrupos() {
+        torneosGrupos = archivo.leerArchivoTorneosGrupos();
     }
 
     @Override
-    public boolean add(TorneoGrupos torneo) {
-        if (torneo == null || torneo.getNombre() == null || torneo.getNombre().isEmpty()) {
-            return false;
+    public boolean add(TorneoGrupos x) {
+        if (find(x) == null) {
+            torneosGrupos.add(x);
+            archivo.escribirArchivoTorneosGrupos(torneosGrupos);
+            return true;
         }
-        for (TorneoGrupos t : torneosGrupos) {
-            if (t.getNombre().equalsIgnoreCase(torneo.getNombre())) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(TorneoGrupos x) {
+        TorneoGrupos t = find(x);
+        if (t != null) {
+            try {
+                torneosGrupos.remove(t);
+                archivo.getUbicacionArchivoTorneosGrupos().delete();
+                archivo.getUbicacionArchivoTorneosGrupos().createNewFile();
+                archivo.escribirArchivoTorneosGrupos(torneosGrupos);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
                 return false;
             }
         }
-        return torneosGrupos.add(torneo);
+        return false;
     }
 
     @Override
-    public boolean delete(TorneoGrupos torneo) {
-        return torneosGrupos.remove(torneo);
-    }
-
-    @Override
-    public TorneoGrupos find(TorneoGrupos torneo) {
+    public TorneoGrupos find(TorneoGrupos x) {
         for (TorneoGrupos t : torneosGrupos) {
-            if (t.getNombre().equalsIgnoreCase(torneo.getNombre())) {
+            if (t.getNombre().equals(x.getNombre())) {
                 return t;
             }
         }
@@ -40,24 +58,44 @@ public class DirectorioTorneosGruposDAO implements InterfaceDAO<TorneoGrupos> {
     }
 
     @Override
-    public boolean update(TorneoGrupos torneoActual, TorneoGrupos torneoNuevo) {
-        int index = torneosGrupos.indexOf(torneoActual);
-        if (index != -1) {
-            torneosGrupos.set(index, torneoNuevo);
-            return true;
-        }
-        return false;
+    public ArrayList<TorneoGrupos> getAll() {
+    	// TODO Auto-generated method stub
+    	return torneosGrupos;
     }
 
     @Override
-    public String getAll() {
-        if (torneosGrupos.isEmpty()) {
-            return "No hay torneos de grupos registrados.";
+    public boolean update(TorneoGrupos x, TorneoGrupos y) {
+        TorneoGrupos t = find(x);
+        if (t != null) {
+            try {
+                torneosGrupos.remove(t);
+                t.setNombre(y.getNombre());
+                t.setEstado(y.getEstado());
+                t.setCronograma(y.getCronograma());
+                t.setEquipo1(y.getEquipo1());
+                t.setEquipo2(y.getEquipo2());
+                t.setEquipo3(y.getEquipo3());
+                t.setEquipo4(y.getEquipo4());
+                t.setEquipoGanador1(y.getEquipoGanador1());
+                t.setEquipoGanador2(y.getEquipoGanador2());
+                t.setEquipoGanadorTorneo(y.getEquipoGanadorTorneo());
+                t.setFase(y.getFase());
+                t.setFechas(y.getFechas());
+                t.setJuego(y.getJuego());
+                t.setLimiteParticipantes(y.getLimiteParticipantes());
+                t.setParticipantes(y.getParticipantes());
+                t.setTipo(y.getTipo());
+                
+                // agregar más campos si tiene TorneoGrupos
+                archivo.getUbicacionArchivoTorneosGrupos().delete();
+                archivo.getUbicacionArchivoTorneosGrupos().createNewFile();
+                archivo.escribirArchivoTorneosGrupos(torneosGrupos);
+                return true;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return false;
+            }
         }
-        StringBuilder sb = new StringBuilder();
-        for (TorneoGrupos torneo : torneosGrupos) {
-            sb.append("Torneo: ").append(torneo.getNombre()).append("\n");
-        }
-        return sb.toString();
+        return false;
     }
 }

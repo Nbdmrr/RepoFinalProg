@@ -6,59 +6,77 @@ import java.util.List;
 
 public class DirectorioEntrenadoresDAO implements InterfaceDAO<Entrenador> {
 
-    private List<Entrenador> entrenadores;
+    private ArrayList<Entrenador> entrenadores;
+    private Archivo archivo;
 
     public DirectorioEntrenadoresDAO() {
         this.entrenadores = new ArrayList<>();
+        archivo = new Archivo();
+    }
+
+    public void actualizarEntrenadores() {
+    	entrenadores = archivo.leerArchivoEntrenadores();
+    	if (entrenadores == null) {
+    	    entrenadores = new ArrayList<>();
+    	}
+
     }
 
     @Override
-    public boolean add(Entrenador entrenador) {
-        if (entrenador == null || entrenador.getUsuario() == null || entrenador.getUsuario().isEmpty()) {
-            return false;
-        }
-        for (Entrenador e : entrenadores) {
-            if (e.getUsuario().equalsIgnoreCase(entrenador.getUsuario())) {
-                return false;
-            }
-        }
-        return entrenadores.add(entrenador);
-    }
-
-    @Override
-    public boolean delete(Entrenador entrenador) {
-        return entrenadores.remove(entrenador);
-    }
-
-    @Override
-    public Entrenador find(Entrenador entrenador) {
-        for (Entrenador e : entrenadores) {
-            if (e.getUsuario().equalsIgnoreCase(entrenador.getUsuario())) {
-                return e;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean update(Entrenador entrenadorActual, Entrenador entrenadorNuevo) {
-        int index = entrenadores.indexOf(entrenadorActual);
-        if (index != -1) {
-            entrenadores.set(index, entrenadorNuevo);
+    public boolean add(Entrenador x) {
+        if (find(x) == null) {
+            entrenadores.add(x);
+            archivo.escribirArchivoEntrenadores(entrenadores);
             return true;
         }
         return false;
     }
 
     @Override
-    public String getAll() {
-        if (entrenadores.isEmpty()) {
-            return "No hay entrenadores registrados.";
+    public boolean delete(Entrenador x) {
+        Entrenador y = find(x);
+        if (y != null) {
+            entrenadores.remove(y);
+            archivo.escribirArchivoEntrenadores(entrenadores);
+            return true;
         }
-        StringBuilder sb = new StringBuilder();
-        for (Entrenador entrenador : entrenadores) {
-            sb.append("Entrenador: ").append(entrenador.getUsuario()).append("\n");
+        return false;
+    }
+
+    @Override
+    public Entrenador find(Entrenador x) {
+        if (x == null || x.getUsuario() == null) {
+            return null;
         }
-        return sb.toString();
+
+        for (Entrenador e : entrenadores) {
+            if (e != null && x.getUsuario().equals(e.getUsuario())) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+
+   @Override
+public ArrayList<Entrenador> getAll() {
+	// TODO Auto-generated method stub
+	return entrenadores;
+}
+
+    @Override
+    public boolean update(Entrenador x, Entrenador y) {
+        Entrenador e = find(x);
+        if (e != null) {
+            entrenadores.remove(e);
+            e.setUsuario(y.getUsuario());
+            e.setContraseña(y.getContraseña());
+            e.setEquipo(y.getEquipo());
+            e.setCorreo(y.getCorreo());
+            e.setNacionalidad(y.getNacionalidad());
+            archivo.escribirArchivoEntrenadores(entrenadores);
+            return true;
+        }
+        return false;
     }
 }

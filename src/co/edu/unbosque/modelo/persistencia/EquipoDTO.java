@@ -1,9 +1,15 @@
 package co.edu.unbosque.modelo.persistencia;
 
 import co.edu.unbosque.modelo.Equipo;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EquipoDTO {
+public class EquipoDTO implements Serializable{
+	
+	
+	
+	private static final long serialVersionUID = 1L;
     private String nombre;
     private ArrayList<JugadorDTO> equipo;
     private EntrenadorDTO entrenador1;
@@ -50,15 +56,5 @@ public class EquipoDTO {
         this.entrenador3 = entrenador3;
     }
 
-    public Equipo toEntity() {
-        Equipo equipoEntity = new Equipo(nombre, entrenador1.toEntity());
-        equipoEntity.setEquipo(new ArrayList<>());
-        return equipoEntity;
-    }
-
-    public static EquipoDTO fromEntity(Equipo equipo) {
-        EquipoDTO dto = new EquipoDTO();
-        dto.setNombre(equipo.getNombre());
-        return dto;
-    }
+    
 }

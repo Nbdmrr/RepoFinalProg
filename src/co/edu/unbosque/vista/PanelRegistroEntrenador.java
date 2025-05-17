@@ -26,6 +26,8 @@ public class PanelRegistroEntrenador extends PanelRegistro {
 
     campoExtra1.revalidate();
     campoExtra1.repaint();
+    btnVolver.setActionCommand("VOLVERAINICIOSESIONDEREGISTROENTRENADOR");
+    btnRegistrarse.setActionCommand("REGISTRARENTRENADOR");
     }
 
     public JTextField getTxtEquipo() {

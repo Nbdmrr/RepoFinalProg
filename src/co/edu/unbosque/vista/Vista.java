@@ -1,5 +1,7 @@
 package co.edu.unbosque.vista;
 
+import javax.swing.JOptionPane;
+
 public class Vista {
 	
 	private VentanaAvanzeYInicioTorneo ventanaAvanzeTorneo;
@@ -126,10 +128,15 @@ public class Vista {
 		this.ventanaAvanzeTorneo = ventanAvanzeTorneo;
 	}
 
-    public void mostrarMensaje(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mostrarMensaje'");
-    }
+	public void mostrarMensaje(String string) {
+	    JOptionPane.showMessageDialog(
+	        null,
+	        string,
+	        "Advertencia",
+	        JOptionPane.WARNING_MESSAGE
+	    );
+	}
+
 	
 
 }

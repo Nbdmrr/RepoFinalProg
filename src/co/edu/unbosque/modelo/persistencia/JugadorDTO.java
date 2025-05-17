@@ -3,6 +3,9 @@ package co.edu.unbosque.modelo.persistencia;
 import co.edu.unbosque.modelo.Jugador;
 
 public class JugadorDTO extends UsuarioDTO {
+	
+	
+	
 
     private int partidasJugadas;
     private int torneosJugados;
@@ -69,29 +72,5 @@ public class JugadorDTO extends UsuarioDTO {
         this.equipo = equipo;
     }
 
-    public Jugador toEntity() {
-        Jugador jugador = new Jugador(usuario, contraseña, nacionalidad, correo, especialidad, equipo);
-        jugador.setPartidasJugadas(partidasJugadas);
-        jugador.setTorneosJugados(torneosJugados);
-        jugador.setPartidasGanadas(partidasGanadas);
-        jugador.setTorneosGanados(torneosGanados);
-        jugador.setPuntos(puntos);
-        return jugador;
-    }
-
-    public static JugadorDTO fromEntity(Jugador jugador) {
-        JugadorDTO dto = new JugadorDTO();
-        dto.setUsuario(jugador.getUsuario());
-        dto.setContraseña(jugador.getContraseña());
-        dto.setNacionalidad(jugador.getNacionalidad());
-        dto.setCorreo(jugador.getCorreo());
-        dto.setEspecialidad(jugador.getEspecialidad());
-        dto.setEquipo(jugador.getEquipo());
-        dto.setPartidasJugadas(jugador.getPartidasJugadas());
-        dto.setTorneosJugados(jugador.getTorneosJugados());
-        dto.setPartidasGanadas(jugador.getPartidasGanadas());
-        dto.setTorneosGanados(jugador.getTorneosGanados());
-        dto.setPuntos(jugador.getPuntos());
-        return dto;
-    }
+    
 }

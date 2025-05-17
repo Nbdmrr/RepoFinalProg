@@ -55,14 +55,17 @@ public class PanelInicioSesion extends JPanel {
 
         // Botones
         btnIniciarSesion = new JButton("Iniciar Sesión");
-        btnIniciarSesion.setBounds(275, 270, 150, 40);  // Ajustado
+        btnIniciarSesion.setBounds(275, 270, 150, 40);
+        btnIniciarSesion.setActionCommand("INICIARSESION");// Ajustado
         lblFondo.add(btnIniciarSesion);
 
         btnRegistrarJugador = new JButton("Registrar Jugador");
-        btnRegistrarJugador.setBounds(350, 220, 200, 40);  // Ajustado
+        btnRegistrarJugador.setBounds(350, 220, 200, 40); 
+        btnRegistrarJugador.setActionCommand("ABRIRREGISTROJUGADOR");// Ajustado
         lblFondo.add(btnRegistrarJugador);
         
         btnRegistrarEntrenador = new JButton("Registrar Entrenador");
+        btnRegistrarEntrenador.setActionCommand("ABRIRREGISTROENTRENADOR");
         btnRegistrarEntrenador.setBounds(150, 220, 200, 40);  // Ajustado
         lblFondo.add(btnRegistrarEntrenador);
     }

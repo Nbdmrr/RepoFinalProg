@@ -19,7 +19,7 @@ public class VentanaCronograma extends JFrame{
 
 		setPanelCronograma(new PanelCronograma());
 		add(getPanelCronograma());
-		setVisible(true);
+		setVisible(false);
 	}
 
 	public PanelCronograma getPanelCronograma() {

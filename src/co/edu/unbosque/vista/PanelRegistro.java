@@ -110,6 +110,24 @@ public class PanelRegistro extends JPanel {
 
         add(panelCampos, BorderLayout.CENTER);
     }
+    public boolean validarCorreo(String correo) {
+        // Lista de dominios permitidos
+        String[] dominiosValidos = {"@gmail.com", "@hotmail.com", "@unbosque.edu.co", "@outlook.com"};
+
+        // Verificar si el correo termina con alguno de los dominios
+        for (String dominio : dominiosValidos) {
+            if (correo.endsWith(dominio)) {
+                return true;
+            }
+        }
+
+        // Si no es válido, mostrar mensaje y limpiar
+        JOptionPane.showMessageDialog(this, "El correo debe terminar en @gmail.com, @hotmail.com, @outlook.com o @unbosque.edu.co", "Correo inválido", JOptionPane.WARNING_MESSAGE);
+        
+        return false;
+    }
+
+
 
     // Getters
     public JTextField getTxtUsuario() {

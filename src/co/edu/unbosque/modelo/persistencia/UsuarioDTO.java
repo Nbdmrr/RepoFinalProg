@@ -1,8 +1,10 @@
 package co.edu.unbosque.modelo.persistencia;
 
+import java.io.Serializable;
+
 import co.edu.unbosque.modelo.Usuario;
 
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable{
 
     protected static final long serialVersionUID = 1L;
     protected String usuario;

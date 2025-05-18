@@ -371,5 +371,11 @@ public class PanelPrincipalAdmin extends JPanel {
     public void setBotonCrearTorneo(JButton botonCrearTorneo) {
         this.botonCrearTorneo = botonCrearTorneo;
     }
+
+
+    public AbstractButton getValorCorreo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getValorCorreo'");
+    }
 }
 

@@ -591,4 +591,87 @@ public class Controlador implements ActionListener{
     public void setDirectorioPrincipal(DirectorioPrincipal directorioPrincipal) {
         this.directorioPrincipal = directorioPrincipal;
     }
-}
+    /**
+     * @param nuevoTorneo El torneo recién creado.
+     */
+    public void enviarCorreosNuevoTorneo(Torneo nuevoTorneo) {
+        ArrayList<String> destinatarios = new ArrayList<>();
+
+        // Recolectar correos de jugadores
+        ArrayList<Jugador> jugadores = directorioPrincipal.getDirectorioJugadores().obtenerJugador();
+        for (Jugador jugador : jugadores) {
+            destinatarios.add(jugador.getCorreo());
+        }
+
+        // Recolectar correos de entrenadores
+        ArrayList<Entrenador> entrenadores = directorioPrincipal.getDirectorioEntrenadores().obtenerEntrenadores();
+        for (Entrenador entrenador : entrenadores) {
+            destinatarios.add(entrenador.getCorreo());
+        }
+
+        // Recolectar correos de administradores
+        ArrayList<Administrador> administradores = directorioPrincipal.getDirectorioAdministradores()
+                .obtenerAdministradores();
+        for (Administrador administrador : administradores) {
+            destinatarios.add(administrador.getCorreo());
+        }
+
+        // Enviar el correo
+        if (!destinatarios.isEmpty()) {
+            String mensaje = "Se ha creado un nuevo torneo: " + nuevoTorneo.getNombre() + ". Tipo: "
+                    + nuevoTorneo.getTipo() + ". Juego: " + nuevoTorneo.getJuego() + ". Límite de participantes: "
+                    + nuevoTorneo.getLimiteParticipantes();
+            enviarCorreo(destinatarios, mensaje,
+                    vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getValorCorreo().getText());
+        } else {
+            vista.mostrarMensaje("No hay usuarios registrados para enviar el correo.");
+        }
+    }
+
+    /**
+     * Envia un correo electrónico a una lista de destinatarios.
+     * 
+     * @param destinatarios Lista de direcciones de correo electrónico de los
+     *                      destinatarios.
+     * @param mensaje       El cuerpo del mensaje.
+     * @param remitente     La dirección de correo electrónico del remitente.
+     */
+    private void enviarCorreo(ArrayList<String> destinatarios, String mensaje, String remitente) {
+        String asunto = "Nuevo torneo creado";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        String cuentaRemitente = "alugou@ubosque.edu.co"; // Reemplaza con tu correo
+        String passwordRemitente = "Alu1304*"; // Reemplaza con tu contraseña
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(cuentaRemitente, passwordRemitente);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(remitente));
+            message.setSubject(asunto);
+            message.setText(mensaje);
+
+            for (String destinatario : destinatarios) {
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+                Transport.send(message);
+            }
+
+            vista.mostrarMensaje("Correo enviado correctamente a todos los usuarios.");
+
+        } catch (MessagingException e) {
+            vista.mostrarMensaje("Error al enviar el correo: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            vista.mostrarMensaje("Error inesperado: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }

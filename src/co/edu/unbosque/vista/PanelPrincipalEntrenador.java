@@ -110,16 +110,19 @@ public class PanelPrincipalEntrenador extends JPanel {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botonVolver = new JButton("Volver");
         botonUnirse = new JButton("Unirse a un equipo");
+        
         botonCrear = new JButton("Crear Equipo");
-        botonElegirEquipo = new JButton("Elegir Equipo");
-        botonElegirEquipo.setActionCommand("ELEGIRTORNEO");
+        botonCrear.setActionCommand("CREACIONEQUIPO");
+        
+        setBotonElegirEquipo(new JButton("Elegir Equipo"));
+        getBotonElegirEquipo().setActionCommand("ELEGIREQUIPO");
 
         botonVolver.setActionCommand("VOLVERDEENTRENADORAINICIO");
-
+        botonUnirse.setActionCommand("UNIRSEAEQUIPO");
         panelBotones.add(botonVolver);
         panelBotones.add(botonUnirse);
         panelBotones.add(botonCrear);
-        panelBotones.add(botonElegirEquipo);
+        panelBotones.add(getBotonElegirEquipo());
 
         panelInferior.add(panelMensaje);
         panelInferior.add(Box.createHorizontalStrut(20));
@@ -421,4 +424,23 @@ public class PanelPrincipalEntrenador extends JPanel {
     public void setValorCorreo(JLabel valorCorreo) {
         this.valorCorreo = valorCorreo;
     }
+
+    /**
+     * Obtiene el botón "Elegir Equipo".
+     * 
+     * @return el botón "Elegir Equipo"
+     */
+    public JButton getBotonElegirEquipo() {
+        return botonElegirEquipo;
+    }
+
+    /**
+     * Establece el botón "Elegir Equipo".
+     * 
+     * @param botonElegirEquipo el botón "Elegir Equipo" a asignar
+     */
+    public void setBotonElegirEquipo(JButton botonElegirEquipo) {
+        this.botonElegirEquipo = botonElegirEquipo;
+    }
+
 }

@@ -16,6 +16,7 @@ public class Vista {
 	private VentanaRegistroAdmin ventanaRegistroAdmin;
 	private VentanaRegistroEntrenador ventanaRegistroEntrenador;
 	private VentanaRegistroJugador ventanaRegistroJugador;
+	private VentanaListaEquipos ventanaListaEquipos;
 	
 	public Vista() {
 		this.ventanaAvanzeTorneo = new VentanaAvanzeYInicioTorneo();
@@ -30,6 +31,7 @@ public class Vista {
         this.ventanaRegistroAdmin = new VentanaRegistroAdmin();
         this.ventanaRegistroEntrenador = new VentanaRegistroEntrenador();
         this.ventanaRegistroJugador = new VentanaRegistroJugador();
+        this.setVentanaListaEquipos(new VentanaListaEquipos());
 	}
 
 	public VentanaRegistroJugador getVentanaRegistroJugador() {
@@ -136,6 +138,14 @@ public class Vista {
 	        "Advertencia",
 	        JOptionPane.WARNING_MESSAGE
 	    );
+	}
+
+	public VentanaListaEquipos getVentanaListaEquipos() {
+		return ventanaListaEquipos;
+	}
+
+	public void setVentanaListaEquipos(VentanaListaEquipos ventanaListaEquipos) {
+		this.ventanaListaEquipos = ventanaListaEquipos;
 	}
 
 	

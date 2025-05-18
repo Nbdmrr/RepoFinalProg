@@ -1,5 +1,7 @@
 package co.edu.unbosque.modelo;
 
+import java.util.ArrayList;
+
 /**
  * Clase que representa un administrador, que es un tipo de usuario.
  * Contiene además el cargo que desempeña el administrador.
@@ -41,4 +43,8 @@ public class Administrador extends Usuario {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
+	
+
+	
+
 }

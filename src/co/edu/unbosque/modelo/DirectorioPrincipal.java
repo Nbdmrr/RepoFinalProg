@@ -335,6 +335,19 @@ public class DirectorioPrincipal {
     public void setTorneoEliminacionPrincipal(TorneoEliminacion torneoEliminacionPrincipal) {
         this.torneoEliminacionPrincipal = torneoEliminacionPrincipal;
     }
+    /**
+	 * Recorre un ArrayList de jugadores y retorna un ArrayList de Strings con los usuarios.
+	 * 
+	 * @param jugadores Lista de jugadores
+	 * @return Lista de nombres de usuario
+	 */
+	public ArrayList<String> obtenerUsuarios(ArrayList<Jugador> jugadores) {
+	    ArrayList<String> usuarios = new ArrayList<>();
+	    for (Jugador jugador : jugadores) {
+	        usuarios.add(jugador.getUsuario());
+	    }
+	    return usuarios;
+	}
 
 
 }

@@ -84,6 +84,18 @@ public class Controlador implements ActionListener{
 		vista.getVentanAvanzeTorneo().getPanelAvanceYInicioTorneo().getBtnIniciarTorneo().addActionListener(this);
 		vista.getVentanAvanzeTorneo().getPanelAvanceYInicioTorneo().getBtnVolver().addActionListener(this);
 		vista.getVentanaCronograma().getPanelCronograma().getBotonVolver().addActionListener(this);
+		vista.getVentanaDatosTorneo().getPanelDatosTorneo().getBotonCronograma().addActionListener(this);
+		vista.getVentanaDatosTorneo().getPanelDatosTorneo().getBotonVolver().addActionListener(this);
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getBotonUnirse().addActionListener(this);
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getBotonCrear().addActionListener(this);
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getBotonEnviar().addActionListener(this);
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getBotonVolver().addActionListener(this);
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getBotonElegirEquipo().addActionListener(this);
+		vista.getVentanaCrearEquipo().getPanelCrearEquipo().getBtnCrearEquipo().addActionListener(this);
+		vista.getVentanaCrearEquipo().getPanelCrearEquipo().getBtnVolver().addActionListener(this);
+		vista.getVentanaListaEquipos().getPanelListaEquipos().getBtnVolver().addActionListener(this);
+		
+		
 	}
 
 	@Override
@@ -936,7 +948,287 @@ else if(comando.equals("INICIARTORNEO")) {
 			        }
 			    }
 			}
+		} else if (comando.equals("VERTORNEO")) {
+
+			String nombreTorneoString = vista.getVentanaPrincipalJugador().getPanelPrincipalJugador().getListaTorneosParticipa().getSelectedValue();
+
+			if (nombreTorneoString != null) {
+			    String[] partes = nombreTorneoString.split("\\|\\|");
+			    if (partes.length > 0) {
+			        String[] subPartes = partes[0].split(":");
+			        if (subPartes.length > 1) {
+			            String nombreTorneo = subPartes[1].trim();
+
+			            // Buscar en todos los directorios de torneos
+			            TorneoEliminacion torneoEliminacion = directorioPrincipal.getDirectorioTorneosEliminacion()
+			                .encontrarTorneoEliminacion(MapHandler.convertirTorneoEliminacionATorneoEliminacionDTO(
+			                    new TorneoEliminacion(nombreTorneo, 0, "", "")));
+
+			            TorneoGrupos torneoGrupos = directorioPrincipal.getDirectorioTorneosGrupos()
+			                .encontrarTorneoGrupos(MapHandler.convertirTorneoGruposATorneoGruposDTO(
+			                    new TorneoGrupos(nombreTorneo, 0, "", "")));
+
+			            TorneoPuntos torneoPuntos = directorioPrincipal.getDirectorioTorneosPuntos()
+			                .encontrarTorneoPuntos(MapHandler.convertirTorneoPuntosATorneoPuntosDTO(
+			                    new TorneoPuntos(nombreTorneo, 0, "", "")));
+
+			            if (torneoEliminacion != null) {
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarNombre(torneoEliminacion.getNombre());
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarParticipantesRestantes(torneoEliminacion.getParticipantes().size());
+			                
+			                // Obtener cantidad de eliminados del HashMap de eliminados
+			                int cantidadEliminados = torneoEliminacion.getEliminados().size();
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarEliminados(cantidadEliminados);
+			                
+			                ArrayList<String> usuariosParticipantes = directorioPrincipal.obtenerUsuarios(torneoEliminacion.getParticipantes());
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarParticipantesRestantesList(usuariosParticipantes);
+
+			            } else if (torneoGrupos != null) {
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarNombre(torneoGrupos.getNombre());
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarParticipantesRestantes(torneoGrupos.getParticipantes().size());
+			                
+			                // Obtener cantidad de eliminados del HashMap de eliminados
+			                int cantidadEliminados = torneoGrupos.getEliminados().size();
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarEliminados(cantidadEliminados);
+
+			                ArrayList<String> usuariosParticipantes = directorioPrincipal.obtenerUsuarios(torneoGrupos.getParticipantes());
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarParticipantesRestantesList(usuariosParticipantes);
+
+			            } else if (torneoPuntos != null) {
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarNombre(torneoPuntos.getNombre());
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarParticipantesRestantes(torneoPuntos.getParticipantes().size());
+			                
+			                // No hay eliminados en Torneo Puntos, se deja el método sin actualización.
+			                ArrayList<String> usuariosParticipantes = directorioPrincipal.obtenerUsuarios(torneoPuntos.getParticipantes());
+			                vista.getVentanaDatosTorneo().getPanelDatosTorneo().actualizarParticipantesRestantesList(usuariosParticipantes);
+
+			            } else {
+			                vista.mostrarMensaje("Torneo no encontrado.");
+			                return;
+			            }
+
+			            vista.getVentanaPrincipalJugador().setVisible(false);
+			            vista.getVentanaDatosTorneo().setVisible(true);
+			        }
+			    }
+			}
+
+
+
+			
+			
+			
+		}else if(comando.equals("VOLVERAPRINCIPALJUGADORDEDATOSTORNEO")) {
+			
+			
+			vista.getVentanaDatosTorneo().setVisible(false);
+			vista.getVentanaPrincipalJugador().setVisible(true);
+			
+			
+		}else if(comando.equals("CRONOGRAMAJUGADOR")) {
+			
+			
+			String nombreTorneoString = vista.getVentanaPrincipalJugador().getPanelPrincipalJugador().getListaTorneosParticipa().getSelectedValue();
+
+			if (nombreTorneoString != null) {
+			    String[] partes = nombreTorneoString.split("\\|\\|");
+			    if (partes.length > 0) {
+			        String[] subPartes = partes[0].split(":");
+			        if (subPartes.length > 1) {
+			            String nombreTorneo = subPartes[1].trim();
+
+			            vista.getVentanAvanzeTorneo().setVisible(false);
+
+			            // Torneo Eliminación
+			            TorneoEliminacion torneoEliminacion = directorioPrincipal.getDirectorioTorneosEliminacion()
+			                .encontrarTorneoEliminacion(MapHandler.convertirTorneoEliminacionATorneoEliminacionDTO(new TorneoEliminacion(nombreTorneo, 0, "", "")));
+
+			            if (torneoEliminacion != null) {
+			            	
+			                if (torneoEliminacion.getEstado().equalsIgnoreCase("preparando")) {
+			                    vista.mostrarMensaje("Aún no hay cronograma.");
+			                    return;
+			                }
+			                vista.getVentanaCronograma().getPanelCronograma().actualizarCronogramaGeneral(torneoEliminacion.getCronograma());
+			                vista.getVentanaCronograma().setVisible(true);
+			                return;
+			            }
+
+			            // Torneo Grupos
+			            TorneoGrupos torneoGrupos = directorioPrincipal.getDirectorioTorneosGrupos()
+			                .encontrarTorneoGrupos(MapHandler.convertirTorneoGruposATorneoGruposDTO(new TorneoGrupos(nombreTorneo, 0, "", "")));
+
+			            if (torneoGrupos != null) {
+			                if (torneoGrupos.getEstado().equalsIgnoreCase("preparando")) {
+			                    vista.mostrarMensaje("Aún no hay cronograma.");
+			                    return;
+			                }
+			                directorioPrincipal.setTorneoGruposPrincipal(torneoGrupos);
+			                vista.getVentanaCronograma().getPanelCronograma().actualizarCronogramaGeneral(torneoGrupos.getCronograma());
+			                vista.getVentanaCronograma().setVisible(true);
+			                return;
+			            }
+
+			            // Torneo Puntos
+			            TorneoPuntos torneoPuntos = directorioPrincipal.getDirectorioTorneosPuntos()
+			                .encontrarTorneoPuntos(MapHandler.convertirTorneoPuntosATorneoPuntosDTO(new TorneoPuntos(nombreTorneo, 0, "", "")));
+
+			            if (torneoPuntos != null) {
+			                if (torneoPuntos.getEstado().equalsIgnoreCase("preparando")) {
+			                    vista.mostrarMensaje("Aún no hay cronograma.");
+			                    return;
+			                }
+			                directorioPrincipal.setTorneoPuntosPrincipal(torneoPuntos);
+			                vista.getVentanaCronograma().getPanelCronograma().actualizarCronogramaGeneral(torneoPuntos.getCronograma());
+			                vista.getVentanaCronograma().setVisible(true);
+			                return;
+			            }
+
+			            vista.mostrarMensaje("Torneo no encontrado.");
+			        }
+			    }
+			}
+		}else if(comando.equals("UNIRSEAEQUIPO")) {
+			
+			
+			String nombreEquipo = vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getListaEquiposDisponibles().getSelectedValue();
+
+			if (nombreEquipo != null) {
+			    Equipo equipoAux = new Equipo(nombreEquipo, null);
+			    Equipo equipo = directorioPrincipal.getDirectorioEquipos().encontrarEquipo(MapHandler.convertirEquipoAEquipoDTO(equipoAux));
+
+			    if (equipo == null) {
+			        vista.mostrarMensaje("Equipo no encontrado.");
+			        return;
+			    }
+
+			    Entrenador entrenadorPrincipal = directorioPrincipal.getEntrenadorPrincipal();
+			    String usuarioEntrenador = entrenadorPrincipal.getUsuario();
+
+			    // Verificar si el entrenador ya está en el equipo
+			    if ((equipo.getEntrenador1() != null && equipo.getEntrenador1().getUsuario().equals(usuarioEntrenador)) ||
+			        (equipo.getEntrenador2() != null && equipo.getEntrenador2().getUsuario().equals(usuarioEntrenador)) ||
+			        (equipo.getEntrenador3() != null && equipo.getEntrenador3().getUsuario().equals(usuarioEntrenador))) {
+
+			        vista.mostrarMensaje("El entrenador ya está asignado a este equipo.");
+			        return;
+			    }
+
+			    if (equipo.getEntrenador2() == null) {
+			        equipo.setEntrenador2(entrenadorPrincipal);
+			        actualizarListaEquiposQueEntrena(entrenadorPrincipal);
+			    } else if (equipo.getEntrenador3() == null) {
+			        equipo.setEntrenador3(entrenadorPrincipal);
+			        actualizarListaEquiposQueEntrena(entrenadorPrincipal);
+			    } else {
+			        vista.mostrarMensaje("El equipo ya tiene 3 entrenadores.");
+			        return;
+			    }
+
+			    // Actualizar el equipo en el directorio
+			    directorioPrincipal.getDirectorioEquipos().actualizarEquipo(
+			        MapHandler.convertirEquipoAEquipoDTO(equipo),
+			        MapHandler.convertirEquipoAEquipoDTO(equipo)
+			    );
+
+			    vista.mostrarMensaje("Entrenador asignado al equipo " + nombreEquipo + " con éxito.");
+			}
+
+
+			
+		}else if(comando.equals("VOLVERAPRINCIPALENTRENADORDECREARQUIPO")) {
+			
+			
+			
+			vista.getVentanaCrearEquipo().setVisible(false);
+			vista.getVentanaPrincipalEntrenador().setVisible(true);
+			
+			
+			
+			
+		}else if(comando.equals("CREACIONEQUIPO")) {
+			
+			vista.getVentanaPrincipalEntrenador().setVisible(false);
+			vista.getVentanaCrearEquipo().setVisible(true);
+			
+			
+		}else if(comando.equals("CREAREQUIPO")) {
+			
+			String nombreEquipo = vista.getVentanaCrearEquipo().getPanelCrearEquipo().getTxtNombreEquipo().getText();
+
+			if (nombreEquipo.isEmpty()) {
+			    vista.mostrarMensaje("El nombre del equipo no puede estar vacío.");
+			    return;
+			}
+
+			
+			Equipo equipoExistente = directorioPrincipal.getDirectorioEquipos().encontrarEquipo(
+			        MapHandler.convertirEquipoAEquipoDTO(new Equipo(nombreEquipo, null))
+			);
+
+			if (equipoExistente != null) {
+			    vista.mostrarMensaje("Ya existe un equipo con ese nombre.");
+			    return;
+			}
+
+			
+			Equipo equipoNuevo = new Equipo(nombreEquipo, directorioPrincipal.getEntrenadorPrincipal());
+
+			
+			directorioPrincipal.getDirectorioEquipos().adicionarEquipo(MapHandler.convertirEquipoAEquipoDTO(equipoNuevo));
+
+			
+			vista.mostrarMensaje("Equipo " + nombreEquipo + " registrado con éxito.");
+
+			
+			vista.getVentanaCrearEquipo().setVisible(false);
+			vista.getVentanaPrincipalEntrenador().setVisible(true);
+			actualizarListaEquiposDisponibles();
+
+			
+			
+		}else if (comando.equals("ELEGIREQUIPO")) {
+			
+			String seleccion = vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().getListaEquiposEntrenados().getSelectedValue();
+
+			if (seleccion != null) {
+			    // Eliminar "Nombre del Equipo:" y los espacios
+			    String nombreEquipo = seleccion.replace("Nombre del Equipo:", "").trim();
+
+			    // Crear un equipo auxiliar con el nombre obtenido
+			    Equipo equipoAux = new Equipo(nombreEquipo, null);
+
+			    // Buscar el equipo en el directorio
+			    Equipo equipo = directorioPrincipal.getDirectorioEquipos().encontrarEquipo(MapHandler.convertirEquipoAEquipoDTO(equipoAux));
+
+			    if (equipo != null) {
+			    	
+			    	
+			    ArrayList<String>  jugadoresString  =directorioPrincipal.obtenerUsuarios(equipo.getEquipo());
+			    	
+			        vista.getVentanaListaEquipos().getPanelListaEquipos().actualizarLista(jugadoresString);
+			        
+			        vista.getVentanaPrincipalEntrenador().setVisible(false);
+			        vista.getVentanaListaEquipos().setVisible(true);
+			        
+			    } else {
+			        vista.mostrarMensaje("Equipo no encontrado.");
+			    }
+			} else {
+			    vista.mostrarMensaje("No se ha seleccionado ningún equipo.");
+			}
+
+			
+			
+		}else if(comando.equals("VOLVERAPRINCIPALENTRENADORDELISTAEQUIPOS")) {
+			
+			
+			vista.getVentanaListaEquipos().setVisible(false);
+			vista.getVentanaPrincipalEntrenador().setVisible(true);
+			
+			
 		}
+
 
 
 

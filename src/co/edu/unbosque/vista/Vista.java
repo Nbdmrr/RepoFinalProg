@@ -131,6 +131,7 @@ public class Vista {
 	public void mostrarMensaje(String string) {
 	    JOptionPane.showMessageDialog(
 	        null,
+	      
 	        string,
 	        "Advertencia",
 	        JOptionPane.WARNING_MESSAGE

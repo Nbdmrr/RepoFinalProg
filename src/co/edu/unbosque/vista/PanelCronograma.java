@@ -4,31 +4,32 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+/**
+ * Panel que muestra el cronograma de actividades/torneos en formato de tabla.
+ */
 public class PanelCronograma extends JPanel {
 
     private JTable tablaCronograma;
     private DefaultTableModel modeloTabla;
     private JButton botonVolver;
 
+    /**
+     * Constructor que inicializa el panel del cronograma con sus componentes.
+     */
     public PanelCronograma() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(1000, 700)); // Tamaño base más amplio
+        setPreferredSize(new Dimension(1000, 700));
 
         modeloTabla = new DefaultTableModel();
         tablaCronograma = new JTable(modeloTabla);
-
-        // Evitar que la tabla ajuste automáticamente el tamaño de las columnas
         tablaCronograma.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        // Panel con scroll que envuelve la tabla
         JScrollPane scrollPane = new JScrollPane(tablaCronograma);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        // Agregar scrollPane al centro del panel
         add(scrollPane, BorderLayout.CENTER);
 
-        // Panel inferior con botón "Volver"
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botonVolver = new JButton("Volver");
         panelInferior.add(botonVolver);
@@ -36,6 +37,10 @@ public class PanelCronograma extends JPanel {
         add(panelInferior, BorderLayout.SOUTH);
     }
 
+    /**
+     * Actualiza los datos mostrados en el cronograma.
+     * @param datos Matriz bidimensional de objetos con la información a mostrar
+     */
     public void actualizarCronogramaGeneral(Object[][] datos) {
         modeloTabla.setRowCount(0);
         modeloTabla.setColumnCount(0);
@@ -44,7 +49,6 @@ public class PanelCronograma extends JPanel {
             int columnas = datos[0].length;
             modeloTabla.setColumnCount(columnas);
 
-            // Ajustar ancho de columnas para mostrar mejor el texto largo
             for (int i = 0; i < columnas; i++) {
                 tablaCronograma.getColumnModel().getColumn(i).setPreferredWidth(300);
             }
@@ -57,7 +61,51 @@ public class PanelCronograma extends JPanel {
         modeloTabla.fireTableDataChanged();
     }
 
+    /**
+     * Obtiene la tabla del cronograma.
+     * @return JTable con los datos del cronograma
+     */
+    public JTable getTablaCronograma() {
+        return tablaCronograma;
+    }
+
+    /**
+     * Establece la tabla del cronograma.
+     * @param tablaCronograma JTable con los datos del cronograma
+     */
+    public void setTablaCronograma(JTable tablaCronograma) {
+        this.tablaCronograma = tablaCronograma;
+    }
+
+    /**
+     * Obtiene el modelo de datos de la tabla.
+     * @return DefaultTableModel con el modelo de datos
+     */
     public DefaultTableModel getModeloTabla() {
         return modeloTabla;
+    }
+
+    /**
+     * Establece el modelo de datos de la tabla.
+     * @param modeloTabla DefaultTableModel con el modelo de datos
+     */
+    public void setModeloTabla(DefaultTableModel modeloTabla) {
+        this.modeloTabla = modeloTabla;
+    }
+
+    /**
+     * Obtiene el botón para volver.
+     * @return JButton configurado para volver
+     */
+    public JButton getBotonVolver() {
+        return botonVolver;
+    }
+
+    /**
+     * Establece el botón para volver.
+     * @param botonVolver JButton configurado para volver
+     */
+    public void setBotonVolver(JButton botonVolver) {
+        this.botonVolver = botonVolver;
     }
 }

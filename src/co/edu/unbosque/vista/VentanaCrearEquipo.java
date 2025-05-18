@@ -28,5 +28,6 @@ public class VentanaCrearEquipo extends JFrame{
 	public void setPanelCrearEquipo(PanelCrearEquipo panelCrearEquipo) {
 		this.panelCrearEquipo = panelCrearEquipo;
 	}
+	
 
 }

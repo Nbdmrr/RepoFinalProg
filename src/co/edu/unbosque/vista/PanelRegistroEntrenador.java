@@ -21,7 +21,6 @@ public class PanelRegistroEntrenador extends PanelRegistro {
     panelEquipo.add(lblEquipo, BorderLayout.NORTH);
     panelEquipo.add(txtEquipo, BorderLayout.CENTER);
 
-    // Agregar al campoExtra1 o campoExtra2 (si ya está ocupado)
     campoExtra1.add(panelEquipo, BorderLayout.CENTER);
 
     campoExtra1.revalidate();
@@ -29,8 +28,13 @@ public class PanelRegistroEntrenador extends PanelRegistro {
     btnVolver.setActionCommand("VOLVERAINICIOSESIONDEREGISTROENTRENADOR");
     btnRegistrarse.setActionCommand("REGISTRARENTRENADOR");
     }
+	public JTextField getTxtEquipo() {
+		return txtEquipo;
+	}
+	public void setTxtEquipo(JTextField txtEquipo) {
+		this.txtEquipo = txtEquipo;
+	}
+	
 
-    public JTextField getTxtEquipo() {
-        return txtEquipo;
-    }
+    
 }

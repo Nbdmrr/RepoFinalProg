@@ -30,10 +30,8 @@ public class PanelRegistro extends JPanel {
         getLblTitulo().setFont(new Font("Arial", Font.BOLD, 22));
         add(getLblTitulo(), BorderLayout.NORTH);
 
-        // Panel central con 8 filas
         JPanel panelCampos = new JPanel(new GridLayout(8, 1, 10, 10));
 
-        // Fila 1: Usuario
         JPanel panelUsuario = new JPanel(new BorderLayout());
         JLabel lblUsuario = new JLabel("Usuario:");
         txtUsuario = new JTextField();
@@ -41,7 +39,6 @@ public class PanelRegistro extends JPanel {
         panelUsuario.add(txtUsuario, BorderLayout.CENTER);
         panelCampos.add(panelUsuario);
 
-        // Fila 2: Contraseña
         JPanel panelContrasena = new JPanel(new BorderLayout());
         JLabel lblContrasena = new JLabel("Contraseña:");
         txtContrasena = new JPasswordField();
@@ -49,7 +46,6 @@ public class PanelRegistro extends JPanel {
         panelContrasena.add(txtContrasena, BorderLayout.CENTER);
         panelCampos.add(panelContrasena);
 
-        // Fila 3: Correo
         JPanel panelCorreo = new JPanel(new BorderLayout());
         JLabel lblCorreo = new JLabel("Correo:");
         txtCorreo = new JTextField();
@@ -57,7 +53,6 @@ public class PanelRegistro extends JPanel {
         panelCorreo.add(txtCorreo, BorderLayout.CENTER);
         panelCampos.add(panelCorreo);
 
-        // Fila 4: Nacionalidad (con lista de países directa)
         JPanel panelNacionalidad = new JPanel(new BorderLayout());
         JLabel lblNacionalidad = new JLabel("Nacionalidad:");
         String[] paises = {
@@ -94,13 +89,11 @@ public class PanelRegistro extends JPanel {
         panelNacionalidad.add(comboNacionalidad, BorderLayout.CENTER);
         panelCampos.add(panelNacionalidad);
 
-        // Fila 5 y 6: campos extra
         campoExtra1 = new JPanel(new BorderLayout());
         campoExtra2 = new JPanel(new BorderLayout());
         panelCampos.add(campoExtra1);
         panelCampos.add(campoExtra2);
 
-        // Fila 7: Botones
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 20, 0));
         btnVolver = new JButton("Volver");
         btnRegistrarse = new JButton("Registrarse");
@@ -111,60 +104,73 @@ public class PanelRegistro extends JPanel {
         add(panelCampos, BorderLayout.CENTER);
     }
     public boolean validarCorreo(String correo) {
-        // Lista de dominios permitidos
+       
         String[] dominiosValidos = {"@gmail.com", "@hotmail.com", "@unbosque.edu.co", "@outlook.com"};
 
-        // Verificar si el correo termina con alguno de los dominios
         for (String dominio : dominiosValidos) {
             if (correo.endsWith(dominio)) {
                 return true;
             }
         }
 
-        // Si no es válido, mostrar mensaje y limpiar
         JOptionPane.showMessageDialog(this, "El correo debe terminar en @gmail.com, @hotmail.com, @outlook.com o @unbosque.edu.co", "Correo inválido", JOptionPane.WARNING_MESSAGE);
         
         return false;
     }
-
-
-
-    // Getters
-    public JTextField getTxtUsuario() {
-        return txtUsuario;
-    }
-
-    public JPasswordField getTxtContrasena() {
-        return txtContrasena;
-    }
-
-    public JTextField getTxtCorreo() {
-        return txtCorreo;
-    }
-
-    public JComboBox<String> getComboNacionalidad() {
-        return comboNacionalidad;
-    }
-
-    public JButton getBtnVolver() {
-        return btnVolver;
-    }
-
-    public JButton getBtnRegistrarse() {
-        return btnRegistrarse;
-    }
-
-    public JPanel getCampoExtra1() {
-        return campoExtra1;
-    }
-
-    public JPanel getCampoExtra2() {
-        return campoExtra2;
-    }
+	public JTextField getTxtUsuario() {
+		return txtUsuario;
+	}
+	public void setTxtUsuario(JTextField txtUsuario) {
+		this.txtUsuario = txtUsuario;
+	}
+	public JPasswordField getTxtContrasena() {
+		return txtContrasena;
+	}
+	public void setTxtContrasena(JPasswordField txtContrasena) {
+		this.txtContrasena = txtContrasena;
+	}
+	public JTextField getTxtCorreo() {
+		return txtCorreo;
+	}
+	public void setTxtCorreo(JTextField txtCorreo) {
+		this.txtCorreo = txtCorreo;
+	}
+	public JComboBox<String> getComboNacionalidad() {
+		return comboNacionalidad;
+	}
+	public void setComboNacionalidad(JComboBox<String> comboNacionalidad) {
+		this.comboNacionalidad = comboNacionalidad;
+	}
+	public JButton getBtnVolver() {
+		return btnVolver;
+	}
+	public void setBtnVolver(JButton btnVolver) {
+		this.btnVolver = btnVolver;
+	}
+	public JButton getBtnRegistrarse() {
+		return btnRegistrarse;
+	}
+	public void setBtnRegistrarse(JButton btnRegistrarse) {
+		this.btnRegistrarse = btnRegistrarse;
+	}
+	public JPanel getCampoExtra1() {
+		return campoExtra1;
+	}
+	public void setCampoExtra1(JPanel campoExtra1) {
+		this.campoExtra1 = campoExtra1;
+	}
+	public JPanel getCampoExtra2() {
+		return campoExtra2;
+	}
+	public void setCampoExtra2(JPanel campoExtra2) {
+		this.campoExtra2 = campoExtra2;
+	}
 	public JLabel getLblTitulo() {
 		return lblTitulo;
 	}
 	public void setLblTitulo(JLabel lblTitulo) {
 		this.lblTitulo = lblTitulo;
 	}
+
+
 }

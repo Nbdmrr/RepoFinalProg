@@ -19,5 +19,11 @@ public class VentanaAvanzeYInicioTorneo extends JFrame{
 		add(panelAvanceYInicioTorneo,BorderLayout.CENTER);
 		setVisible(false);
 	}
+	public PanelAvanceYInicioTorneo getPanelAvanceYInicioTorneo() {
+		return panelAvanceYInicioTorneo;
+	}
+	public void setPanelAvanceYInicioTorneo(PanelAvanceYInicioTorneo panelAvanceYInicioTorneo) {
+		this.panelAvanceYInicioTorneo = panelAvanceYInicioTorneo;
+	}
 
 }

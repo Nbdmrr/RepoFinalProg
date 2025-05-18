@@ -31,7 +31,12 @@ public class PanelRegistroAdmin extends PanelRegistro {
         btnRegistrarse.setActionCommand("REGISTRARADMIN");
     }
 
-    public JTextField getTxtCargo() {
-        return txtCargo;
-    }
+	public JTextField getTxtCargo() {
+		return txtCargo;
+	}
+
+	public void setTxtCargo(JTextField txtCargo) {
+		this.txtCargo = txtCargo;
+	}
+
 }

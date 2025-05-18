@@ -18,14 +18,13 @@ public class PanelRegistroJugador extends PanelRegistro {
     public void agregarCampos() {
     	
     	getLblTitulo().setText("Registro jugador:"); 
-    	// Campo especialidad
+    
         JPanel panelEspecialidad = new JPanel(new BorderLayout());
         JLabel lblEspecialidad = new JLabel("Especialidad:");
         txtEspecialidad = new JTextField();
         panelEspecialidad.add(lblEspecialidad, BorderLayout.NORTH);
         panelEspecialidad.add(txtEspecialidad, BorderLayout.CENTER);
 
-        // Campo equipo
         JPanel panelEquipo = new JPanel(new BorderLayout());
         JLabel lblEquipo = new JLabel("Equipo:");
         comboEquipo = new JComboBox<>();
@@ -33,7 +32,6 @@ public class PanelRegistroJugador extends PanelRegistro {
         panelEquipo.add(lblEquipo, BorderLayout.NORTH);
         panelEquipo.add(comboEquipo, BorderLayout.CENTER);
 
-        // Agregar los campos personalizados a los paneles extra
         campoExtra1.add(panelEspecialidad, BorderLayout.CENTER);
         campoExtra2.add(panelEquipo, BorderLayout.CENTER);
 
@@ -46,7 +44,6 @@ public class PanelRegistroJugador extends PanelRegistro {
     }
     
 
-    // Método para cargar los equipos desde un arreglo de strings
     public void setEquipos(ArrayList<String> equipos) {
         comboEquipo.removeAllItems();
         if (equipos != null) {
@@ -56,12 +53,21 @@ public class PanelRegistroJugador extends PanelRegistro {
         }
     }
 
-    // Getters
-    public JTextField getTxtEspecialidad() {
-        return txtEspecialidad;
-    }
+	public JTextField getTxtEspecialidad() {
+		return txtEspecialidad;
+	}
 
-    public JComboBox<String> getComboEquipo() {
-        return comboEquipo;
-    }
+	public void setTxtEspecialidad(JTextField txtEspecialidad) {
+		this.txtEspecialidad = txtEspecialidad;
+	}
+
+	public JComboBox<String> getComboEquipo() {
+		return comboEquipo;
+	}
+
+	public void setComboEquipo(JComboBox<String> comboEquipo) {
+		this.comboEquipo = comboEquipo;
+	}
+
+    
 }

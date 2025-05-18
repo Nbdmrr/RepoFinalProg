@@ -114,5 +114,14 @@ public class Equipo {
      */
     public void setEntrenador1(Entrenador entrenador1) {
         this.entrenador1 = entrenador1;
+        
+    }
+    @Override
+    public String toString() {
+    	
+    	
+    	
+    	
+    	return"Nombre del Equipo: "+nombre;
     }
 }

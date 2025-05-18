@@ -2,6 +2,7 @@ package co.edu.unbosque.vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * PanelPrincipalEntrenador es un JPanel que contiene la interfaz principal para el entrenador.
@@ -16,7 +17,7 @@ public class PanelPrincipalEntrenador extends JPanel {
     private JButton botonVolver;
     private JButton botonUnirse;
     private JButton botonCrear;
-
+    private JButton botonElegirEquipo;
     private JLabel etiquetaImagen;
     private JLabel etiquetaUsuario;
     private JLabel valorUsuario;
@@ -24,6 +25,7 @@ public class PanelPrincipalEntrenador extends JPanel {
     private JLabel valorNacionalidad;
     private JLabel etiquetaCorreo;
     private JLabel valorCorreo;
+    
 
     /**
      * Constructor que inicializa el panel principal del entrenador.
@@ -109,12 +111,15 @@ public class PanelPrincipalEntrenador extends JPanel {
         botonVolver = new JButton("Volver");
         botonUnirse = new JButton("Unirse a un equipo");
         botonCrear = new JButton("Crear Equipo");
-        
+        botonElegirEquipo = new JButton("Elegir Equipo");
+        botonElegirEquipo.setActionCommand("ELEGIRTORNEO");
+
         botonVolver.setActionCommand("VOLVERDEENTRENADORAINICIO");
 
         panelBotones.add(botonVolver);
         panelBotones.add(botonUnirse);
         panelBotones.add(botonCrear);
+        panelBotones.add(botonElegirEquipo);
 
         panelInferior.add(panelMensaje);
         panelInferior.add(Box.createHorizontalStrut(20));
@@ -122,6 +127,33 @@ public class PanelPrincipalEntrenador extends JPanel {
 
         add(panelInferior, BorderLayout.SOUTH);
     }
+    /**
+     * Llena la lista de equipos disponibles con los datos recibidos.
+     * 
+     * @param equiposDisponibles ArrayList<String> con los nombres de los equipos disponibles.
+     */
+    public void llenarListaEquiposDisponibles(ArrayList<String> equiposDisponibles) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (String equipo : equiposDisponibles) {
+            modelo.addElement(equipo);
+        }
+        listaEquiposDisponibles.setModel(modelo);
+    }
+
+    /**
+     * Llena la lista de equipos entrenados con los datos recibidos.
+     * 
+     * @param equiposEntrenados ArrayList<String> con los nombres de los equipos entrenados.
+     */
+    public void llenarListaEquiposEntrenados(ArrayList<String> equiposEntrenados) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (String equipo : equiposEntrenados) {
+            modelo.addElement(equipo);
+        }
+        listaEquiposEntrenados.setModel(modelo);
+    }
+
+
 
     /**
      * Actualiza los datos del entrenador que se muestran en el panel.

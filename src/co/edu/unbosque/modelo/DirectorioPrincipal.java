@@ -1,5 +1,7 @@
 package co.edu.unbosque.modelo;
 
+import java.util.ArrayList;
+
 /**
  * Clase que funciona como directorio principal que agrupa y administra
  * los diferentes directorios de la aplicación relacionados con
@@ -152,5 +154,37 @@ public class DirectorioPrincipal {
     public void setDirectorioAdministradores(DirectorioAdministradores directorioAdministradores) {
         this.directorioAdministradores = directorioAdministradores;
     }
+    
+    /**
+     * Convierte los torneos de los diferentes tipos (`TorneoEliminacion`, `TorneoPuntos`, `TorneoGrupos`) 
+     * en una lista de cadenas (`ArrayList<String>`) representando cada torneo.
+     * 
+     * Obtiene los torneos de los directorios correspondientes, los convierte a `String` mediante su método 
+     * `toString()` y los agrega a un único `ArrayList<String>`.
+     * 
+     * @return Un `ArrayList<String>` con las representaciones en texto de todos los torneos.
+     */
+    public ArrayList<String> convertirTorneosAStrings() {
+        
+        ArrayList<String> torneosEnString = new ArrayList<>();
+        ArrayList<TorneoEliminacion> torneosEliminacion = getDirectorioTorneosEliminacion().obtenerTorneosEliminacio();
+        ArrayList<TorneoPuntos> torneosPuntos = getDirectorioTorneosPuntos().obtenerTorneosPuntos();
+        ArrayList<TorneoGrupos> torneosGrupos = getDirectorioTorneosGrupos().obtenerTorneosGrupos();
+        
+        for (TorneoEliminacion torneoEliminacion : torneosEliminacion) {
+            torneosEnString.add(torneoEliminacion.toString());
+        }
+        
+        for (TorneoGrupos torneoGrupos : torneosGrupos) {
+            torneosEnString.add(torneoGrupos.toString());
+        }
+        
+        for (TorneoPuntos torneoPuntos : torneosPuntos) {
+            torneosEnString.add(torneoPuntos.toString());
+        }
+        
+        return torneosEnString;
+    }
+
 
 }

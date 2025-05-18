@@ -1,12 +1,10 @@
 package co.edu.unbosque.modelo.persistencia;
 
-import co.edu.unbosque.modelo.Jugador;
+import java.io.Serializable;
 
-public class JugadorDTO extends UsuarioDTO {
-	
-	
-	
-	
+public class JugadorDTO extends UsuarioDTO{
+    
+
     private int partidasJugadas;
     private int torneosJugados;
     private int partidasGanadas;
@@ -15,7 +13,6 @@ public class JugadorDTO extends UsuarioDTO {
     private int puntos;
     private String equipo;
 
-    // Getters y setters
     public int getPartidasJugadas() {
         return partidasJugadas;
     }
@@ -71,6 +68,4 @@ public class JugadorDTO extends UsuarioDTO {
     public void setEquipo(String equipo) {
         this.equipo = equipo;
     }
-
-    
 }

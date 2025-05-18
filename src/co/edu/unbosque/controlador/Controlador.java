@@ -13,6 +13,7 @@ import co.edu.unbosque.modelo.Equipo;
 import co.edu.unbosque.modelo.Jugador;
 import co.edu.unbosque.modelo.TorneoEliminacion;
 import co.edu.unbosque.modelo.TorneoGrupos;
+import co.edu.unbosque.modelo.TorneoPuntos;
 import co.edu.unbosque.modelo.persistencia.Archivo;
 import co.edu.unbosque.modelo.persistencia.DirectorioJugadoresDAO;
 import co.edu.unbosque.modelo.persistencia.MapHandler;
@@ -39,6 +40,13 @@ public class Controlador implements ActionListener{
 		actualizarComboBoxRegistroJugador();
 		Administrador admin = new Administrador("admin", "123", "Colombia", "dsgomezd@unbosque.edu.co", "administradorPrincipal");
 		directorioPrincipal.getDirectorioAdministradores().adicionarAdministrador(MapHandler.convertirAdministradorAAdministradorDTO(admin));
+		actualizarListaTorneosAdmin();
+		actualizarListaEquiposDisponibles();
+		actualizarListaTorneosActivos();
+		
+		
+		
+		
 	}
 	public void asignarOyentes() {
 
@@ -57,7 +65,9 @@ public class Controlador implements ActionListener{
 		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getBotonCrearTorneo().addActionListener(this);
 		vista.getVentanaCrearTorneo().getPanelCrearTorneo().getBtnCrear().addActionListener(this);
 		vista.getVentanaCrearTorneo().getPanelCrearTorneo().getBtnVolver().addActionListener(this);
-
+		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getBotonEnviar().addActionListener(this);
+		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getBotonPDF().addActionListener(this);
+		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().getBotonVolver().addActionListener(this);
 	}
 
 	@Override
@@ -140,6 +150,9 @@ public class Controlador implements ActionListener{
 			Administrador adminNuevo = new Administrador(usuario, contraseña, nacionalidad, correo, cargo);
 			directorioPrincipal.getDirectorioAdministradores().adicionarAdministrador(MapHandler.convertirAdministradorAAdministradorDTO(adminNuevo));
 			
+			
+			vista.mostrarMensaje("Administrador registrado con exito");
+			
 			vista.getVentanaRegistroAdmin().setVisible(false);
 			vista.getVentanaPrincipalAdmin().setVisible(true);
 			
@@ -166,6 +179,9 @@ public class Controlador implements ActionListener{
 			Equipo equipoAlQueEntra =directorioPrincipal.getDirectorioEquipos().encontrarEquipo(MapHandler.convertirEquipoAEquipoDTO(equipoAux));
 			equipoAlQueEntra.getEquipo().add(jugadorNuevo);
 			directorioPrincipal.getDirectorioEquipos().actualizarEquipo(MapHandler.convertirEquipoAEquipoDTO(equipoAux), MapHandler.convertirEquipoAEquipoDTO(equipoAlQueEntra));
+			
+			vista.mostrarMensaje("Jugador registrado con exito");
+			
 			vista.getVentanaRegistroJugador().setVisible(false);
 			vista.getVentanaInicioSesion().setVisible(true);
 
@@ -195,6 +211,8 @@ public class Controlador implements ActionListener{
 
 			directorioPrincipal.getDirectorioEntrenadores().adicionarEntrenador(MapHandler.convertirEntrenadorAEntrenadorDTO(entrenadorNuevo));
 			directorioPrincipal.getDirectorioEquipos().adicionarEquipo(MapHandler.convertirEquipoAEquipoDTO(equipoNuevo));
+			
+			vista.mostrarMensaje("Entrenador registrado con exito");
 
 			vista.getVentanaRegistroEntrenador().setVisible(false);
 			vista.getVentanaInicioSesion().setVisible(true);
@@ -226,7 +244,7 @@ public class Controlador implements ActionListener{
 					vista.getVentanaPrincipalEntrenador().setVisible(true);
 					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtContrasena().setText("");
 					vista.getVentanaInicioSesion().getPanelInicioSesion().getTxtUsuario().setText("");
-					
+					actualizarListaEquiposQueEntrena(entrenadorPrincipal);
 					
 					return;
 				}
@@ -299,13 +317,21 @@ public class Controlador implements ActionListener{
 			String tipoTorneo =vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboTipo().getSelectedItem().toString();
 			String juego = vista.getVentanaCrearTorneo().getPanelCrearTorneo().getComboJuego().getSelectedItem().toString();
 			
+			if(!validarNombreTorneo(nombreTorneo)) {
+				return;
+			} 
+			
 			if(tipoTorneo.equals("Eliminación Directa")) {
 				
 				TorneoEliminacion nuevoTorneoEliminacion = new TorneoEliminacion(nombreTorneo, limiteParticipantes, tipoTorneo, juego);
 				
 				directorioPrincipal.getDirectorioTorneosEliminacion().adicionarTorneoEliminacion(MapHandler.convertirTorneoEliminacionATorneoEliminacionDTO(nuevoTorneoEliminacion));
 				
-				vista.mostrarMensaje("Torneo Agregador Correctamente");
+				vista.mostrarMensaje("Torneo de Eliminacion Agregador Correctamente");
+				
+				vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().llenarListaTorneos(directorioPrincipal.convertirTorneosAStrings());
+				actualizarListaTorneosAdmin();
+				actualizarListaTorneosActivos();
 				vista.getVentanaCrearTorneo().setVisible(false);
 				vista.getVentanaPrincipalAdmin().setVisible(true);
 				
@@ -313,25 +339,145 @@ public class Controlador implements ActionListener{
 
 			}else if (tipoTorneo.equals("Grupos")) {
 				
+				TorneoGrupos nuevoTorneoGrupos = new TorneoGrupos(nombreTorneo, limiteParticipantes, tipoTorneo, juego);
+				
+				directorioPrincipal.getDirectorioTorneosGrupos().adicionarTorneoGrupos(MapHandler.convertirTorneoGruposATorneoGruposDTO(nuevoTorneoGrupos));
+				
+				vista.mostrarMensaje("Torneo por Grupos Agregador Correctamente");
+				actualizarListaTorneosActivos();
+				actualizarListaTorneosAdmin();
+				vista.getVentanaCrearTorneo().setVisible(false);
+				vista.getVentanaPrincipalAdmin().setVisible(true);
 				
 				
 			}else if(tipoTorneo.equals("Puntos")) {
 				
 				
 				
+				TorneoPuntos nuevoTorneoPuntos = new TorneoPuntos(nombreTorneo, limiteParticipantes, tipoTorneo, juego);
+				
+				directorioPrincipal.getDirectorioTorneosPuntos().adicionarTorneoPuntos(MapHandler.convertirTorneoPuntosATorneoPuntosDTO(nuevoTorneoPuntos));
+				
+				vista.mostrarMensaje("Torneo por Puntos Agregador Correctamente");
+				actualizarListaTorneosAdmin();
+				actualizarListaTorneosActivos();
+				vista.getVentanaCrearTorneo().setVisible(false);
+				vista.getVentanaPrincipalAdmin().setVisible(true);
+				
 				
 				
 			}
 			
+			
+		}else if(comando.equals("VOLVERAINICIOSESIONDEPRINCIPALADMIN")) {
+			
+			vista.getVentanaPrincipalAdmin().setVisible(false);
+			vista.getVentanaInicioSesion().setVisible(true);
+			
+			
+		}else if(comando.equals("UNIRSEATORNEO")) {
+			
+			
+			String torneoAlQueEntra=vista.getVentanaPrincipalJugador().getPanelPrincipalJugador().getListaTorneosActivos().getSelectedValue();
+			
+			
+			
+			
+			
 		}
+		
+		
+		
+		
 		
 		
 
 	}
+	/**
+	 * Actualiza la lista de equipos que entrena el entrenador especificado.  
+	 * Recorre todos los equipos registrados y verifica si el entrenador es asignado como `entrenador1`, `entrenador2` o `entrenador3`.  
+	 * Solo se validan aquellos entrenadores que no sean `null`.
+	 * 
+	 * @param entrenador El entrenador del que se quiere obtener la lista de equipos que entrena.
+	 */
+	public void actualizarListaEquiposQueEntrena(Entrenador entrenador) {
+	    ArrayList<String> equiposQueEntrenaString = new ArrayList<>();
+	    ArrayList<Equipo> equipos = directorioPrincipal.getDirectorioEquipos().obtenerEquipos();
+
+	    for (Equipo equipo : equipos) {
+	        String usuarioEntrenador1Aux = equipo.getEntrenador1() != null ? equipo.getEntrenador1().getUsuario() : "";
+	        String usuarioEntrenador2Aux = equipo.getEntrenador2() != null ? equipo.getEntrenador2().getUsuario() : "";
+	        String usuarioEntrenador3Aux = equipo.getEntrenador3() != null ? equipo.getEntrenador3().getUsuario() : "";
+
+	        if (entrenador.getUsuario().equals(usuarioEntrenador1Aux) || 
+	            (!usuarioEntrenador2Aux.isEmpty() && entrenador.getUsuario().equals(usuarioEntrenador2Aux)) || 
+	            (!usuarioEntrenador3Aux.isEmpty() && entrenador.getUsuario().equals(usuarioEntrenador3Aux))) {
+	            
+	            equiposQueEntrenaString.add(equipo.toString());
+	        }
+	    }
+
+	    vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().llenarListaEquiposEntrenados(equiposQueEntrenaString);
+	}
+
+	public void actualizarListaTorneosActivos() {
+		
+		vista.getVentanaPrincipalJugador().getPanelPrincipalJugador().llenarListaTorneosActivos(directorioPrincipal.convertirTorneosAStrings());
+		
+	}
+	public void actualizarListaTorneosAdmin() {
+		vista.getVentanaPrincipalAdmin().getPanelPrincipalAdmin().llenarListaTorneos(directorioPrincipal.convertirTorneosAStrings());
+		
+	}
+	public void actualizarListaEquiposDisponibles() {
+		
+		
+		vista.getVentanaPrincipalEntrenador().getPanelPrincipalEntrenador().llenarListaEquiposDisponibles(directorioPrincipal.getDirectorioEquipos().convertirEquiposAStrings());
+	}
+	/**
+	 * Valida si el nombre de un torneo ya existe en los torneos de eliminación, puntos o grupos.  
+	 * Si el nombre ya existe en alguno de los torneos, muestra un mensaje y retorna `false`.  
+	 * 
+	 * @param nombreTorneo El nombre del torneo a verificar.
+	 * @return `true` si el nombre del torneo no existe, `false` si ya está registrado.
+	 */
+	public Boolean validarNombreTorneo(String nombreTorneo) {
+
+	    ArrayList<TorneoEliminacion> torneosEliminacion = directorioPrincipal.getDirectorioTorneosEliminacion().obtenerTorneosEliminacio();
+	    ArrayList<TorneoPuntos> torneosPuntos = directorioPrincipal.getDirectorioTorneosPuntos().obtenerTorneosPuntos();
+	    ArrayList<TorneoGrupos> torneosGrupos = directorioPrincipal.getDirectorioTorneosGrupos().obtenerTorneosGrupos();
+
+	    for (TorneoEliminacion torneoEliminacion : torneosEliminacion) {
+	        if (torneoEliminacion.getNombre().equals(nombreTorneo)) {
+	            vista.mostrarMensaje("Nombre de torneo ya registrado, utiliza otro");
+	            return false;
+	        }
+	    }
+
+	    for (TorneoPuntos torneoPuntos : torneosPuntos) {
+	        if (torneoPuntos.getNombre().equals(nombreTorneo)) {
+	            vista.mostrarMensaje("Nombre de torneo ya registrado, utiliza otro");
+	            return false;
+	        }
+	    }
+
+	    for (TorneoGrupos torneoGrupos : torneosGrupos) {
+	        if (torneoGrupos.getNombre().equals(nombreTorneo)) {
+	            vista.mostrarMensaje("Nombre de torneo ya registrado, utiliza otro");
+	            return false;
+	        }
+	    }
+
+	    return true;
+	}
+
+	
+	
+	
 
 	public void actualizarComboBoxRegistroJugador() {
 
-		ArrayList<String> stringsEquipos = directorioPrincipal.getDirectorioEquipos().convertirEquiposAStrings(directorioPrincipal.getDirectorioEquipos().obtenerEquipos());
+		ArrayList<String> stringsEquipos = directorioPrincipal.getDirectorioEquipos().convertirEquiposAStrings();
 		vista.getVentanaRegistroJugador().getPanelRegistroJugador().setEquipos(stringsEquipos);
 	}
 	public Boolean ValidarUsuario(String usuario) {
@@ -375,6 +521,10 @@ public class Controlador implements ActionListener{
 		}
 		return true;
 	}
+	
+	
+	
+
 
 
 

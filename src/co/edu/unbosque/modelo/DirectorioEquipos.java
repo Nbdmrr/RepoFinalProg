@@ -101,10 +101,11 @@ public class DirectorioEquipos {
      * @param equipos Lista de objetos Equipo
      * @return Lista de nombres de equipos en formato String
      */
-    public ArrayList<String> convertirEquiposAStrings(ArrayList<Equipo> equipos) {
+    public ArrayList<String> convertirEquiposAStrings() {
+    	ArrayList<Equipo> equipos = obtenerEquipos();
         ArrayList<String> stringEquipos = new ArrayList<String>();
         for (Equipo equipo : equipos) {
-            stringEquipos.add(equipo.getNombre());
+            stringEquipos.add(equipo.toString());
         }
         return stringEquipos;
     }

@@ -2,6 +2,7 @@ package co.edu.unbosque.vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * PanelPrincipalAdmin representa el panel principal de la vista para el administrador.
@@ -25,6 +26,7 @@ public class PanelPrincipalAdmin extends JPanel {
     private JButton botonRegistrarAdmin;
     private JButton botonPDF;
     private JButton botonCrearTorneo;
+    private JButton botonElegirTorneo;
 
     /**
      * Constructor que inicializa el panel principal con su diseño y componentes.
@@ -106,19 +108,26 @@ public class PanelPrincipalAdmin extends JPanel {
         panelInferior.setPreferredSize(new Dimension(0, 60));
 
         botonVolver = new JButton("Volver");
+        botonVolver.setActionCommand("VOLVERAINICIOSESIONDEPRINCIPALADMIN");
+        
         botonRegistrarAdmin = new JButton("Registrar Administrador");
         botonRegistrarAdmin.setActionCommand("REGISTRARADMINISTRADOR");
         botonPDF = new JButton("PDF");
         botonCrearTorneo = new JButton("Crear Torneo");
         botonCrearTorneo.setActionCommand("CREACIONTORNEO");
 
+        botonElegirTorneo = new JButton("Elegir Torneo");
+        botonElegirTorneo.setActionCommand("ELEGIRTORNEO");
+
         panelInferior.add(botonVolver);
         panelInferior.add(botonRegistrarAdmin);
         panelInferior.add(botonPDF);
         panelInferior.add(botonCrearTorneo);
+        panelInferior.add(botonElegirTorneo);
 
         add(panelInferior, BorderLayout.SOUTH);
     }
+
 
     /**
      * Actualiza los valores visibles en la sección de datos del administrador.
@@ -133,6 +142,18 @@ public class PanelPrincipalAdmin extends JPanel {
         valorCargo.setText(cargo);
         valorCorreo.setText(correo);
         valorNacionalidad.setText(nacionalidad);
+    }
+    /**
+     * Llena la lista de torneos con los datos proporcionados en la lista.
+     * 
+     * @param torneos un ArrayList de strings que contiene los nombres de los torneos a mostrar en la lista.
+     */
+    public void llenarListaTorneos(ArrayList<String> torneos) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (String torneo : torneos) {
+            modelo.addElement(torneo);
+        }
+        listaTorneos.setModel(modelo);
     }
 
     /**

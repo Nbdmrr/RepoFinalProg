@@ -132,11 +132,11 @@ public class Torneo {
     /**
      * Devuelve una representación en texto del torneo.
      *
-     * @return Cadena con el nombre del torneo
+     * @return Cadena con los datos del torneo
      */
     @Override
     public String toString() {
-        return "Nombre del torneo: " + nombre;
+        return "Nombre del torneo: " + nombre+",Tipo: "+tipo+",Limite de Participantes: "+limiteParticipantes+",Juego: "+juego;
     }
 
     /**
@@ -191,6 +191,9 @@ public class Torneo {
      */
     public void setJuego(String juego) {
         this.juego = juego;
-    }
 }
+    
+    
+    }
+
 

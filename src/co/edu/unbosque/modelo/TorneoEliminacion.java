@@ -30,6 +30,7 @@ public class TorneoEliminacion extends Torneo {
         super(nombre, limiteparticipantes, tipo, juego);
         ganadores = new ArrayList<>();
         eliminados = new HashMap<>();
+        ganadorTorneo = null;
     }
 
     /**

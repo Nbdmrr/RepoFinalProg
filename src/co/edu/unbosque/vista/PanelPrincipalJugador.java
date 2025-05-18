@@ -2,6 +2,7 @@ package co.edu.unbosque.vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Panel principal que muestra la interfaz gráfica para un jugador.
@@ -12,6 +13,8 @@ public class PanelPrincipalJugador extends JPanel {
     private JList<String> listaTorneosParticipa;
     private JList<String> listaTorneosActivos;
     private JButton botonVolver;
+    private JButton botonVerTorneo;
+    private JButton botonUnirseTorneo;
     private JLabel etiquetaImagen;
     private JLabel etiquetaUsuario;
     private JLabel valorUsuario;
@@ -23,6 +26,7 @@ public class PanelPrincipalJugador extends JPanel {
     private JLabel valorCorreo;
     private JLabel etiquetaEquipo;
     private JLabel valorEquipo;
+    
 
     private JLabel etiquetaPartidasJugadas;
     private JLabel valorPartidasJugadas;
@@ -139,12 +143,49 @@ public class PanelPrincipalJugador extends JPanel {
 
         botonVolver = new JButton("Volver");
         botonVolver.setActionCommand("VOLVERDEJUGADORAINICIOSESION");
+
+        botonUnirseTorneo = new JButton("Unirse a Torneo");
+        botonUnirseTorneo.setActionCommand("UNIRSEATORNEO");
+
+        botonVerTorneo = new JButton("Ver Torneo");
+        botonVerTorneo.setActionCommand("VERTORNEO");
+
         JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 5));
+        panelBotonDerecha.add(botonUnirseTorneo);
+        panelBotonDerecha.add(botonVerTorneo);
         panelBotonDerecha.add(botonVolver);
+
         panelInferior.add(panelBotonDerecha, BorderLayout.SOUTH);
 
         add(panelInferior, BorderLayout.SOUTH);
     }
+    /**
+     * Llena la lista de torneos en los que participa el jugador con los datos proporcionados.
+     * 
+     * @param torneosParticipa ArrayList de strings con los nombres de los torneos en los que participa el jugador.
+     */
+    public void llenarListaTorneosParticipa(ArrayList<String> torneosParticipa) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (String torneo : torneosParticipa) {
+            modelo.addElement(torneo);
+        }
+        listaTorneosParticipa.setModel(modelo);
+    }
+
+    /**
+     * Llena la lista de torneos activos con los datos proporcionados.
+     * 
+     * @param torneosActivos ArrayList de strings con los nombres de los torneos activos.
+     */
+    public void llenarListaTorneosActivos(ArrayList<String> torneosActivos) {
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        for (String torneo : torneosActivos) {
+            modelo.addElement(torneo);
+        }
+        listaTorneosActivos.setModel(modelo);
+    }
+
+
 
 
     /**

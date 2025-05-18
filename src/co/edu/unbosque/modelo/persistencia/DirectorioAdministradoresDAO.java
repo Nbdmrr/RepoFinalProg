@@ -81,6 +81,7 @@ public class DirectorioAdministradoresDAO implements InterfaceDAO<Administrador>
                 p.setCargo(y.getCargo());
                 p.setCorreo(y.getCorreo());
                 p.setNacionalidad(y.getNacionalidad());
+                administradores.add(p);
                 archivo.getUbicacionArchivoAdministradores().delete();
                 archivo.getUbicacionArchivoAdministradores().createNewFile();
                 archivo.escribirArchivoAdministradores(administradores);

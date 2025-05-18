@@ -45,19 +45,27 @@ public class PanelAvanceYInicioTorneo extends JPanel {
     public void inicializarComponentes() {
         add(new JLabel());
         btnAvanzarFase = new JButton("Avanzar Fase");
+        btnAvanzarFase.setVisible(false);
+        btnAvanzarFase.setActionCommand("AVANZARFASE");
         add(btnAvanzarFase);
         add(new JLabel());
 
         add(new JLabel());
         btnIniciarTorneo = new JButton("Iniciar Torneo");
-        btnIniciarTorneo.setVisible(false);
+        btnIniciarTorneo.setActionCommand("INICIARTORNEO");
+        btnIniciarTorneo.setVisible(true);
         add(btnIniciarTorneo);
         add(new JLabel());
 
         btnVolver = new JButton("Volver");
+        btnVolver.setActionCommand("VOLVERAPRINCIPALADMINDEINICIOYAVACETORNEO");
+        btnVolver.setVisible(true);
         add(btnVolver);
+        
         add(new JLabel());
         btnCronograma = new JButton("Cronograma");
+        btnCronograma.setActionCommand("CRONOGRAMAADMIN");
+        btnCronograma.setVisible(false);
         add(btnCronograma);
     }
 

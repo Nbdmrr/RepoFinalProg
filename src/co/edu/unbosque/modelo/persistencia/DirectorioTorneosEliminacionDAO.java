@@ -79,7 +79,7 @@ public ArrayList<TorneoEliminacion> getAll() {
                 t.setLimiteParticipantes(y.getLimiteParticipantes());
                 t.setParticipantes(y.getParticipantes());
                 t.setTipo(y.getTipo());
-                
+                torneosEliminacion.add(t);
                 archivo.getUbicacionArchivoTorneosEliminacion().delete();
                 archivo.getUbicacionArchivoTorneosEliminacion().createNewFile();
                 archivo.escribirArchivoTorneosEliminacion(torneosEliminacion);
@@ -90,5 +90,6 @@ public ArrayList<TorneoEliminacion> getAll() {
             }
         }
         return false;
+        
     }
 }

@@ -105,7 +105,7 @@ public class DirectorioEquipos {
     	ArrayList<Equipo> equipos = obtenerEquipos();
         ArrayList<String> stringEquipos = new ArrayList<String>();
         for (Equipo equipo : equipos) {
-            stringEquipos.add(equipo.toString());
+            stringEquipos.add(equipo.getNombre());
         }
         return stringEquipos;
     }

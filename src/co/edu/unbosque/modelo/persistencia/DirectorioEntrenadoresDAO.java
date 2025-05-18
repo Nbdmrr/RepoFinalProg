@@ -73,7 +73,9 @@ public ArrayList<Entrenador> getAll() {
             e.setContraseña(y.getContraseña());
             e.setEquipo(y.getEquipo());
             e.setCorreo(y.getCorreo());
+           
             e.setNacionalidad(y.getNacionalidad());
+            entrenadores.add(e);
             archivo.escribirArchivoEntrenadores(entrenadores);
             return true;
         }

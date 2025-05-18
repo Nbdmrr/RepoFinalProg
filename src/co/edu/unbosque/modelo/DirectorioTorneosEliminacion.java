@@ -58,7 +58,7 @@ public class DirectorioTorneosEliminacion {
      * @param nuevoDTO DTO con los nuevos datos del torneo
      * @return true si se actualizó correctamente, false si falló
      */
-    public boolean actualizarTorneoEliminacio(TorneoEliminacionDTO viejoDTO, TorneoEliminacionDTO nuevoDTO) {
+    public boolean actualizarTorneoEliminacion(TorneoEliminacionDTO viejoDTO, TorneoEliminacionDTO nuevoDTO) {
         TorneoEliminacion viejo = MapHandler.convertirTorneoEliminacionDTOATorneoEliminacion(viejoDTO);
         TorneoEliminacion nuevo = MapHandler.convertirTorneoEliminacionDTOATorneoEliminacion(nuevoDTO);
         return getDirectorioTorneosEliminacionDAO().update(viejo, nuevo);
@@ -70,7 +70,7 @@ public class DirectorioTorneosEliminacion {
      * @param aDTO DTO del torneo que se desea buscar
      * @return Objeto TorneoEliminacion si se encuentra, null si no existe
      */
-    public TorneoEliminacion encontrarTorneoEliminacio(TorneoEliminacionDTO aDTO) {
+    public TorneoEliminacion encontrarTorneoEliminacion(TorneoEliminacionDTO aDTO) {
         TorneoEliminacion a = MapHandler.convertirTorneoEliminacionDTOATorneoEliminacion(aDTO);
         return getDirectorioTorneosEliminacionDAO().find(a);
     }

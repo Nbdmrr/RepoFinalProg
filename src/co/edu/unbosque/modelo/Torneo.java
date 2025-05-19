@@ -136,7 +136,7 @@ public class Torneo {
      */
     @Override
     public String toString() {
-        return "Nombre del torneo: " + nombre+",Tipo: "+tipo+",Limite de Participantes: "+limiteParticipantes+",Juego: "+juego;
+        return "Nombre del torneo: " + nombre+"||Tipo: "+tipo+"||Limite de Participantes: "+limiteParticipantes+"||Juego: "+juego;
     }
 
     /**

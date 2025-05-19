@@ -144,15 +144,15 @@ public class PanelPrincipalJugador extends JPanel {
         botonVolver = new JButton("Volver");
         botonVolver.setActionCommand("VOLVERDEJUGADORAINICIOSESION");
 
-        botonUnirseTorneo = new JButton("Unirse a Torneo");
-        botonUnirseTorneo.setActionCommand("UNIRSEATORNEO");
+        setBotonUnirseTorneo(new JButton("Unirse a Torneo"));
+        getBotonUnirseTorneo().setActionCommand("UNIRSEATORNEO");
 
-        botonVerTorneo = new JButton("Ver Torneo");
-        botonVerTorneo.setActionCommand("VERTORNEO");
+        setBotonVerTorneo(new JButton("Ver Torneo"));
+        getBotonVerTorneo().setActionCommand("VERTORNEO");
 
         JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 5));
-        panelBotonDerecha.add(botonUnirseTorneo);
-        panelBotonDerecha.add(botonVerTorneo);
+        panelBotonDerecha.add(getBotonUnirseTorneo());
+        panelBotonDerecha.add(getBotonVerTorneo());
         panelBotonDerecha.add(botonVolver);
 
         panelInferior.add(panelBotonDerecha, BorderLayout.SOUTH);
@@ -346,4 +346,40 @@ public class PanelPrincipalJugador extends JPanel {
      */
     public void setValorTorneosGanados(JLabel valorTorneosGanados) {
         this.valorTorneosGanados = valorTorneosGanados;
-    }}
+    }
+    /**
+     * Obtiene el botón para unirse a un torneo.
+     * 
+     * @return JButton que permite al usuario unirse a un torneo.
+     */
+    public JButton getBotonUnirseTorneo() {
+        return botonUnirseTorneo;
+    }
+
+    /**
+     * Establece el botón para unirse a un torneo.
+     * 
+     * @param botonUnirseTorneo JButton que permite al usuario unirse a un torneo.
+     */
+    public void setBotonUnirseTorneo(JButton botonUnirseTorneo) {
+        this.botonUnirseTorneo = botonUnirseTorneo;
+    }
+
+    /**
+     * Obtiene el botón para ver los detalles de un torneo.
+     * 
+     * @return JButton que permite al usuario ver los detalles de un torneo.
+     */
+    public JButton getBotonVerTorneo() {
+        return botonVerTorneo;
+    }
+
+    /**
+     * Establece el botón para ver los detalles de un torneo.
+     * 
+     * @param botonVerTorneo JButton que permite al usuario ver los detalles de un torneo.
+     */
+    public void setBotonVerTorneo(JButton botonVerTorneo) {
+        this.botonVerTorneo = botonVerTorneo;
+    }
+}

@@ -56,12 +56,20 @@ public class MapHandler {
 	    jugadorDTO.setEspecialidad(jugador.getEspecialidad());
 	    jugadorDTO.setPuntos(jugador.getPuntos());
 	    jugadorDTO.setEquipo(jugador.getEquipo());
+	    jugadorDTO.setPartidasGanadas(jugador.getPartidasGanadas());
+	    jugadorDTO.setPartidasJugadas(jugador.getPartidasJugadas());
+	    jugadorDTO.setTorneosGanados(jugador.getTorneosGanados());
+	    jugadorDTO.setTorneosJugados(jugador.getTorneosJugados());
 	    return jugadorDTO;
 	}
 
 	public static Jugador convertirJugadorDTOAJugador(JugadorDTO jugadorDTO) {
 	    Jugador jugador = new Jugador(jugadorDTO.getUsuario(), jugadorDTO.getContraseña(), jugadorDTO.getNacionalidad(), jugadorDTO.getCorreo(), jugadorDTO.getEspecialidad(), jugadorDTO.getEquipo());
 	    jugador.setPuntos(jugadorDTO.getPuntos());
+	    jugador.setPartidasGanadas(jugadorDTO.getPartidasGanadas());
+	    jugador.setPartidasJugadas(jugadorDTO.getPartidasJugadas());
+	    jugador.setTorneosGanados(jugadorDTO.getTorneosGanados());
+	    jugador.setTorneosJugados(jugadorDTO.getTorneosJugados());
 	    return jugador;
 	}
 
@@ -107,19 +115,24 @@ public class MapHandler {
 
 
 	public static Equipo convertirEquipoDTOAEquipo(EquipoDTO equipoDTO) {
-	    Equipo equipo = new Equipo(equipoDTO.getNombre(), convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador1()));
+	    Equipo equipo;
 
-	    if(equipoDTO.getEntrenador2()!=null) {
-	        equipo.setEntrenador2(convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador2()));
-	    
-	    }else {
-	    	equipo.setEntrenador2(null);
+	    if (equipoDTO.getEntrenador1() != null) {
+	        equipo = new Equipo(equipoDTO.getNombre(), convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador1()));
+	    } else {
+	        equipo = new Equipo(equipoDTO.getNombre(), null);
 	    }
-	    if(equipoDTO.getEntrenador3()!=null) {
+
+	    if (equipoDTO.getEntrenador2() != null) {
+	        equipo.setEntrenador2(convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador2()));
+	    } else {
+	        equipo.setEntrenador2(null);
+	    }
+
+	    if (equipoDTO.getEntrenador3() != null) {
 	        equipo.setEntrenador3(convertirEntrenadorDTOAEntrenador(equipoDTO.getEntrenador3()));
-	    }else {
-	    	equipo.setEntrenador3(null);
-	    	
+	    } else {
+	        equipo.setEntrenador3(null);
 	    }
 
 	    ArrayList<Jugador> jugadores = new ArrayList<>();
@@ -130,6 +143,7 @@ public class MapHandler {
 
 	    return equipo;
 	}
+
 
 
 
@@ -153,6 +167,7 @@ public class MapHandler {
 	    	ganadores.add(convertirJugadorDTOAJugador(jugadorDTO));
 			
 		}
+	    torneo.setEstado(dto.getEstado());
 	    torneo.setGanadores(ganadores);
 	    torneo.setParticipantes(participantes);
 	    torneo.setFase(dto.getFase());

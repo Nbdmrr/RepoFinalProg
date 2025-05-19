@@ -191,4 +191,21 @@ public class Jugador extends Usuario {
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Jugador jugador = (Jugador) obj;
+        return usuario != null && usuario.equals(jugador.usuario);
+    }
+
+    @Override
+    public int hashCode() {
+        return usuario != null ? usuario.hashCode() : 0;
+    }
+
 }

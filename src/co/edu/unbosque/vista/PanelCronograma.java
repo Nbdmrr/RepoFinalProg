@@ -32,6 +32,7 @@ public class PanelCronograma extends JPanel {
 
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botonVolver = new JButton("Volver");
+        botonVolver.setActionCommand("VOLVERAVISTAADMINDECRONOGRAMAADMIN");
         panelInferior.add(botonVolver);
 
         add(panelInferior, BorderLayout.SOUTH);
@@ -49,6 +50,13 @@ public class PanelCronograma extends JPanel {
             int columnas = datos[0].length;
             modeloTabla.setColumnCount(columnas);
 
+            // Generar encabezados dinámicos
+            String[] encabezados = new String[columnas];
+            for (int i = 0; i < columnas; i++) {
+                encabezados[i] = "Enfrentamiento " + (i + 1);
+            }
+            modeloTabla.setColumnIdentifiers(encabezados);
+
             for (int i = 0; i < columnas; i++) {
                 tablaCronograma.getColumnModel().getColumn(i).setPreferredWidth(300);
             }
@@ -59,6 +67,7 @@ public class PanelCronograma extends JPanel {
         }
 
         modeloTabla.fireTableDataChanged();
+
     }
 
     /**

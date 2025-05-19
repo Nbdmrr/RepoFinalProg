@@ -8,6 +8,42 @@ import java.util.ArrayList;
  * administradores, entrenadores, equipos, jugadores y tipos de torneos.
  */
 public class DirectorioPrincipal {
+    /**
+     * Torneo de eliminación directa actualmente seleccionado o en curso.
+     */
+    private TorneoEliminacion torneoEliminacionPrincipal;
+
+    /**
+     * Torneo de puntos actualmente seleccionado o en curso.
+     */
+    private TorneoPuntos torneoPuntosPrincipal;
+
+    /**
+     * Torneo de grupos actualmente seleccionado o en curso.
+     */
+    private TorneoGrupos torneoGruposPrincipal;
+
+	/**
+	 * Entrenador que ha iniciado sesión en el sistema.
+	 * Este atributo se actualiza al iniciar sesión como Entrenador y permite acceder
+	 * a los datos del entrenador logueado.
+	 */
+	private Entrenador entrenadorPrincipal;
+
+	/**
+	 * Jugador que ha iniciado sesión en el sistema.
+	 * Este atributo se actualiza al iniciar sesión como Jugador y permite acceder
+	 * a los datos del jugador logueado.
+	 */
+	private Jugador jugadorPrincipal;
+
+	/**
+	 * Administrador que ha iniciado sesión en el sistema.
+	 * Este atributo se actualiza al iniciar sesión como Administrador y permite acceder
+	 * a los datos del administrador logueado.
+	 */
+	private Administrador administradorPrincipal;
+
 
     /** Directorio de administradores */
     private DirectorioAdministradores directorioAdministradores;
@@ -41,6 +77,12 @@ public class DirectorioPrincipal {
         setDirectorioTorneosGrupos(new DirectorioTorneosGrupos());
         setDirectorioTorneosEliminacion(new DirectorioTorneosEliminacion());
         setDirectorioTorneosPuntos(new DirectorioTorneosPuntos());
+        jugadorPrincipal = null;
+        entrenadorPrincipal = null;
+        administradorPrincipal = null;
+        setTorneoEliminacionPrincipal(null);
+        setTorneoGruposPrincipal(null);
+        setTorneoPuntosPrincipal(null);
     }
 
     /**
@@ -185,6 +227,127 @@ public class DirectorioPrincipal {
         
         return torneosEnString;
     }
+
+    /**
+     * Obtiene el administrador principal actualmente en sesión.
+     * 
+     * @return Administrador principal.
+     */
+    public Administrador getAdministradorPrincipal() {
+        return administradorPrincipal;
+    }
+
+    /**
+     * Establece el administrador principal.
+     * 
+     * @param administradorPrincipal Administrador principal a establecer.
+     */
+    public void setAdministradorPrincipal(Administrador administradorPrincipal) {
+        this.administradorPrincipal = administradorPrincipal;
+    }
+
+    /**
+     * Obtiene el jugador principal actualmente en sesión.
+     * 
+     * @return Jugador principal.
+     */
+    public Jugador getJugadorPrincipal() {
+        return jugadorPrincipal;
+    }
+
+    /**
+     * Establece el jugador principal.
+     * 
+     * @param jugadorPrincipal Jugador principal a establecer.
+     */
+    public void setJugadorPrincipal(Jugador jugadorPrincipal) {
+        this.jugadorPrincipal = jugadorPrincipal;
+    }
+
+    /**
+     * Obtiene el entrenador principal actualmente en sesión.
+     * 
+     * @return Entrenador principal.
+     */
+    public Entrenador getEntrenadorPrincipal() {
+        return entrenadorPrincipal;
+    }
+
+    /**
+     * Establece el entrenador principal.
+     * 
+     * @param entrenadorPrincipal Entrenador principal a establecer.
+     */
+    public void setEntrenadorPrincipal(Entrenador entrenadorPrincipal) {
+        this.entrenadorPrincipal = entrenadorPrincipal;
+    }
+
+    /**
+     * Obtiene el torneo de grupos principal seleccionado.
+     * 
+     * @return Torneo de grupos principal.
+     */
+    public TorneoGrupos getTorneoGruposPrincipal() {
+        return torneoGruposPrincipal;
+    }
+
+    /**
+     * Establece el torneo de grupos principal.
+     * 
+     * @param torneoGruposPrincipal Torneo de grupos principal a establecer.
+     */
+    public void setTorneoGruposPrincipal(TorneoGrupos torneoGruposPrincipal) {
+        this.torneoGruposPrincipal = torneoGruposPrincipal;
+    }
+
+    /**
+     * Obtiene el torneo de puntos principal seleccionado.
+     * 
+     * @return Torneo de puntos principal.
+     */
+    public TorneoPuntos getTorneoPuntosPrincipal() {
+        return torneoPuntosPrincipal;
+    }
+
+    /**
+     * Establece el torneo de puntos principal.
+     * 
+     * @param torneoPuntosPrincipal Torneo de puntos principal a establecer.
+     */
+    public void setTorneoPuntosPrincipal(TorneoPuntos torneoPuntosPrincipal) {
+        this.torneoPuntosPrincipal = torneoPuntosPrincipal;
+    }
+
+    /**
+     * Obtiene el torneo de eliminación directa principal seleccionado.
+     * 
+     * @return Torneo de eliminación directa principal.
+     */
+    public TorneoEliminacion getTorneoEliminacionPrincipal() {
+        return torneoEliminacionPrincipal;
+    }
+
+    /**
+     * Establece el torneo de eliminación directa principal.
+     * 
+     * @param torneoEliminacionPrincipal Torneo de eliminación directa principal a establecer.
+     */
+    public void setTorneoEliminacionPrincipal(TorneoEliminacion torneoEliminacionPrincipal) {
+        this.torneoEliminacionPrincipal = torneoEliminacionPrincipal;
+    }
+    /**
+	 * Recorre un ArrayList de jugadores y retorna un ArrayList de Strings con los usuarios.
+	 * 
+	 * @param jugadores Lista de jugadores
+	 * @return Lista de nombres de usuario
+	 */
+	public ArrayList<String> obtenerUsuarios(ArrayList<Jugador> jugadores) {
+	    ArrayList<String> usuarios = new ArrayList<>();
+	    for (Jugador jugador : jugadores) {
+	        usuarios.add(jugador.getUsuario());
+	    }
+	    return usuarios;
+	}
 
 
 }

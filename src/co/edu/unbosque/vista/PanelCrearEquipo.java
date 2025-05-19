@@ -51,7 +51,10 @@ public class PanelCrearEquipo extends JPanel {
 
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 20, 0));
         btnVolver = new JButton("Volver");
+        btnVolver.setActionCommand("VOLVERAPRINCIPALENTRENADORDECREARQUIPO");
+        
         btnCrearEquipo = new JButton("Crear Equipo");
+        btnCrearEquipo.setActionCommand("CREAREQUIPO");
         panelBotones.add(btnVolver);
         panelBotones.add(btnCrearEquipo);
 

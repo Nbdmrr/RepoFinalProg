@@ -80,6 +80,7 @@ public ArrayList<Jugador> getAll() {
                 j.setPuntos(y.getPuntos());
                 j.setTorneosGanados(y.getTorneosGanados());
                 j.setTorneosJugados(y.getTorneosJugados());
+                jugadores.add(j);
          
                 archivo.getUbicacionArchivoJugadores().delete();
                 archivo.getUbicacionArchivoJugadores().createNewFile();

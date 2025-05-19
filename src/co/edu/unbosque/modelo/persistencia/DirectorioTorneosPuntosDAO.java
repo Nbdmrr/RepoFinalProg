@@ -83,7 +83,7 @@ public ArrayList<TorneoPuntos> getAll() {
                 t.setGanadorTorneo(y.getGanadorTorneo());
                 
                
-                // agrega más campos si Torneo los tiene
+                torneosPuntos.add(t);
                 archivo.getUbicacionArchivoTorneosPuntos().delete();
                 archivo.getUbicacionArchivoTorneosPuntos().createNewFile();
                 archivo.escribirArchivoTorneosPuntos(torneosPuntos);

@@ -116,14 +116,14 @@ public class PanelPrincipalAdmin extends JPanel {
         botonCrearTorneo = new JButton("Crear Torneo");
         botonCrearTorneo.setActionCommand("CREACIONTORNEO");
 
-        botonElegirTorneo = new JButton("Elegir Torneo");
-        botonElegirTorneo.setActionCommand("ELEGIRTORNEO");
+        setBotonElegirTorneo(new JButton("Elegir Torneo"));
+        getBotonElegirTorneo().setActionCommand("ELEGIRTORNEO");
 
         panelInferior.add(botonVolver);
         panelInferior.add(botonRegistrarAdmin);
         panelInferior.add(botonPDF);
         panelInferior.add(botonCrearTorneo);
-        panelInferior.add(botonElegirTorneo);
+        panelInferior.add(getBotonElegirTorneo());
 
         add(panelInferior, BorderLayout.SOUTH);
     }
@@ -373,9 +373,25 @@ public class PanelPrincipalAdmin extends JPanel {
     }
 
 
-    public AbstractButton getValorCorreo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getValorCorreo'");
-    }
-}
 
+    /**
+     * Obtiene el botón para elegir un torneo.
+     * Este botón permite al jugador seleccionar un torneo para unirse.
+     *
+     * @return el botón de elegir torneo.
+     */
+    public JButton getBotonElegirTorneo() {
+        return botonElegirTorneo;
+    }
+
+    /**
+     * Establece el botón para elegir un torneo.
+     *
+     * @param botonElegirTorneo el nuevo botón para elegir torneo.
+     */
+    public void setBotonElegirTorneo(JButton botonElegirTorneo) {
+        this.botonElegirTorneo = botonElegirTorneo;
+    }
+
+
+}

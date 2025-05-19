@@ -2,6 +2,7 @@ package co.edu.unbosque.vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Panel que muestra los detalles de un torneo.
@@ -102,7 +103,9 @@ public class PanelDatosTorneo extends JPanel {
 
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botonVolver = new JButton("Volver");
+        botonVolver.setActionCommand("VOLVERAPRINCIPALJUGADORDEDATOSTORNEO"); 
         botonCronograma = new JButton("Cronograma");
+        botonCronograma.setActionCommand("CRONOGRAMAJUGADOR");
 
         panelInferior.add(botonCronograma);
         panelInferior.add(botonVolver);
@@ -144,18 +147,6 @@ public class PanelDatosTorneo extends JPanel {
      */
     public void actualizarTipo(String tipo) {
         lblTipo.setText("Tipo: " + tipo);
-    }
-
-    /**
-     * Actualiza la lista de participantes restantes con un arreglo de nombres.
-     * 
-     * @param participantes Array con los nombres de los participantes restantes
-     */
-    public void actualizarParticipantesRestantesList(String[] participantes) {
-        listModel.clear();
-        for (String participante : participantes) {
-            listModel.addElement(participante);
-        }
     }
 
     /**
@@ -336,5 +327,16 @@ public class PanelDatosTorneo extends JPanel {
      */
     public void setPanelIzquierda(JPanel panelIzquierda) {
         this.panelIzquierda = panelIzquierda;
+    }
+    /**
+     * Actualiza la lista de participantes restantes con un ArrayList de nombres.
+     * 
+     * @param participantes ArrayList con los nombres de los participantes restantes
+     */
+    public void actualizarParticipantesRestantesList(ArrayList<String> participantes) {
+        listModel.clear();
+        for (String participante : participantes) {
+            listModel.addElement(participante);
+        }
     }
 }

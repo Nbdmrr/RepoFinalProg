@@ -74,6 +74,7 @@ public class DirectorioEquiposDAO implements InterfaceDAO<Equipo> {
                 e.setEntrenador2(y.getEntrenador2());
                 e.setEntrenador3(y.getEntrenador3());
                 e.setEquipo(y.getEquipo());
+                equipos.add(e);
                 archivo.getUbicacionArchivoEquipos().delete();
                 archivo.getUbicacionArchivoEquipos().createNewFile();
                 archivo.escribirArchivoEquipos(equipos);

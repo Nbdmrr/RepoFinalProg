@@ -47,7 +47,7 @@ public class TorneoGrupos extends Torneo {
         setEquipoGanador1(new Jugador[3]);
         setEquipoGanador2(new Jugador[3]);
         setEquipoGanadorTorneo(new Jugador[3]);
-        eliminados = new HashMap<>();
+        setEliminados(new HashMap<>());
     }
 
     /**
@@ -133,13 +133,13 @@ public class TorneoGrupos extends Torneo {
             setEquipoGanador1(getEquipo1());
             for (Jugador perdedor : getEquipo2()) {
                 participantes.remove(perdedor);
-                eliminados.put(perdedor, false);
+                getEliminados().put(perdedor, false);
             }
         } else if (puntosB > puntosA) {
             setEquipoGanador1(getEquipo2());
             for (Jugador perdedor : getEquipo1()) {
                 participantes.remove(perdedor);
-                eliminados.put(perdedor, false);
+                getEliminados().put(perdedor, false);
             }
         }
 
@@ -165,17 +165,18 @@ public class TorneoGrupos extends Torneo {
             setEquipoGanador2(getEquipo3());
             for (Jugador perdedor : getEquipo4()) {
                 participantes.remove(perdedor);
-                eliminados.put(perdedor, false);
+                getEliminados().put(perdedor, false);
             }
         } else if (puntosB > puntosA) {
             setEquipoGanador2(getEquipo4());
             for (Jugador perdedor : getEquipo3()) {
                 participantes.remove(perdedor);
-                eliminados.put(perdedor, false);
+                getEliminados().put(perdedor, false);
             }
         }
 
         actualizarCronogramaPorGrupos();
+        fase++;
     }
 
     /**
@@ -205,14 +206,14 @@ public class TorneoGrupos extends Torneo {
             for (Jugador j : equipoGanador1) j.sumarTorneoGanado();
             for (Jugador perdedor : equipoGanador2) {
                 participantes.remove(perdedor);
-                eliminados.put(perdedor, false);
+                getEliminados().put(perdedor, false);
             }
         } else if (puntosB > puntosA) {
             setEquipoGanadorTorneo(equipoGanador2);
             for (Jugador j : equipoGanador2) j.sumarTorneoGanado();
             for (Jugador perdedor : equipoGanador1) {
                 participantes.remove(perdedor);
-                eliminados.put(perdedor, false);
+                getEliminados().put(perdedor, false);
             }
         }
 
@@ -405,5 +406,13 @@ public class TorneoGrupos extends Torneo {
     public void setEquipo1(Jugador[] equipo1) {
         this.equipo1 = equipo1;
     }
+
+	public HashMap<Jugador, Boolean> getEliminados() {
+		return eliminados;
+	}
+
+	public void setEliminados(HashMap<Jugador, Boolean> eliminados) {
+		this.eliminados = eliminados;
+	}
 }
 

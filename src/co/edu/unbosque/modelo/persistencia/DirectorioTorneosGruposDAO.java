@@ -86,7 +86,7 @@ public class DirectorioTorneosGruposDAO implements InterfaceDAO<TorneoGrupos> {
                 t.setParticipantes(y.getParticipantes());
                 t.setTipo(y.getTipo());
                 
-                // agregar más campos si tiene TorneoGrupos
+                torneosGrupos.add(t);
                 archivo.getUbicacionArchivoTorneosGrupos().delete();
                 archivo.getUbicacionArchivoTorneosGrupos().createNewFile();
                 archivo.escribirArchivoTorneosGrupos(torneosGrupos);

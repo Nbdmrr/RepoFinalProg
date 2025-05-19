@@ -11,8 +11,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.mail.Session;
-
 import co.edu.unbosque.modelo.Administrador;
 import co.edu.unbosque.modelo.DirectorioPrincipal;
 import co.edu.unbosque.modelo.Entrenador;

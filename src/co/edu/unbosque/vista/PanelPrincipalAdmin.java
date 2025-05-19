@@ -373,6 +373,7 @@ public class PanelPrincipalAdmin extends JPanel {
     }
 
 
+
     /**
      * Obtiene el botón para elegir un torneo.
      * Este botón permite al jugador seleccionar un torneo para unirse.
@@ -392,5 +393,5 @@ public class PanelPrincipalAdmin extends JPanel {
         this.botonElegirTorneo = botonElegirTorneo;
     }
 
-}
 
+}

@@ -1,0 +1,1009 @@
+@startuml
+' =========================
+' MODELO
+' =========================
+package "co.edu.unbosque.modelo" {
+    class Usuario {
+        - usuario: String
+        - nacionalidad: String
+        - correo: String
+        + getUsuario(): String
+        + setUsuario(usuario: String): void
+        + getNacionalidad(): String
+        + setNacionalidad(nacionalidad: String): void
+        + getCorreo(): String
+        + setCorreo(correo: String): void
+    }
+
+    class Administrador {
+        - usuario: String
+        - contraseña: String
+        - nacionalidad: String
+        - correo: String
+        - cargo: String
+        + Administrador(usuario: String, contraseña: String, nacionalidad: String, correo: String, cargo: String)
+        + getUsuario(): String
+        + setUsuario(usuario: String): void
+        + getContraseña(): String
+        + setContraseña(contraseña: String): void
+        + getNacionalidad(): String
+        + setNacionalidad(nacionalidad: String): void
+        + getCorreo(): String
+        + setCorreo(correo: String): void
+        + getCargo(): String
+        + setCargo(cargo: String): void
+        + toString(): String
+    }
+
+    class Entrenador {
+        - usuario: String
+        - contraseña: String
+        - nacionalidad: String
+        - correo: String
+        - equipo: String
+        + Entrenador(usuario: String, contraseña: String, nacionalidad: String, correo: String, equipo: String)
+        + getUsuario(): String
+        + setUsuario(usuario: String): void
+        + getContraseña(): String
+        + setContraseña(contraseña: String): void
+        + getNacionalidad(): String
+        + setNacionalidad(nacionalidad: String): void
+        + getCorreo(): String
+        + setCorreo(correo: String): void
+        + getEquipo(): String
+        + setEquipo(equipo: String): void
+        + toString(): String
+    }
+
+    class Jugador {
+        - usuario: String
+        - contraseña: String
+        - nacionalidad: String
+        - correo: String
+        - especialidad: String
+        - equipo: String
+        - partidasJugadas: int
+        - partidasGanadas: int
+        - torneosJugados: int
+        - torneosGanados: int
+        + Jugador(usuario: String, contraseña: String, nacionalidad: String, correo: String, especialidad: String, equipo: String)
+        + getUsuario(): String
+        + setUsuario(usuario: String): void
+        + getContraseña(): String
+        + setContraseña(contraseña: String): void
+        + getNacionalidad(): String
+        + setNacionalidad(nacionalidad: String): void
+        + getCorreo(): String
+        + setCorreo(correo: String): void
+        + getEspecialidad(): String
+        + setEspecialidad(especialidad: String): void
+        + getEquipo(): String
+        + setEquipo(equipo: String): void
+        + getPartidasJugadas(): int
+        + setPartidasJugadas(partidasJugadas: int): void
+        + getPartidasGanadas(): int
+        + setPartidasGanadas(partidasGanadas: int): void
+        + getTorneosJugados(): int
+        + setTorneosJugados(torneosJugados: int): void
+        + getTorneosGanados(): int
+        + setTorneosGanados(torneosGanados: int): void
+        + toString(): String
+    }
+
+    class Equipo {
+        - nombre: String
+        - entrenador1: Entrenador
+        - entrenador2: Entrenador
+        - entrenador3: Entrenador
+        - equipo: ArrayList<Jugador>
+        + Equipo(nombre: String, entrenador1: Entrenador)
+        + getNombre(): String
+        + setNombre(nombre: String): void
+        + getEntrenador1(): Entrenador
+        + setEntrenador1(entrenador1: Entrenador): void
+        + getEntrenador2(): Entrenador
+        + setEntrenador2(entrenador2: Entrenador): void
+        + getEntrenador3(): Entrenador
+        + setEquipo(equipo: ArrayList<Jugador>): void
+        + toString(): String
+    }
+
+    abstract class Torneo {
+        - nombre: String
+        - limiteParticipantes: int
+        - tipo: String
+        - juego: String
+        - fase: int
+        + Torneo(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+        + getNombre(): String
+        + setNombre(nombre: String): void
+        + getLimiteParticipantes(): int
+        + setLimiteParticipantes(limiteParticipantes: int): void
+        + getTipo(): String
+        + setTipo(tipo: String): void
+        + getJuego(): String
+        + setJuego(juego: String): void
+        + getFase(): int
+        + setFase(fase: int): void
+        + toString(): String
+    }
+
+    class TorneoEliminacion extends Torneo {
+        + TorneoEliminacion(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+    }
+
+    class TorneoGrupos extends Torneo {
+        + TorneoGrupos(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+    }
+
+    class TorneoPuntos extends Torneo {
+        + TorneoPuntos(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+    }
+
+    class DirectorioPrincipal {
+        - directorioAdministradores: DirectorioAdministradores
+        - directorioEntrenadores: DirectorioEntrenadores
+        - directorioEquipos: DirectorioEquipos
+        - directorioJugadores: DirectorioJugadores
+        - directorioTorneosGrupos: DirectorioTorneosGrupos
+        - directorioTorneosEliminacion: DirectorioTorneosEliminacion
+        - directorioTorneosPuntos: DirectorioTorneosPuntos
+        + DirectorioPrincipal()
+        + getDirectorioAdministradores(): DirectorioAdministradores
+        + setDirectorioAdministradores(directorioAdministradores: DirectorioAdministradores): void
+        + getDirectorioEntrenadores(): DirectorioEntrenadores
+        + setDirectorioEntrenadores(directorioEntrenadores: DirectorioEntrenadores): void
+        + getDirectorioEquipos(): DirectorioEquipos
+        + setDirectorioEquipos(directorioEquipos: DirectorioEquipos): void
+        + getDirectorioJugadores(): DirectorioJugadores
+        + setDirectorioJugadores(directorioJugadores: DirectorioJugadores): void
+        + getDirectorioTorneosGrupos(): DirectorioTorneosGrupos
+        + setDirectorioTorneosGrupos(directorioTorneosGrupos: DirectorioTorneosGrupos): void
+        + getDirectorioTorneosEliminacion(): DirectorioTorneosEliminacion
+        + setDirectorioTorneosEliminacion(directorioTorneosEliminacion: DirectorioTorneosEliminacion): void
+        + getDirectorioTorneosPuntos(): DirectorioTorneosPuntos
+        + setDirectorioTorneosPuntos(directorioTorneosPuntos: DirectorioTorneosPuntos): void
+        + convertirTorneosAStrings(): ArrayList<String>
+    }
+
+    class DirectorioAdministradores {
+        - administradores: ArrayList<Administrador>
+        + DirectorioAdministradores()
+        + adicionarAdministrador(administrador: Administrador): void
+        + obtenerAdministradores(): ArrayList<Administrador>
+        + encontrarAdministrador(administrador: Administrador): Administrador
+        + cargarAdministradores(): void
+        + guardarAdministradores(): void
+    }
+
+    class DirectorioEntrenadores {
+        - entrenadores: ArrayList<Entrenador>
+        + DirectorioEntrenadores()
+        + adicionarEntrenador(entrenador: Entrenador): void
+        + obtenerEntrenadores(): ArrayList<Entrenador>
+        + encontrarEntrenadores(entrenador: Entrenador): Entrenador
+        + cargarEntrenadores(): void
+        + guardarEntrenadores(): void
+    }
+
+    class DirectorioEquipos {
+        - equipos: ArrayList<Equipo>
+        + DirectorioEquipos()
+        + adicionarEquipo(equipo: Equipo): void
+        + obtenerEquipos(): ArrayList<Equipo>
+        + encontrarEquipo(equipo: Equipo): Equipo
+        + actualizarEquipo(equipoAntiguo: Equipo, equipoNuevo: Equipo): void
+        + cargarEquipos(): void
+        + guardarEquipos(): void
+        + convertirEquiposAStrings(): ArrayList<String>
+    }
+
+    class DirectorioJugadores {
+        - jugadores: ArrayList<Jugador>
+        + DirectorioJugadores()
+        + adicionarJugador(jugador: Jugador): void
+        + obtenerJugador(): ArrayList<Jugador>
+        + encontrarJugador(jugador: Jugador): Jugador
+        + cargarJugadores(): void
+        + guardarJugadores(): void
+    }
+
+    class DirectorioTorneosGrupos {
+        - torneosGrupos: ArrayList<TorneoGrupos>
+        + DirectorioTorneosGrupos()
+        + adicionarTorneoGrupos(torneoGrupos: TorneoGrupos): void
+        + obtenerTorneosGrupos(): ArrayList<TorneoGrupos>
+        + cargarTorneosGrupos(): void
+        + guardarTorneosGrupos(): void
+    }
+
+    class DirectorioTorneosEliminacion {
+        - torneosEliminacion: ArrayList<TorneoEliminacion>
+        + DirectorioTorneosEliminacion()
+        + adicionarTorneoEliminacion(torneoEliminacion: TorneoEliminacion): void
+        + obtenerTorneosEliminacio(): ArrayList<TorneoEliminacion>
+        + cargarTorneosEliminacion(): void
+        + guardarTorneosEliminacion(): void
+    }
+
+    class DirectorioTorneosPuntos {
+        - torneosPuntos: ArrayList<TorneoPuntos>
+        + DirectorioTorneosPuntos()
+        + adicionarTorneoPuntos(torneoPuntos: TorneoPuntos): void
+        + obtenerTorneosPuntos(): ArrayList<TorneoPuntos>
+        + cargarTorneosPuntos(): void
+        + guardarTorneosPuntos(): void
+    }
+}
+
+' =========================
+' VISTA
+' =========================
+package "co.edu.unbosque.vista" {
+    class Vista {
+        - ventanaAvanzeTorneo: VentanaAvanzeYInicioTorneo
+        - ventanaCrearEquipo: VentanaCrearEquipo
+        - ventanaCrearTorneo: VentanaCrearTorneo
+        - ventanaCronograma: VentanaCronograma
+        - ventanaDatosTorneo: VentanaDatosTorneo
+        - ventanaInicioSesion: VentanaInicioSesion
+        - ventanaPrincipalAdmin: VentanaPrincipalAdmin
+        - ventanaPrincipalEntrenador: VentanaPrincipalEntrenador
+        - ventanaPrincipalJugador: VentanaPrincipalJugador
+        - ventanaRegistroAdmin: VentanaRegistroAdmin
+        - ventanaRegistroEntrenador: VentanaRegistroEntrenador
+        - ventanaRegistroJugador: VentanaRegistroJugador
+        + Vista()
+        + mostrarMensaje(mensaje: String): void
+        + getVentanaAvanzeTorneo(): VentanaAvanzeYInicioTorneo
+        + getVentanaCrearEquipo(): VentanaCrearEquipo
+        + getVentanaCrearTorneo(): VentanaCrearTorneo
+        + getVentanaCronograma(): VentanaCronograma
+        + getVentanaDatosTorneo(): VentanaDatosTorneo
+        + getVentanaInicioSesion(): VentanaInicioSesion
+        + getVentanaPrincipalAdmin(): VentanaPrincipalAdmin
+        + getVentanaPrincipalEntrenador(): VentanaPrincipalEntrenador
+        + getVentanaPrincipalJugador(): VentanaPrincipalJugador
+        + getVentanaRegistroAdmin(): VentanaRegistroAdmin
+        + getVentanaRegistroEntrenador(): VentanaRegistroEntrenador
+        + getVentanaRegistroJugador(): VentanaRegistroJugador
+    }
+
+    class VentanaAvanzeYInicioTorneo {
+        - panelAvanceYInicioTorneo: PanelAvanceYInicioTorneo
+        + VentanaAvanzeYInicioTorneo()
+        + getPanelAvanceYInicioTorneo(): PanelAvanceYInicioTorneo
+        + setPanelAvanceYInicioTorneo(panelAvanceYInicioTorneo: PanelAvanceYInicioTorneo): void
+    }
+
+    class VentanaCrearEquipo {
+        - panelCrearEquipo: PanelCrearEquipo
+        + VentanaCrearEquipo()
+        + getPanelCrearEquipo(): PanelCrearEquipo
+        + setPanelCrearEquipo(panelCrearEquipo: PanelCrearEquipo): void
+    }
+
+    class VentanaCrearTorneo {
+        - panelCrearTorneo: PanelCrearTorneo
+        + VentanaCrearTorneo()
+        + getPanelCrearTorneo(): PanelCrearTorneo
+        + setPanelCrearTorneo(panelCrearTorneo: PanelCrearTorneo): void
+    }
+
+    class VentanaCronograma {
+        - panelCronograma: PanelCronograma
+        + VentanaCronograma()
+        + getPanelCronograma(): PanelCronograma
+        + setPanelCronograma(panelCronograma: PanelCronograma): void
+    }
+
+    class VentanaDatosTorneo {
+        - panelDatosTorneo: PanelDatosTorneo
+        + VentanaDatosTorneo()
+        + getPanelDatosTorneo(): PanelDatosTorneo
+        + setPanelDatosTorneo(panelDatosTorneo: PanelDatosTorneo): void
+    }
+
+    class VentanaInicioSesion {
+        - panelInicioSesion: PanelInicioSesion
+        + VentanaInicioSesion()
+        + getPanelInicioSesion(): PanelInicioSesion
+        + setPanelInicioSesion(panelInicioSesion: PanelInicioSesion): void
+    }
+
+    class VentanaPrincipalAdmin {
+        - panelPrincipalAdmin: PanelPrincipalAdmin
+        + VentanaPrincipalAdmin()
+        + getPanelPrincipalAdmin(): PanelPrincipalAdmin
+        + setPanelPrincipalAdmin(panelPrincipalAdmin: PanelPrincipalAdmin): void
+    }
+
+    class VentanaPrincipalEntrenador {
+        - panelPrincipalEntrenador: PanelPrincipalEntrenador
+        + VentanaPrincipalEntrenador()
+        + getPanelPrincipalEntrenador(): PanelPrincipalEntrenador
+        + setPanelPrincipalEntrenador(panelPrincipalEntrenador: PanelPrincipalEntrenador): void
+    }
+
+    class VentanaPrincipalJugador {
+        - panelPrincipalJugador: PanelPrincipalJugador
+        + VentanaPrincipalJugador()
+        + getPanelPrincipalJugador(): PanelPrincipalJugador
+        + setPanelPrincipalJugador(panelPrincipalJugador: PanelPrincipalJugador): void
+    }
+
+    class VentanaRegistroAdmin {
+        - panelRegistroAdmin: PanelRegistroAdmin
+        + VentanaRegistroAdmin()
+        + getPanelRegistroAdmin(): PanelRegistroAdmin
+        + setPanelRegistroAdmin(panelRegistroAdmin: PanelRegistroAdmin): void
+    }
+
+    class VentanaRegistroEntrenador {
+        - panelRegistroEntrenador: PanelRegistroEntrenador
+        + VentanaRegistroEntrenador()
+        + getPanelRegistroEntrenador(): PanelRegistroEntrenador
+        + setPanelRegistroEntrenador(panelRegistroEntrenador: PanelRegistroEntrenador): void
+    }
+
+    class VentanaRegistroJugador {
+        - panelRegistroJugador: PanelRegistroJugador
+        + VentanaRegistroJugador()
+        + getPanelRegistroJugador(): PanelRegistroJugador
+        + setPanelRegistroJugador(panelRegistroJugador: PanelRegistroJugador): void
+    }
+
+     class PanelAvanceYInicioTorneo {
+        - btnVolver: JButton
+        - btnAvanzarFase: JButton
+        - btnCronograma: JButton
+        - btnIniciarTorneo: JButton
+        + PanelAvanceYInicioTorneo()
+        + getBtnVolver(): JButton
+        + setBtnVolver(btnVolver: JButton): void
+        + getBtnAvanzarFase(): JButton
+        + setBtnAvanzarFase(btnAvanzarFase: JButton): void
+        + getBtnCronograma(): JButton
+        + setBtnCronograma(btnCronograma: JButton): void
+        + getBtnIniciarTorneo(): JButton
+        + setBtnIniciarTorneo(btnIniciarTorneo: JButton): void
+        + inicializarComponentes(): void
+    }
+
+    class PanelCrearEquipo {
+        - campoNombreEquipo: JTextField
+        - campoEntrenador1: JTextField
+        - campoEntrenador2: JTextField
+        - campoEntrenador3: JTextField
+        - listaJugadores: JList<String>
+        - botonAgregarJugador: JButton
+        - botonCrearEquipo: JButton
+        - botonVolver: JButton
+        + getCampoNombreEquipo(): JTextField
+        + getCampoEntrenador1(): JTextField
+        + getCampoEntrenador2(): JTextField
+        + getCampoEntrenador3(): JTextField
+        + getListaJugadores(): JList<String>
+        + getBotonAgregarJugador(): JButton
+        + getBotonCrearEquipo(): JButton
+        + getBotonVolver(): JButton
+    }
+    class PanelCrearTorneo {
+        - campoNombre: JTextField
+        - campoLimiteParticipantes: JTextField
+        - campoTipo: JComboBox<String>
+        - campoJuego: JTextField
+        - botonCrear: JButton
+        - botonVolver: JButton
+        + getCampoNombre(): JTextField
+        + getCampoLimiteParticipantes(): JTextField
+        + getCampoTipo(): JComboBox<String>
+        + getCampoJuego(): JTextField
+        + getBotonCrear(): JButton
+        + getBotonVolver(): JButton
+    }
+
+    class PanelCronograma {
+        - modeloTabla: DefaultTableModel
+        - tablaCronograma: JTable
+        - botonVolver: JButton
+        + PanelCronograma()
+        + getBotonVolver(): JButton
+        + setBotonVolver(botonVolver: JButton): void
+        + actualizarCronogramaGeneral(datos: Object[][]): void
+    }
+
+    class PanelDatosTorneo {
+        - panelIzquierda: JPanel
+        - panelDerecha: JPanel
+        - botonVolver: JButton
+        - botonCronograma: JButton
+        - lblNombre: JLabel
+        - lblParticipantesRestantes: JLabel
+        - lblEliminados: JLabel
+        - lblTipo: JLabel
+        - listModel: DefaultListModel<String>
+        - listParticipantesRestantes: JList<String>
+        + PanelDatosTorneo()
+        + getPanelIzquierda(): JPanel
+        + setPanelIzquierda(panelIzquierda: JPanel): void
+        + getPanelDerecha(): JPanel
+        + setPanelDerecha(panelDerecha: JPanel): void
+        + getBotonVolver(): JButton
+        + setBotonVolver(botonVolver: JButton): void
+        + getBotonCronograma(): JButton
+        + setBotonCronograma(botonCronograma: JButton): void
+        + getLblNombre(): JLabel
+        + setLblNombre(lblNombre: JLabel): void
+        + getLblParticipantesRestantes(): JLabel
+        + setLblParticipantesRestantes(lblParticipantesRestantes: JLabel): void
+        + getLblEliminados(): JLabel
+        + setLblEliminados(lblEliminados: JLabel): void
+        + getLblTipo(): JLabel
+        + setLblTipo(lblTipo: JLabel): void
+        + getListModel(): DefaultListModel<String>
+        + setListModel(listModel: DefaultListModel<String>): void
+        + getListParticipantesRestantes(): JList<String>
+        + setListParticipantesRestantes(listParticipantesRestantes: JList<String>): void
+        + actualizarEliminados(eliminados: int): void
+        + actualizarTipo(tipo: String): void
+        + actualizarParticipantesRestantesList(participantes: String[]): void
+    }
+
+    class PanelInicioSesion {
+        - campoUsuario: JTextField
+        - campoContraseña: JPasswordField
+        - botonIniciarSesion: JButton
+        - botonRegistrar: JButton
+        - botonSalir: JButton
+        + getCampoUsuario(): JTextField
+        + getCampoContraseña(): JPasswordField
+        + getBotonIniciarSesion(): JButton
+        + getBotonRegistrar(): JButton
+        + getBotonSalir(): JButton
+    }
+
+    class PanelPrincipalAdmin {
+        - botonVolver: JButton
+        - botonRegistrarAdmin: JButton
+        - listaTorneos: JList<String>
+        - valorUsuario: JLabel
+        - valorCargo: JLabel
+        - valorCorreo: JLabel
+        - valorNacionalidad: JLabel
+        + getBotonVolver(): JButton
+        + setBotonVolver(botonVolver: JButton): void
+        + getBotonRegistrarAdmin(): JButton
+        + setBotonRegistrarAdmin(botonRegistrarAdmin: JButton): void
+        + llenarListaTorneos(torneos: ArrayList<String>): void
+        + actualizarDatosAdmin(usuario: String, cargo: String, correo: String, nacionalidad: String): void
+    }
+
+    class PanelPrincipalEntrenador {
+        - botonVolver: JButton
+        - botonRegistrarEquipo: JButton
+        - botonVerTorneos: JButton
+        - listaEquipos: JList<String>
+        - valorUsuario: JLabel
+        - valorCorreo: JLabel
+        - valorNacionalidad: JLabel
+        + getBotonVolver(): JButton
+        + setBotonVolver(botonVolver: JButton): void
+        + getBotonRegistrarEquipo(): JButton
+        + setBotonRegistrarEquipo(botonRegistrarEquipo: JButton): void
+        + getBotonVerTorneos(): JButton
+        + setBotonVerTorneos(botonVerTorneos: JButton): void
+        + llenarListaEquipos(equipos: ArrayList<String>): void
+        + actualizarDatosEntrenador(usuario: String, correo: String, nacionalidad: String): void
+    }
+
+    class PanelPrincipalJugador {
+        - botonVolver: JButton
+        - botonVerTorneos: JButton
+        - listaTorneos: JList<String>
+        - valorUsuario: JLabel
+        - valorCorreo: JLabel
+        - valorNacionalidad: JLabel
+        - valorEspecialidad: JLabel
+        + getBotonVolver(): JButton
+        + setBotonVolver(botonVolver: JButton): void
+        + getBotonVerTorneos(): JButton
+        + setBotonVerTorneos(botonVerTorneos: JButton): void
+        + llenarListaTorneos(torneos: ArrayList<String>): void
+        + actualizarDatosJugador(usuario: String, correo: String, nacionalidad: String, especialidad: String): void
+    }
+
+    class PanelRegistroAdmin {
+        - campoUsuario: JTextField
+        - campoContraseña: JPasswordField
+        - campoCorreo: JTextField
+        - campoNacionalidad: JTextField
+        - campoCargo: JTextField
+        - botonRegistrar: JButton
+        - botonVolver: JButton
+        + getCampoUsuario(): JTextField
+        + getCampoContraseña(): JPasswordField
+        + getCampoCorreo(): JTextField
+        + getCampoNacionalidad(): JTextField
+        + getCampoCargo(): JTextField
+        + getBotonRegistrar(): JButton
+        + getBotonVolver(): JButton
+    }
+
+    class PanelRegistroEntrenador {
+        - campoUsuario: JTextField
+        - campoContraseña: JPasswordField
+        - campoCorreo: JTextField
+        - campoNacionalidad: JTextField
+        - campoEquipo: JTextField
+        - botonRegistrar: JButton
+        - botonVolver: JButton
+        + getCampoUsuario(): JTextField
+        + getCampoContraseña(): JPasswordField
+        + getCampoCorreo(): JTextField
+        + getCampoNacionalidad(): JTextField
+        + getCampoEquipo(): JTextField
+        + getBotonRegistrar(): JButton
+        + getBotonVolver(): JButton
+    }
+
+    class PanelRegistroJugador {
+        - campoUsuario: JTextField
+        - campoContraseña: JPasswordField
+        - campoCorreo: JTextField
+        - campoNacionalidad: JTextField
+        - campoEspecialidad: JTextField
+        - campoEquipo: JTextField
+        - botonRegistrar: JButton
+        - botonVolver: JButton
+        + getCampoUsuario(): JTextField
+        + getCampoContraseña(): JPasswordField
+        + getCampoCorreo(): JTextField
+        + getCampoNacionalidad(): JTextField
+        + getCampoEspecialidad(): JTextField
+        + getCampoEquipo(): JTextField
+        + getBotonRegistrar(): JButton
+        + getBotonVolver(): JButton
+    }
+}
+
+' =========================
+' CONTROLADOR
+' =========================
+package "co.edu.unbosque.controlador" {
+    class Controlador {
+        - vista: Vista
+        - directorioPrincipal: DirectorioPrincipal
+        + Controlador()
+        + actionPerformed(e: ActionEvent): void
+        + asignarOyentes(): void
+        + actualizarListaEquiposQueEntrena(entrenador: Entrenador): void
+        + actualizarListaTorneosActivos(): void
+        + actualizarListaTorneosAdmin(): void
+        + actualizarListaEquiposDisponibles(): void
+        + validarNombreTorneo(nombreTorneo: String): Boolean
+        + actualizarComboBoxRegistroJugador(): void
+        + ValidarUsuario(usuario: String): Boolean
+        + getVista(): Vista
+        + setVista(vista: Vista): void
+        + getDirectorioPrincipal(): DirectorioPrincipal
+        + setDirectorioPrincipal(directorioPrincipal: DirectorioPrincipal): void
+        + enviarCorreosNuevoTorneo(nuevoTorneo: Torneo): void
+    }
+    class Main
+}
+
+' =========================
+' PERSISTENCIA
+' =========================
+package "co.edu.unbosque.modelo.persistencia" {
+
+    class Archivo {
+        - ubicacionArchivoJugadores: File
+        - ubicacionArchivoAdministradores: File
+        - ubicacionArchivoEntrenadores: File
+        - ubicacionArchivoTorneosEliminacion: File
+        - ubicacionArchivoTorneosGrupos: File
+        - ubicacionArchivoTorneosPuntos: File
+        - ubicacionArchivoEquipos: File
+        - entrada: ObjectInputStream
+        - salida: ObjectOutputStream
+        + Archivo()
+        + escribirArchivoJugadores(jugadores: ArrayList<Jugador>): void
+        + leerArchivoJugadores(): ArrayList<Jugador>
+        + escribirArchivoAdministradores(administradores: ArrayList<Administrador>): void
+        + leerArchivoAdministradores(): ArrayList<Administrador>
+        + escribirArchivoEntrenadores(entrenadores: ArrayList<Entrenador>): void
+        + leerArchivoEntrenadores(): ArrayList<Entrenador>
+        + escribirArchivoEquipos(equipos: ArrayList<Equipo>): void
+        + leerArchivoEquipos(): ArrayList<Equipo>
+        + escribirArchivoTorneosEliminacion(torneos: ArrayList<TorneoEliminacion>): void
+        + leerArchivoTorneosEliminacion(): ArrayList<TorneoEliminacion>
+        + escribirArchivoTorneosGrupos(torneos: ArrayList<TorneoGrupos>): void
+        + leerArchivoTorneosGrupos(): ArrayList<TorneoGrupos>
+        + escribirArchivoTorneosPuntos(torneos: ArrayList<TorneoPuntos>): void
+        + leerArchivoTorneosPuntos(): ArrayList<TorneoPuntos>
+        + setUbicacionArchivoJugadores(ubicacion: File): void
+        + getUbicacionArchivoJugadores(): File
+        + setUbicacionArchivoAdministradores(ubicacion: File): void
+        + getUbicacionArchivoAdministradores(): File
+        + setUbicacionArchivoEntrenadores(ubicacion: File): void
+        + getUbicacionArchivoEntrenadores(): File
+        + setUbicacionArchivoTorneosEliminacion(ubicacion: File): void
+        + getUbicacionArchivoTorneosEliminacion(): File
+        + setUbicacionArchivoTorneosGrupos(ubicacion: File): void
+        + getUbicacionArchivoTorneosGrupos(): File
+        + setUbicacionArchivoTorneosPuntos(ubicacion: File): void
+        + getUbicacionArchivoTorneosPuntos(): File
+        + setUbicacionArchivoEquipos(ubicacion: File): void
+        + getUbicacionArchivoEquipos(): File
+        + setEntrada(entrada: ObjectInputStream): void
+        + getEntrada(): ObjectInputStream
+        + setSalida(salida: ObjectOutputStream): void
+        + getSalida(): ObjectOutputStream
+    }
+
+    interface InterfaceDAO<T> {
+        + add(x: T): boolean
+        + delete(x: T): boolean
+        + find(x: T): T
+        + update(x: T, y: T): boolean
+        + getAll(): ArrayList<T>
+    }
+
+    class DirectorioAdministradoresDAO {
+        - administradores: ArrayList<Administrador>
+        - archivo: Archivo
+        + DirectorioAdministradoresDAO()
+        + actualizarAdministradores(): void
+        + add(x: Administrador): boolean
+        + delete(x: Administrador): boolean
+        + find(x: Administrador): Administrador
+        + update(x: Administrador, y: Administrador): boolean
+        + getAll(): ArrayList<Administrador>
+    }
+
+    class DirectorioEntrenadoresDAO {
+        - entrenadores: ArrayList<Entrenador>
+        - archivo: Archivo
+        + DirectorioEntrenadoresDAO()
+        + actualizarEntrenadores(): void
+        + add(x: Entrenador): boolean
+        + delete(x: Entrenador): boolean
+        + find(x: Entrenador): Entrenador
+        + update(x: Entrenador, y: Entrenador): boolean
+        + getAll(): ArrayList<Entrenador>
+    }
+
+    class DirectorioEquiposDAO {
+        - equipos: ArrayList<Equipo>
+        - archivo: Archivo
+        + DirectorioEquiposDAO()
+        + actualizarEquipos(): void
+        + add(x: Equipo): boolean
+        + delete(x: Equipo): boolean
+        + find(x: Equipo): Equipo
+        + update(x: Equipo, y: Equipo): boolean
+        + getAll(): ArrayList<Equipo>
+    }
+
+    class DirectorioJugadoresDAO {
+        - jugadores: ArrayList<Jugador>
+        - archivo: Archivo
+        + DirectorioJugadoresDAO()
+        + actualizarJugadores(): void
+        + add(x: Jugador): boolean
+        + delete(x: Jugador): boolean
+        + find(x: Jugador): Jugador
+        + update(x: Jugador, y: Jugador): boolean
+        + getAll(): ArrayList<Jugador>
+    }
+
+    class DirectorioTorneosGruposDAO {
+        - torneosGrupos: ArrayList<TorneoGrupos>
+        - archivo: Archivo
+        + DirectorioTorneosGruposDAO()
+        + actualizarTorneosGrupos(): void
+        + add(x: TorneoGrupos): boolean
+        + delete(x: TorneoGrupos): boolean
+        + find(x: TorneoGrupos): TorneoGrupos
+        + update(x: TorneoGrupos, y: TorneoGrupos): boolean
+        + getAll(): ArrayList<TorneoGrupos>
+    }
+
+    class DirectorioTorneosEliminacionDAO {
+        - torneosEliminacion: ArrayList<TorneoEliminacion>
+        - archivo: Archivo
+        + DirectorioTorneosEliminacionDAO()
+        + actualizarTorneosEliminacion(): void
+        + add(x: TorneoEliminacion): boolean
+        + delete(x: TorneoEliminacion): boolean
+        + find(x: TorneoEliminacion): TorneoEliminacion
+        + update(x: TorneoEliminacion, y: TorneoEliminacion): boolean
+        + getAll(): ArrayList<TorneoEliminacion>
+    }
+
+    class DirectorioTorneosPuntosDAO {
+        - torneosPuntos: ArrayList<TorneoPuntos>
+        - archivo: Archivo
+        + DirectorioTorneosPuntosDAO()
+        + actualizarTorneosPuntos(): void
+        + add(x: TorneoPuntos): boolean
+        + delete(x: TorneoPuntos): boolean
+        + find(x: TorneoPuntos): TorneoPuntos
+        + update(x: TorneoPuntos, y: TorneoPuntos): boolean
+        + getAll(): ArrayList<TorneoPuntos>
+    }
+
+    class MapHandler {
+        + convertirAdministradorAAdministradorDTO(administrador: Administrador): AdministradorDTO
+        + convertirAdministradorDTOAAdministrador(adminDTO: AdministradorDTO): Administrador
+        + convertirEntrenadorAEntrenadorDTO(entrenador: Entrenador): EntrenadorDTO
+        + convertirEntrenadorDTOAEntrenador(entrenadorDTO: EntrenadorDTO): Entrenador
+        + convertirJugadorAJugadorDTO(jugador: Jugador): JugadorDTO
+        + convertirJugadorDTOAJugador(jugadorDTO: JugadorDTO): Jugador
+        + convertirEquipoAEquipoDTO(equipo: Equipo): EquipoDTO
+        + convertirEquipoDTOAEquipo(equipoDTO: EquipoDTO): Equipo
+        + convertirTorneoEliminacionATorneoEliminacionDTO(torneo: TorneoEliminacion): TorneoEliminacionDTO
+        + convertirTorneoEliminacionDTOATorneoEliminacion(dto: TorneoEliminacionDTO): TorneoEliminacion
+        + convertirTorneoGruposATorneoGruposDTO(torneo: TorneoGrupos): TorneoGruposDTO
+        + convertirTorneoGruposDTOATorneoGrupos(dto: TorneoGruposDTO): TorneoGrupos
+        + convertirTorneoPuntosATorneoPuntosDTO(torneo: TorneoPuntos): TorneoPuntosDTO
+        + convertirTorneoPuntosDTOATorneoPuntos(dto: TorneoPuntosDTO): TorneoPuntos
+        + convertirAdministradoresAAdministradoresDTO(administradores: ArrayList<Administrador>): ArrayList<AdministradorDTO>
+        + convertirAdministradoresDTOAAdministradores(administradoresDTO: ArrayList<AdministradorDTO>): ArrayList<Administrador>
+        + convertirJugadoresAJugadoresDTO(jugadores: ArrayList<Jugador>): ArrayList<JugadorDTO>
+        + convertirJugadoresDTOAJugadores(jugadoresDTO: ArrayList<JugadorDTO>): ArrayList<Jugador>
+        + convertirEntrenadoresAEntrenadoresDTO(entrenadores: ArrayList<Entrenador>): ArrayList<EntrenadorDTO>
+        + convertirEntrenadoresDTOAEntrenadores(entrenadoresDTO: ArrayList<EntrenadorDTO>): ArrayList<Entrenador>
+    }
+
+    class UsuarioDTO {
+        - usuario: String
+        - contraseña: String
+        - nacionalidad: String
+        - tipo: String
+        - correo: String
+        + getUsuario(): String
+        + setUsuario(usuario: String): void
+        + getContraseña(): String
+        + setContraseña(contraseña: String): void
+        + getNacionalidad(): String
+        + setNacionalidad(nacionalidad: String): void
+        + getTipo(): String
+        + setTipo(tipo: String): void
+        + getCorreo(): String
+        + setCorreo(correo: String): void
+    }
+
+    class AdministradorDTO extends UsuarioDTO {
+        - cargo: String
+        + getCargo(): String
+        + setCargo(cargo: String): void
+    }
+
+    class EntrenadorDTO extends UsuarioDTO {
+        - equipo: String
+        + getEquipo(): String
+        + setEquipo(equipo: String): void
+    }
+
+    class JugadorDTO extends UsuarioDTO {
+        - partidasJugadas: int
+        - torneosJugados: int
+        - partidasGanadas: int
+        - torneosGanados: int
+        - especialidad: String
+        - puntos: int
+        - equipo: String
+        + getPartidasJugadas(): int
+        + setPartidasJugadas(partidasJugadas: int): void
+        + getTorneosJugados(): int
+        + setTorneosJugados(torneosJugados: int): void
+        + getPartidasGanadas(): int
+        + setPartidasGanadas(partidasGanadas: int): void
+        + getTorneosGanados(): int
+        + setTorneosGanados(torneosGanados: int): void
+        + getEspecialidad(): String
+        + setEspecialidad(especialidad: String): void
+        + getPuntos(): int
+        + setPuntos(puntos: int): void
+        + getEquipo(): String
+        + setEquipo(equipo: String): void
+    }
+
+    class EquipoDTO {
+        - nombre: String
+        - equipo: ArrayList<JugadorDTO>
+        - entrenador1: EntrenadorDTO
+        - entrenador2: EntrenadorDTO
+        - entrenador3: EntrenadorDTO
+        + getNombre(): String
+        + setNombre(nombre: String): void
+        + getEquipo(): ArrayList<JugadorDTO>
+        + setEquipo(equipo: ArrayList<JugadorDTO>): void
+        + getEntrenador1(): EntrenadorDTO
+        + setEntrenador1(entrenador1: EntrenadorDTO): void
+        + getEntrenador2(): EntrenadorDTO
+        + setEntrenador2(entrenador2: EntrenadorDTO): void
+        + getEntrenador3(): EntrenadorDTO
+        + setEntrenador3(entrenador3: EntrenadorDTO): void
+    }
+
+    class TorneoDTO {
+        - participantes: ArrayList<JugadorDTO>
+        - tipo: String
+        - nombre: String
+        - limiteParticipantes: int
+        - juego: String
+        - fase: int
+        - estado: String
+        + getEstado(): String
+        + setEstado(estado: String): void
+        + getFase(): int
+        + setFase(fase: int): void
+        + getJuego(): String
+        + setJuego(juego: String): void
+        + getLimiteParticipantes(): int
+        + setLimiteParticipantes(limiteParticipantes: int): void
+        + getNombre(): String
+        + setNombre(nombre: String): void
+        + getTipo(): String
+        + setTipo(tipo: String): void
+        + getParticipantes(): ArrayList<JugadorDTO>
+        + setParticipantes(participantes: ArrayList<JugadorDTO>): void
+    }
+
+    class TorneoEliminacionDTO extends TorneoDTO {
+        - ganadores: ArrayList<JugadorDTO>
+        - eliminados: HashMap<JugadorDTO, Boolean>
+        - ganadorTorneo: JugadorDTO
+        - cronograma: String[][]
+        - fechas: LocalDate[]
+        + getGanadores(): ArrayList<JugadorDTO>
+        + setGanadores(ganadores: ArrayList<JugadorDTO>): void
+        + getEliminados(): HashMap<JugadorDTO, Boolean>
+        + setEliminados(eliminados: HashMap<JugadorDTO, Boolean>): void
+        + getGanadorTorneo(): JugadorDTO
+        + setGanadorTorneo(ganadorTorneo: JugadorDTO): void
+        + getCronograma(): String[][]
+        + setCronograma(cronograma: String[][]): void
+        + getFechas(): LocalDate[]
+        + setFechas(fechas: LocalDate[]): void
+    }
+
+    class TorneoGruposDTO extends TorneoDTO {
+        - equipo1: JugadorDTO[]
+        - equipo2: JugadorDTO[]
+        - equipo3: JugadorDTO[]
+        - equipo4: JugadorDTO[]
+        - equipoGanador1: JugadorDTO[]
+        - equipoGanador2: JugadorDTO[]
+        - equipoGanadorTorneo: JugadorDTO[]
+        - eliminados: ArrayList<JugadorDTO>
+        - cronograma: String[][]
+        - fechas: LocalDate[]
+        + getEquipo1(): JugadorDTO[]
+        + setEquipo1(equipo1: JugadorDTO[]): void
+        + getEquipo2(): JugadorDTO[]
+        + setEquipo2(equipo2: JugadorDTO[]): void
+        + getEquipo3(): JugadorDTO[]
+        + setEquipo3(equipo3: JugadorDTO[]): void
+        + getEquipo4(): JugadorDTO[]
+        + setEquipo4(equipo4: JugadorDTO[]): void
+        + getEquipoGanador1(): JugadorDTO[]
+        + setEquipoGanador1(equipoGanador1: JugadorDTO[]): void
+        + getEquipoGanador2(): JugadorDTO[]
+        + setEquipoGanador2(equipoGanador2: JugadorDTO[]): void
+        + getEquipoGanadorTorneo(): JugadorDTO[]
+        + setEquipoGanadorTorneo(equipoGanadorTorneo: JugadorDTO[]): void
+        + getEliminados(): ArrayList<JugadorDTO>
+        + setEliminados(eliminados: ArrayList<JugadorDTO>): void
+        + getCronograma(): String[][]
+        + setCronograma(cronograma: String[][]): void
+        + getFechas(): LocalDate[]
+        + setFechas(fechas: LocalDate[]): void
+    }
+
+    class TorneoPuntosDTO extends TorneoDTO {
+        - cronograma: String[][]
+        - fechas: LocalDate[]
+        - ganadorTorneo: JugadorDTO
+        + getCronograma(): String[][]
+        + setCronograma(cronograma: String[][]): void
+        + getFechas(): LocalDate[]
+        + setFechas(fechas: LocalDate[]): void
+        + getGanadorTorneo(): JugadorDTO
+        + setGanadorTorneo(ganadorTorneo: JugadorDTO): void
+    }
+
+
+' =========================
+' RELACIONES
+' =========================
+' Modelo
+Administrador ..|> Usuario
+Entrenador ..|> Usuario
+Jugador ..|> Usuario
+
+DirectorioPrincipal "1" -- "1" DirectorioAdministradores : contiene
+DirectorioPrincipal "1" -- "1" DirectorioEntrenadores : contiene
+DirectorioPrincipal "1" -- "1" DirectorioEquipos : contiene
+DirectorioPrincipal "1" -- "1" DirectorioJugadores : contiene
+DirectorioPrincipal "1" -- "1" DirectorioTorneosGrupos : contiene
+DirectorioPrincipal "1" -- "1" DirectorioTorneosEliminacion : contiene
+DirectorioPrincipal "1" -- "1" DirectorioTorneosPuntos : contiene
+
+DirectorioAdministradores "1" -- "*" Administrador : administra
+DirectorioEntrenadores "1" -- "*" Entrenador : administra
+DirectorioEquipos "1" -- "*" Equipo : administra
+DirectorioJugadores "1" -- "*" Jugador : administra
+DirectorioTorneosGrupos "1" -- "*" TorneoGrupos : administra
+DirectorioTorneosEliminacion "1" -- "*" TorneoEliminacion : administra
+DirectorioTorneosPuntos "1" -- "*" TorneoPuntos : administra
+
+Equipo "1" -- "0..3" Entrenador : entrenado_por
+Equipo "*" -- "*" Jugador : conforma
+
+Torneo <|-- TorneoEliminacion
+Torneo <|-- TorneoGrupos
+Torneo <|-- TorneoPuntos
+
+' Vista
+Vista "1" -- "1" VentanaAvanzeYInicioTorneo : contiene
+Vista "1" -- "1" VentanaCrearEquipo : contiene
+Vista "1" -- "1" VentanaCrearTorneo : contiene
+Vista "1" -- "1" VentanaCronograma : contiene
+Vista "1" -- "1" VentanaDatosTorneo : contiene
+Vista "1" -- "1" VentanaInicioSesion : contiene
+Vista "1" -- "1" VentanaPrincipalAdmin : contiene
+Vista "1" -- "1" VentanaPrincipalEntrenador : contiene
+Vista "1" -- "1" VentanaPrincipalJugador : contiene
+Vista "1" -- "1" VentanaRegistroAdmin : contiene
+Vista "1" -- "1" VentanaRegistroEntrenador : contiene
+Vista "1" -- "1" VentanaRegistroJugador : contiene
+
+VentanaAvanzeYInicioTorneo "1" -- "1" PanelAvanceYInicioTorneo : contiene
+VentanaCrearEquipo "1" -- "1" PanelCrearEquipo : contiene
+VentanaCrearTorneo "1" -- "1" PanelCrearTorneo : contiene
+VentanaCronograma "1" -- "1" PanelCronograma : contiene
+VentanaDatosTorneo "1" -- "1" PanelDatosTorneo : contiene
+VentanaInicioSesion "1" -- "1" PanelInicioSesion : contiene
+VentanaPrincipalAdmin "1" -- "1" PanelPrincipalAdmin : contiene
+VentanaPrincipalEntrenador "1" -- "1" PanelPrincipalEntrenador : contiene
+VentanaPrincipalJugador "1" -- "1" PanelPrincipalJugador : contiene
+VentanaRegistroAdmin "1" -- "1" PanelRegistroAdmin : contiene
+VentanaRegistroEntrenador "1" -- "1" PanelRegistroEntrenador : contiene
+VentanaRegistroJugador "1" -- "1" PanelRegistroJugador : contiene
+
+' Controlador
+Controlador "1" -- "1" Vista : usa
+Controlador "1" -- "1" DirectorioPrincipal : usa
+
+' Persistencia    ' Relaciones de herencia
+    AdministradorDTO --|> UsuarioDTO
+    EntrenadorDTO --|> UsuarioDTO
+    JugadorDTO --|> UsuarioDTO
+    TorneoEliminacionDTO --|> TorneoDTO
+    TorneoGruposDTO --|> TorneoDTO
+    TorneoPuntosDTO --|> TorneoDTO
+
+    ' Relaciones DAO
+    InterfaceDAO <|-- DirectorioAdministradoresDAO
+    InterfaceDAO <|-- DirectorioEntrenadoresDAO
+    InterfaceDAO <|-- DirectorioEquiposDAO
+    InterfaceDAO <|-- DirectorioJugadoresDAO
+    InterfaceDAO <|-- DirectorioTorneosGruposDAO
+    InterfaceDAO <|-- DirectorioTorneosEliminacionDAO
+    InterfaceDAO <|-- DirectorioTorneosPuntosDAO
+
+    DirectorioAdministradoresDAO "1" -- "1" Archivo : usa
+    DirectorioEntrenadoresDAO "1" -- "1" Archivo : usa
+    DirectorioEquiposDAO "1" -- "1" Archivo : usa
+    DirectorioJugadoresDAO "1" -- "1" Archivo : usa
+    DirectorioTorneosGruposDAO "1" -- "1" Archivo : usa
+    DirectorioTorneosEliminacionDAO "1" -- "1" Archivo : usa
+    DirectorioTorneosPuntosDAO "1" -- "1" Archivo : usa
+}
+
+@enduml

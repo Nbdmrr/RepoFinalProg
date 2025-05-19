@@ -26,7 +26,12 @@ import co.edu.unbosque.modelo.persistencia.DirectorioJugadoresDAO;
 import co.edu.unbosque.modelo.persistencia.MapHandler;
 import co.edu.unbosque.vista.Vista;
 
+/**
+ * Controlador principal de la aplicación.
+ * Implementa la interfaz ActionListener para manejar eventos de la interfaz gráfica.
+ */
 public class Controlador implements ActionListener{
+
 
 	private Vista vista;
 	private DirectorioPrincipal directorioPrincipal;
@@ -1475,3 +1480,5 @@ else if(comando.equals("INICIARTORNEO")) {
 		this.directorioPrincipal = directorioPrincipal;
 	}
 }
+
+    

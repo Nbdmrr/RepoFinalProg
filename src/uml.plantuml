@@ -129,17 +129,54 @@ package "co.edu.unbosque.modelo" {
     }
 
     class TorneoEliminacion extends Torneo {
-        + TorneoEliminacion(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+        - cronograma: String[][]
+        - fechas: LocalDate[]
+        - ganadores: ArrayList<Jugador>
+        - eliminados: HashMap<Jugador, Boolean>
+        - ganadorTorneo: Jugador
+        + TorneoEliminacion(nombre: String, limiteparticipantes: int, tipo: String, juego: String)
+        + generarCronograma(): void
+        + actualizarCronograma(ganadores: List<Jugador>): void
+        + avanzarFase(): void
+        + mostrarCronograma(): void
+        + getters y setters ()
     }
 
     class TorneoGrupos extends Torneo {
+        - equipo1: Jugador[]
+        - equipo2: Jugador[]
+        - equipo3: Jugador[]
+        - equipo4: Jugador[]
+        - equipoGanador1: Jugador[]
+        - equipoGanador2: Jugador[]
+        - equipoGanadorTorneo: Jugador[]
+        - eliminados: HashMap<Jugador, Boolean>
+        - cronograma: String[][]
+        - fechas: LocalDate[]
         + TorneoGrupos(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+        + organizarEquipos(): void
+        + agregarJugador(jugador: Jugador): boolean
+        + avanzarAFase2(): void
+        + elegirGanadorFinal(): void
+        + actualizarCronogramaPorGrupos(): void
+        + generarCronograma(): void
+        + mostrarCronograma(): void
+        + getters y setters ()
     }
 
     class TorneoPuntos extends Torneo {
+        - cronograma: String[][]
+        - fechas: LocalDate[]
+        - ganadorTorneo: Jugador
         + TorneoPuntos(nombre: String, limiteParticipantes: int, tipo: String, juego: String)
+        + generarCronograma(): void
+        + actualizarCronograma(): void
+        + avanzarFase(): void
+        + mostrarCronograma(): void
+        + calcularPuntos(): void
+        + determinarGanador(): void
+        + getters y setters para todos los atributos
     }
-
     class DirectorioPrincipal {
         - directorioAdministradores: DirectorioAdministradores
         - directorioEntrenadores: DirectorioEntrenadores
@@ -149,90 +186,105 @@ package "co.edu.unbosque.modelo" {
         - directorioTorneosEliminacion: DirectorioTorneosEliminacion
         - directorioTorneosPuntos: DirectorioTorneosPuntos
         + DirectorioPrincipal()
-        + getDirectorioAdministradores(): DirectorioAdministradores
-        + setDirectorioAdministradores(directorioAdministradores: DirectorioAdministradores): void
-        + getDirectorioEntrenadores(): DirectorioEntrenadores
-        + setDirectorioEntrenadores(directorioEntrenadores: DirectorioEntrenadores): void
-        + getDirectorioEquipos(): DirectorioEquipos
-        + setDirectorioEquipos(directorioEquipos: DirectorioEquipos): void
-        + getDirectorioJugadores(): DirectorioJugadores
-        + setDirectorioJugadores(directorioJugadores: DirectorioJugadores): void
-        + getDirectorioTorneosGrupos(): DirectorioTorneosGrupos
-        + setDirectorioTorneosGrupos(directorioTorneosGrupos: DirectorioTorneosGrupos): void
-        + getDirectorioTorneosEliminacion(): DirectorioTorneosEliminacion
-        + setDirectorioTorneosEliminacion(directorioTorneosEliminacion: DirectorioTorneosEliminacion): void
-        + getDirectorioTorneosPuntos(): DirectorioTorneosPuntos
-        + setDirectorioTorneosPuntos(directorioTorneosPuntos: DirectorioTorneosPuntos): void
-        + convertirTorneosAStrings(): ArrayList<String>
+        + getters y setters ()
     }
 
     class DirectorioAdministradores {
-        - administradores: ArrayList<Administrador>
+        - directorioAdministradoresDAO: DirectorioAdministradoresDAO
         + DirectorioAdministradores()
-        + adicionarAdministrador(administrador: Administrador): void
-        + obtenerAdministradores(): ArrayList<Administrador>
-        + encontrarAdministrador(administrador: Administrador): Administrador
         + cargarAdministradores(): void
-        + guardarAdministradores(): void
+        + adicionarAdministrador(aDTO: AdministradorDTO): boolean
+        + eliminarAdministrador(aDTO: AdministradorDTO): boolean
+        + actualizarAdministrador(viejoDTO: AdministradorDTO, nuevoDTO: AdministradorDTO): boolean
+        + encontrarAdministrador(aDTO: AdministradorDTO): Administrador
+        + obtenerAdministradores(): ArrayList<Administrador>
+        + getDirectorioAdministradoresDAO(): DirectorioAdministradoresDAO
+        + setDirectorioAdministradoresDAO(directorioAdministradoresDAO: DirectorioAdministradoresDAO): void
+        + getters y setters ()
     }
 
     class DirectorioEntrenadores {
-        - entrenadores: ArrayList<Entrenador>
+        - directorioEntrenadoresDAO: DirectorioEntrenadoresDAO
         + DirectorioEntrenadores()
-        + adicionarEntrenador(entrenador: Entrenador): void
-        + obtenerEntrenadores(): ArrayList<Entrenador>
-        + encontrarEntrenadores(entrenador: Entrenador): Entrenador
         + cargarEntrenadores(): void
-        + guardarEntrenadores(): void
+        + adicionarEntrenador(aDTO: EntrenadorDTO): boolean
+        + eliminarEntrenador(aDTO: EntrenadorDTO): boolean
+        + actualizarEntrenador(viejoDTO: EntrenadorDTO, nuevoDTO: EntrenadorDTO): boolean
+        + encontrarEntrenadores(aDTO: EntrenadorDTO): Entrenador
+        + obtenerEntrenadores(): ArrayList<Entrenador>
+        + getDirectorioEntrenadoresDAO(): DirectorioEntrenadoresDAO
+        + setDirectorioEntrenadoresDAO(directorioEntrenadoresDAO: DirectorioEntrenadoresDAO): void
+        + getters y setters ()
     }
-
     class DirectorioEquipos {
-        - equipos: ArrayList<Equipo>
+        - directorioEquiposDAO: DirectorioEquiposDAO
         + DirectorioEquipos()
-        + adicionarEquipo(equipo: Equipo): void
-        + obtenerEquipos(): ArrayList<Equipo>
-        + encontrarEquipo(equipo: Equipo): Equipo
-        + actualizarEquipo(equipoAntiguo: Equipo, equipoNuevo: Equipo): void
         + cargarEquipos(): void
-        + guardarEquipos(): void
+        + adicionarEquipo(aDTO: EquipoDTO): boolean
+        + eliminarEquipo(aDTO: EquipoDTO): boolean
+        + actualizarEquipo(viejoDTO: EquipoDTO, nuevoDTO: EquipoDTO): boolean
+        + encontrarEquipo(aDTO: EquipoDTO): Equipo
+        + obtenerEquipos(): ArrayList<Equipo>
+        + getDirectorioEquiposDAO(): DirectorioEquiposDAO
+        + setDirectorioEquiposDAO(directorioEquiposDAO: DirectorioEquiposDAO): void
         + convertirEquiposAStrings(): ArrayList<String>
+        + getters y setters()
     }
 
     class DirectorioJugadores {
-        - jugadores: ArrayList<Jugador>
+        - directorioJugadoresDAO: DirectorioJugadoresDAO
         + DirectorioJugadores()
-        + adicionarJugador(jugador: Jugador): void
-        + obtenerJugador(): ArrayList<Jugador>
-        + encontrarJugador(jugador: Jugador): Jugador
         + cargarJugadores(): void
-        + guardarJugadores(): void
+        + adicionarJugador(aDTO: JugadorDTO): boolean
+        + eliminarJugador(aDTO: JugadorDTO): boolean
+        + actualizarJugador(viejoDTO: JugadorDTO, nuevoDTO: JugadorDTO): boolean
+        + encontrarJugador(aDTO: JugadorDTO): Jugador
+        + obtenerJugador(): ArrayList<Jugador>
+        + getDirectorioJugadoresDAO(): DirectorioJugadoresDAO
+        + setDirectorioJugadoresDAO(directorioJugadoresDAO: DirectorioJugadoresDAO): void
+        + getters y setters para todos los atributos
     }
 
     class DirectorioTorneosGrupos {
-        - torneosGrupos: ArrayList<TorneoGrupos>
+        - directorioTorneosGruposDAO: DirectorioTorneosGruposDAO
         + DirectorioTorneosGrupos()
-        + adicionarTorneoGrupos(torneoGrupos: TorneoGrupos): void
-        + obtenerTorneosGrupos(): ArrayList<TorneoGrupos>
         + cargarTorneosGrupos(): void
-        + guardarTorneosGrupos(): void
+        + adicionarTorneoGrupos(aDTO: TorneoGruposDTO): boolean
+        + eliminarTorneoGrupos(aDTO: TorneoGruposDTO): boolean
+        + actualizarTorneoGrupos(viejoDTO: TorneoGruposDTO, nuevoDTO: TorneoGruposDTO): boolean
+        + encontrarTorneoGrupos(aDTO: TorneoGruposDTO): TorneoGrupos
+        + obtenerTorneosGrupos(): ArrayList<TorneoGrupos>
+        + getDirectorioTorneosGruposDAO(): DirectorioTorneosGruposDAO
+        + setDirectorioTorneosGruposDAO(directorioTorneosGruposDAO: DirectorioTorneosGruposDAO): void
+        + getters y setters para todos los atributos
     }
-
+    
     class DirectorioTorneosEliminacion {
-        - torneosEliminacion: ArrayList<TorneoEliminacion>
+        - directorioTorneosEliminacionDAO: DirectorioTorneosEliminacionDAO
         + DirectorioTorneosEliminacion()
-        + adicionarTorneoEliminacion(torneoEliminacion: TorneoEliminacion): void
-        + obtenerTorneosEliminacio(): ArrayList<TorneoEliminacion>
         + cargarTorneosEliminacion(): void
-        + guardarTorneosEliminacion(): void
+        + adicionarTorneoEliminacion(aDTO: TorneoEliminacionDTO): boolean
+        + eliminarTorneoEliminacion(aDTO: TorneoEliminacionDTO): boolean
+        + actualizarTorneoEliminacio(viejoDTO: TorneoEliminacionDTO, nuevoDTO: TorneoEliminacionDTO): boolean
+        + encontrarTorneoEliminacio(aDTO: TorneoEliminacionDTO): TorneoEliminacion
+        + obtenerTorneosEliminacio(): ArrayList<TorneoEliminacion>
+        + getDirectorioTorneosEliminacionDAO(): DirectorioTorneosEliminacionDAO
+        + setDirectorioTorneosEliminacionDAO(directorioTorneosEliminacionDAO: DirectorioTorneosEliminacionDAO): void
+        + getters y setters para todos los atributos
     }
-
+    
     class DirectorioTorneosPuntos {
-        - torneosPuntos: ArrayList<TorneoPuntos>
+        - directorioTorneosPuntosDAO: DirectorioTorneosPuntosDAO
         + DirectorioTorneosPuntos()
-        + adicionarTorneoPuntos(torneoPuntos: TorneoPuntos): void
-        + obtenerTorneosPuntos(): ArrayList<TorneoPuntos>
         + cargarTorneosPuntos(): void
-        + guardarTorneosPuntos(): void
+        + adicionarTorneoPuntos(aDTO: TorneoPuntosDTO): boolean
+        + eliminarTorneoPuntos(aDTO: TorneoPuntosDTO): boolean
+        + actualizarTorneoPuntos(viejoDTO: TorneoPuntosDTO, nuevoDTO: TorneoPuntosDTO): boolean
+        + encontrarTorneoPuntos(aDTO: TorneoPuntosDTO): TorneoPuntos
+        + obtenerTorneosPuntos(): ArrayList<TorneoPuntos>
+        + getDirectorioTorneosPuntosDAO(): DirectorioTorneosPuntosDAO
+        + setDirectorioTorneosPuntosDAO(directorioTorneosPuntosDAO: DirectorioTorneosPuntosDAO): void
+        + getters y setters para todos los atributos
     }
 }
 
@@ -598,51 +650,11 @@ package "co.edu.unbosque.controlador" {
 ' =========================
 package "co.edu.unbosque.modelo.persistencia" {
 
-    class Archivo {
-        - ubicacionArchivoJugadores: File
-        - ubicacionArchivoAdministradores: File
-        - ubicacionArchivoEntrenadores: File
-        - ubicacionArchivoTorneosEliminacion: File
-        - ubicacionArchivoTorneosGrupos: File
-        - ubicacionArchivoTorneosPuntos: File
-        - ubicacionArchivoEquipos: File
-        - entrada: ObjectInputStream
-        - salida: ObjectOutputStream
-        + Archivo()
-        + escribirArchivoJugadores(jugadores: ArrayList<Jugador>): void
-        + leerArchivoJugadores(): ArrayList<Jugador>
-        + escribirArchivoAdministradores(administradores: ArrayList<Administrador>): void
-        + leerArchivoAdministradores(): ArrayList<Administrador>
-        + escribirArchivoEntrenadores(entrenadores: ArrayList<Entrenador>): void
-        + leerArchivoEntrenadores(): ArrayList<Entrenador>
-        + escribirArchivoEquipos(equipos: ArrayList<Equipo>): void
-        + leerArchivoEquipos(): ArrayList<Equipo>
-        + escribirArchivoTorneosEliminacion(torneos: ArrayList<TorneoEliminacion>): void
-        + leerArchivoTorneosEliminacion(): ArrayList<TorneoEliminacion>
-        + escribirArchivoTorneosGrupos(torneos: ArrayList<TorneoGrupos>): void
-        + leerArchivoTorneosGrupos(): ArrayList<TorneoGrupos>
-        + escribirArchivoTorneosPuntos(torneos: ArrayList<TorneoPuntos>): void
-        + leerArchivoTorneosPuntos(): ArrayList<TorneoPuntos>
-        + setUbicacionArchivoJugadores(ubicacion: File): void
-        + getUbicacionArchivoJugadores(): File
-        + setUbicacionArchivoAdministradores(ubicacion: File): void
-        + getUbicacionArchivoAdministradores(): File
-        + setUbicacionArchivoEntrenadores(ubicacion: File): void
-        + getUbicacionArchivoEntrenadores(): File
-        + setUbicacionArchivoTorneosEliminacion(ubicacion: File): void
-        + getUbicacionArchivoTorneosEliminacion(): File
-        + setUbicacionArchivoTorneosGrupos(ubicacion: File): void
-        + getUbicacionArchivoTorneosGrupos(): File
-        + setUbicacionArchivoTorneosPuntos(ubicacion: File): void
-        + getUbicacionArchivoTorneosPuntos(): File
-        + setUbicacionArchivoEquipos(ubicacion: File): void
-        + getUbicacionArchivoEquipos(): File
-        + setEntrada(entrada: ObjectInputStream): void
-        + getEntrada(): ObjectInputStream
-        + setSalida(salida: ObjectOutputStream): void
-        + getSalida(): ObjectOutputStream
+       class VentanaListaEquipos {
+        - panelListaEquipos: PanelListaEquipos
+        + VentanaListaEquipos()
+        + getPanelListaEquipos(): PanelListaEquipos
     }
-
     interface InterfaceDAO<T> {
         + add(x: T): boolean
         + delete(x: T): boolean
